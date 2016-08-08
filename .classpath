@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/scala/org/learningconcurrency"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/leveldbjni-win64-1.5.jar"/>
+	<classpathentry kind="lib" path="lib/scala-blitz_2.11-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/scala-stm_2.11-0.7.jar"/>
+	<classpathentry kind="lib" path="lib/scala-swing_2.11-1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/scalameter-core_2.11-0.6.jar"/>
+	<classpathentry kind="lib" path="lib/scalaz-concurrent_2.11-7.0.6.jar"/>
+	<classpathentry kind="lib" path="lib/akka-remote_2.11-2.3.11.jar"/>
+	<classpathentry kind="lib" path="lib/akka-stream-experimental_2.11-0.4.jar"/>
+	<classpathentry kind="lib" path="lib/hawtjni-runtime-1.8.jar"/>
+	<classpathentry kind="lib" path="lib/reactive-collections-core_2.11-0.5.jar"/>
+	<classpathentry kind="lib" path="lib/scala-async_2.11-0.9.1.jar"/>
+	<classpathentry kind="lib" path="lib/scalaz-effect_2.11-7.0.6.jar"/>
+	<classpathentry kind="lib" path="lib/akka-actor_2.11-2.3.3.jar"/>
+	<classpathentry kind="lib" path="lib/akka-persistence-experimental_2.11-2.3.3.jar"/>
+	<classpathentry kind="lib" path="lib/rxjava-scala-0.19.1.jar"/>
+	<classpathentry kind="lib" path="lib/reactive-collections_2.11-0.5.jar"/>
+	<classpathentry kind="lib" path="lib/reactive-streams-spi-0.3.jar"/>
+	<classpathentry kind="lib" path="lib/guava-12.0.jar"/>
+	<classpathentry kind="lib" path="lib/config-1.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/rxjava-core-0.19.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
