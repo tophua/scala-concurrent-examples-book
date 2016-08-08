@@ -1,7 +1,8 @@
-package org.learningconcurrency
 package ch3
 
 
+import org.learningconcurrency._
+import ch3._
 
 import java.io._
 import java.util.concurrent._

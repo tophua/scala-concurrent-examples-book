@@ -1,20 +1,20 @@
 package org.learningconcurrency
 
+
+
 import java.io._
 import java.text.SimpleDateFormat
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.monitor._
 import rx.lang.scala._
-import java.nio.file.FileSystem._
-
+import ch3._
 
 package ch9 {
-  
+
   case class FileInfo(path: String, name: String, parent: String, modified: String, isDir: Boolean, size: Long, state: FileSystem.State) {
     def toRow = Array[AnyRef](name, if (isDir) "" else size / 1000 + "kB", modified)
     def toFile = new File(path)
   }
-  
 
   object FileInfo {
     def apply(file: File): FileInfo = {
