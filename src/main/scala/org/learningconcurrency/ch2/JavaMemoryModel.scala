@@ -1,11 +1,7 @@
-package org.learningconcurrency
 package ch2
 
-
-
-
-
-
+import org.learningconcurrency._
+import ch2._
 object JMMPublicationWrong extends App {
   class Num(var x: Int)
   var num = new Num(-1)

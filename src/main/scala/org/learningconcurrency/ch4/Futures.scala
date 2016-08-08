@@ -1,9 +1,5 @@
-package org.learningconcurrency
 package ch4
-
-
-
-
+import org.learningconcurrency._
 
 
 object FuturesComputation extends App {

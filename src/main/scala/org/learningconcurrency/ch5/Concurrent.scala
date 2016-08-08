@@ -1,7 +1,9 @@
-package org.learningconcurrency
 package ch5
 
-
+import org.learningconcurrency._
+import ch5.ParHtmlSpecSearch
+import scala.io.Source
+import scala.concurrent.Future
 
 
 
@@ -9,9 +11,13 @@ package ch5
 object ConcurrentWrong extends App {
   import scala.collection._
   import scala.concurrent.ExecutionContext.Implicits.global
-  import ParHtmlSpecSearch.getHtmlSpec
-  import ch4.FuturesCallbacks.getUrlSpec
+  import ch5.ParHtmlSpecSearch._
 
+  
+  def getUrlSpec(): Future[Seq[String]] = Future {
+    val f = Source.fromURL("http://www.w3.org/Addressing/URL/url-spec.txt")
+    try f.getLines.toList finally f.close()
+  }
   def intersection(a: GenSet[String], b: GenSet[String]): GenSet[String] = {
     val result = new mutable.HashSet[String]
     for (x <- a.par) if (b contains x) result.add(x)
@@ -39,8 +45,14 @@ object ConcurrentCollections extends App {
   import scala.collection.convert.decorateAsScala._
   import scala.concurrent.ExecutionContext.Implicits.global
   import ParHtmlSpecSearch.getHtmlSpec
-  import ch4.FuturesCallbacks.getUrlSpec
-
+ 
+ 
+  
+  def getUrlSpec(): Future[Seq[String]] = Future {
+    val f = Source.fromURL("http://www.w3.org/Addressing/URL/url-spec.txt")
+    try f.getLines.toList finally f.close()
+  }
+  
   def intersection(a: GenSet[String], b: GenSet[String]): GenSet[String] = {
     val skiplist = new ConcurrentSkipListSet[String]
     for (x <- a.par) if (b contains x) skiplist.add(x)
