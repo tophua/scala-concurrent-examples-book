@@ -1,7 +1,8 @@
-package org.learningconcurrency
+
 package ch8
 
-
+import org.learningconcurrency._
+import ch8._
 
 import akka.actor.Actor
 import akka.actor.ActorRef

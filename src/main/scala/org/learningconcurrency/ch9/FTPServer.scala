@@ -1,6 +1,8 @@
-package org.learningconcurrency
+
 package ch9
 
+import org.learningconcurrency._
+import ch9._
 
 
 import rx.lang.scala._

@@ -1,6 +1,6 @@
 package ch4
-import org.learningconcurrency._
 
+import org.learningconcurrency._
 
 object FuturesComputation extends App {
   import scala.concurrent._
@@ -148,7 +148,7 @@ object FuturesClumsyCallback extends App {
   
   def findFiles(patterns: List[String]): List[String] = {
     val root = new File(".")
-    for {
+    for {      
       f <- iterateFiles(root, null, true).asScala.toList
       pat <- patterns
       abspat = root.getCanonicalPath + File.separator + pat

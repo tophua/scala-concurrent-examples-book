@@ -1,5 +1,7 @@
-package org.learningconcurrency
 package ch7
+
+import org.learningconcurrency._
+import ch7._
 
 import scala.concurrent.Future
 import scala.concurrent.stm.Ref

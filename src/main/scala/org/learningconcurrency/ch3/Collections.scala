@@ -1,5 +1,7 @@
-package org.learningconcurrency
 package ch3
+
+import org.learningconcurrency._
+import ch3._
 
 object CollectionsBad extends App {
   import scala.collection._

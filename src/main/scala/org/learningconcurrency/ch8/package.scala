@@ -1,11 +1,7 @@
 package org.learningconcurrency
 
-
-
 import akka.actor.ActorSystem
 import com.typesafe.config._
-
-
 
 package object ch8 {
   

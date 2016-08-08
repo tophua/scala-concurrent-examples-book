@@ -1,7 +1,8 @@
-package org.learningconcurrency
+
 package ch6
 
-
+import org.learningconcurrency._
+import ch6._
 
 import scala.reactive._
 

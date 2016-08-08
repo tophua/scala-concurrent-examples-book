@@ -1,9 +1,9 @@
-package org.learningconcurrency
+
 package ch9
 
 
-
-
+import ch9._
+import org.learningconcurrency._
 
 
 object Deadlock extends App {

@@ -1,7 +1,9 @@
-package org.learningconcurrency
+
 package ch6
 
 
+import org.learningconcurrency._
+import ch6._
 
 
 

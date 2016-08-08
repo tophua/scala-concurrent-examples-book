@@ -1,11 +1,6 @@
-package org.learningconcurrency
 package ch4
-
+import org.learningconcurrency._
 import scala.concurrent.Future
-
-
-
-
 
 
 object PromisesCreate extends App {

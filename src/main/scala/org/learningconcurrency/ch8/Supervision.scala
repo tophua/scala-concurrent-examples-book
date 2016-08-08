@@ -1,19 +1,17 @@
-package org.learningconcurrency
 package ch8
 
-
-
+import org.learningconcurrency._
+import ch8._
 import akka.actor._
 import akka.event.Logging
 import akka.pattern.pipe
 import akka.actor.SupervisorStrategy._
-import org.apache.commons.io.FileUtils
 import scala.io.Source
 import scala.collection._
 import scala.concurrent._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
-
+import org.apache.commons.io.FileUtils
 
 
 class Naughty extends Actor {
@@ -50,6 +48,7 @@ object SupervisionKill extends App {
 
 
 class Downloader extends Actor {
+ 
   def receive = {
     case DownloadManager.Download(url, dest) =>
       val content = Source.fromURL(url)

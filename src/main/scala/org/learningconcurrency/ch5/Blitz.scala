@@ -1,5 +1,9 @@
-package org.learningconcurrency
 package ch5
+
+import org.learningconcurrency._
+import ch5._
+
+import ParNonParallelizableOperations._
 
 
 

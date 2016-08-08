@@ -1,7 +1,8 @@
 package ch5
 
 import org.learningconcurrency._
-import ch5.ParHtmlSpecSearch
+import ch5._
+import ParHtmlSpecSearch._
 import scala.io.Source
 import scala.concurrent.Future
 
@@ -11,7 +12,7 @@ import scala.concurrent.Future
 object ConcurrentWrong extends App {
   import scala.collection._
   import scala.concurrent.ExecutionContext.Implicits.global
-  import ch5.ParHtmlSpecSearch._
+ 
 
   
   def getUrlSpec(): Future[Seq[String]] = Future {

@@ -9,7 +9,7 @@ import java.nio.file.FileSystem._
 
 
 package ch9 {
-
+  
   case class FileInfo(path: String, name: String, parent: String, modified: String, isDir: Boolean, size: Long, state: FileSystem.State) {
     def toRow = Array[AnyRef](name, if (isDir) "" else size / 1000 + "kB", modified)
     def toFile = new File(path)
