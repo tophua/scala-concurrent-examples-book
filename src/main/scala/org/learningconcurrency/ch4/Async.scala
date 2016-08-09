@@ -5,7 +5,9 @@ import org.learningconcurrency._
 
 
 
-
+/**
+ * 异步async
+ */
 object AsyncBasic extends App {
   import scala.concurrent._
   import ExecutionContext.Implicits.global
@@ -50,9 +52,11 @@ object AsyncWhile extends App {
   import scala.concurrent._
   import ExecutionContext.Implicits.global
   import scala.async.Async.{async, await}
-
+/**
+ * 异步执行 async
+ **/
   def delay(nSeconds: Int) = async {
-    blocking {
+    blocking {//scala包 blocking
       Thread.sleep(nSeconds * 1000)
     }
   }

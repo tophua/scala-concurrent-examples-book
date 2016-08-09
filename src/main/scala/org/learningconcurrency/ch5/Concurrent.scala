@@ -8,7 +8,9 @@ import scala.concurrent.Future
 
 
 
-
+/**
+ * 并发不正常
+ */
 object ConcurrentWrong extends App {
   import scala.collection._
   import scala.concurrent.ExecutionContext.Implicits.global
@@ -38,7 +40,10 @@ object ConcurrentWrong extends App {
     case t => log(s"Result: $t")
   }
 }
-
+/**
+ * 并发集合
+ * 
+ */
 
 object ConcurrentCollections extends App {
   import java.util.concurrent.ConcurrentSkipListSet

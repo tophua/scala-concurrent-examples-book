@@ -6,7 +6,9 @@ import ch6._
 
 
 
-
+/**
+ * Composition ×é³É
+ */
 
 object CompositionMapAndFilter extends App {
   import rx.lang.scala._

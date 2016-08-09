@@ -41,7 +41,10 @@ class FileSystem(val root: String) {
   }
 
   logger.start()
-
+/**
+ * LinkedBlockingQueue 一个由链接节点支持的可选有界队列
+ * 
+ */
   private val messages = new LinkedBlockingQueue[String]
 
   def logMessage(msg: String): Unit = messages.add(msg)
@@ -57,13 +60,14 @@ class FileSystem(val root: String) {
   class Deleting extends State
 
   class Entry(val isDir: Boolean) {
+    //AtomicReference则对应普通的对象引用,也就是它可以保证你在修改对象引用时的线程安全性。
     val state = new AtomicReference[State](new Idle)
   }
 
   val files: concurrent.Map[String, Entry] =
     //new ConcurrentHashMap().asScala
     new concurrent.TrieMap()
-
+ //iterateFiles 第二个参数过滤器，第三个参数是否递归
   for (file <- FileUtils.iterateFiles(new File(root), null, false).asScala) {
     files.put(file.getName, new Entry(false))
   }
@@ -72,6 +76,15 @@ class FileSystem(val root: String) {
     val s0 = entry.state.get
     s0 match {
       case i: Idle =>
+        /**
+         * compareAndSet 如果当前值 == 预期值，则以原子方式将该值设置为给定的更新值。
+         * 参数：
+         * expect - 预期值
+         * update - 新值
+         * 返回：如果成功，则返回 true。返回 false 指示实际值与预期值不相等。
+         */
+
+        
         if (entry.state.compareAndSet(s0, new Deleting)) true
         else prepareForDelete(entry)
       case c: Creating =>
@@ -94,6 +107,7 @@ class FileSystem(val root: String) {
       case Some(entry) =>
         execute {
           if (prepareForDelete(entry)) {
+            //安全删除
             if (FileUtils.deleteQuietly(new File(filename)))
               files.remove(filename)
           }
@@ -111,6 +125,10 @@ class FileSystem(val root: String) {
         if (entry.state.compareAndSet(s0, new Copying(1))) true
         else acquire(entry)
       case c: Copying =>
+        /**
+         * compareAndSet方法作用是首先检查当前引用是否等于预期引用，并且当前标志是否等于预期标志，如果全部相等，
+         * 则以原子方式将该引用和该标志的值设置为给定的更新值
+         */
         if (entry.state.compareAndSet(s0, new Copying(c.n + 1))) true
         else acquire(entry)
     }
@@ -144,7 +162,9 @@ class FileSystem(val root: String) {
           if (acquire(srcEntry)) try {
             val destEntry = new Entry(false)
             destEntry.state.set(new Creating)
+            //putIfAbsent 返回与指定键关联的以前的值，或如果没有键映射None
             if (files.putIfAbsent(dest, destEntry) == None) try {
+              //文件复制
               FileUtils.copyFile(new File(src), new File(dest))
             } finally release(destEntry)
           } finally release(srcEntry)

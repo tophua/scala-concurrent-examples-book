@@ -262,7 +262,7 @@ object SynchronizedPool extends App {
       tasks.dequeue()
     }
     override def run() = while (true) {
-      val task = poll()
+      val task = poll() // poll() 方法都是从队列中删除第一个元素（head）,在用空集合调用时不是抛出异常
       task()
     }
   }
@@ -282,13 +282,15 @@ object SynchronizedPool extends App {
 object SynchronizedGracefulShutdown extends App {
   import scala.collection._
   import scala.annotation.tailrec
-
+  //Queue 一个队列就是一个先入先出（FIFO）的数据结构,
+  //
   private val tasks = mutable.Queue[() => Unit]()
 
   object Worker extends Thread {
     var terminated = false
     def poll(): Option[() => Unit] = tasks.synchronized {
       while (tasks.isEmpty && !terminated) tasks.wait()
+      //
       if (!terminated) Some(tasks.dequeue()) else None
     }
     @tailrec override def run() = poll() match {

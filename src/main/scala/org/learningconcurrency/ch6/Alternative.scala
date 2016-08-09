@@ -6,7 +6,9 @@ import ch6._
 
 import scala.reactive._
 
-
+/**
+ * Alternative 替代的, 备选
+ */
 
 object AkkaStreams extends App {
   import akka.actor.ActorSystem

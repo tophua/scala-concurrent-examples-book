@@ -84,6 +84,9 @@ object CollectionsIterators extends App {
   import java.util.concurrent._
 
   val queue = new LinkedBlockingQueue[String]
+  //一个队列就是一个先入先出（FIFO）的数据结构,
+  //如果想在一个满的队列中加入一个新项，多出的项就会被拒绝,
+  //这时新的 offer 方法就可以起作用了。它不是对调用 add() 方法抛出一个 unchecked 异常，而只是得到由 offer() 返回的 false
   for (i <- 1 to 5500) queue.offer(i.toString)
   execute {
     val it = queue.iterator
@@ -130,8 +133,11 @@ object CollectionsConcurrentMapIncremental extends App {
   @tailrec def addEmail(name: String, address: String) {
     emails.get(name) match {
       case Some(existing) =>
+        //
         if (!emails.replace(name, existing, address :: existing)) addEmail(name, address)
       case None =>
+        //putIfAbsent()方法用于在 map 中进行添加,这个方法以要添加到 ConcurrentMap实现中的键的值为参数，就像普通的 put() 方法，
+        //但是只有在 map 不包含这个键时，才能将键加入到 map 中。如果 map 已经包含这个键，那么这个键的现有值就会保留。
         if (emails.putIfAbsent(name, address :: Nil) != None) addEmail(name, address)
     }
   }

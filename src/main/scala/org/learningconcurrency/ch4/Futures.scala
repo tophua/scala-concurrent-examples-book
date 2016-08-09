@@ -1,8 +1,14 @@
 package ch4
 
 import org.learningconcurrency._
-
+/**
+ * Future 它是一个容器类型，代表一个代码最终会返回的T类型结果。不过，代码可能会出错或执行超时，
+ * 所以当Future完成时，它有可能完全没有被成功执行，这时它会代表一个异常
+ *  Future 表示一个可能还没有实际完成的异步任务的结果,
+ *  针对这个结果可以添加 Callback 以便在任务执行成功或失败后做出对应的操作
+ */
 object FuturesComputation extends App {
+  //Computation计算
   import scala.concurrent._
   import ExecutionContext.Implicits.global
 
@@ -14,7 +20,9 @@ object FuturesComputation extends App {
 
 }
 
-
+/**
+ * 数据类型
+ */
 object FuturesDataType extends App {
   import scala.concurrent._
   import ExecutionContext.Implicits.global
@@ -26,10 +34,10 @@ object FuturesDataType extends App {
   }
 
   log(s"started reading build file asynchronously")
-  log(s"status: ${buildFile.isCompleted}")
+  log(s"status: ${buildFile.isCompleted}")//是否完成
   Thread.sleep(250)
-  log(s"status: ${buildFile.isCompleted}")
-  log(s"status: ${buildFile.value}")
+  log(s"status: ${buildFile.isCompleted}")//是否完成
+  log(s"status: ${buildFile.value}")//还回值
 
 }
 
@@ -62,7 +70,9 @@ object FuturesCallbacks extends App {
 
 }
 
-
+/**
+ * Failure 回调
+ */
 object FuturesFailure extends App {
   import scala.concurrent._
   import ExecutionContext.Implicits.global
@@ -72,9 +82,12 @@ object FuturesFailure extends App {
     Source.fromURL("http://www.w3.org/non-existent-url-spec.txt").mkString
   }
 
-  urlSpec.failed foreach {
-    case t => log(s"exception occurred - $t")
+  urlSpec.failed.foreach {    
+    case t => {      
+      log(s"exception occurred - $t")     
+    }    
   }
+
 }
 
 
@@ -89,7 +102,7 @@ object FuturesExceptions extends App {
     text => log(text)
   }
 
-  file.failed foreach {
+  file.failed foreach {//异常处理,抛出异常类型FileNotFoundException
     case fnfe: java.io.FileNotFoundException => log(s"Cannot find file - $fnfe")
     case t => log(s"Failed due to $t")
   }
@@ -98,6 +111,7 @@ object FuturesExceptions extends App {
 
   file onComplete {
     case Success(text) => log(text)
+   //onComplete 回调方式
     case Failure(t) => log(s"Failed due to $t")
   }
 
