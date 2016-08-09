@@ -88,19 +88,23 @@ object FuturesCallbacks extends App {
  * 直接发送给find方法,而且在程序调用find方法时,该Future很可能还无法使用.
  */
   def find(lines: Seq[String], word: String) = lines.zipWithIndex.collect {
+    //zipWithIndex， 返回对偶列表，第二个组成部分是元素下标  
     case (line, n) if line.contains(word) => (n, line)
-  }.mkString("\n")
+  }.mkString("\n")//此迭代器转换为字符串
 /**
  * 我们使用foreach方法为这个Future添加一个回调函数,注意onSuccess方法与foreach方法等价,但onSuccess方法可能
- * 会在scala 2.11之后被弃用,foreach方法接收偏函数作为其参数
- * 此处的要点是:添加回调函数是非阻塞操作,回调用函数注册后,main线程中用的log语句会立即执行
- * 但是执行回调函数中log语句的时间可以晚得多
- * 在Future对象被完善后,无须立刻调用回调参数,大多数执行上下文通过调用任务,以异步方式处理回调函数
+ * 会在scala 2.11之后被弃用,foreach方法接收偏函数作为其参数 
  */
   urlSpec.foreach {
     lines => log(s"Found occurrences of 'telnet'\n${find(lines, "telnet")}\n")
   }
-   Thread.sleep(2000)
+  /**
+  * Thread.sleep
+  * 此处的要点是:添加回调函数是非阻塞操作,回调用函数注册后,main线程中用的log语句会立即执行
+ 	* 但是执行回调函数中log语句的时间可以晚得多
+ 	* 在Future对象被完善后,无须立刻调用回调参数,大多数执行上下文通过调用任务,以异步方式处理回调函数
+   */
+   Thread.sleep(2000)//添加此方法如果不添加不异步调用不显示信息
    log("callbacks registered, continuing with other work")
 
 /**
@@ -133,26 +137,40 @@ object FuturesCallbacks extends App {
 }
 
 /**
- * Failure 回调
+ * Failure计算和异常
  */
 object FuturesFailure extends App {
   import scala.concurrent._
   import ExecutionContext.Implicits.global
   import scala.io.Source
-
+/**
+ * 当完善Future对象的操作被执行后,有可能成功Future对象,也有可能失败Future对象,
+ * 
+ */
   val urlSpec: Future[String] = Future {
+    //访问一个非法URL发送了Http请求,因此fromURL方法抛出了一个异常,而且Future对象urlSpec的操作失败了.
     Source.fromURL("http://www.w3.org/non-existent-url-spec.txt").mkString
   }
+  /**
+   * foreach方法会接收处理成功完善的Future对象的回调函数,
+   * failed方法会接收处理接失败情况的回调函数,返回Future[Throwable]对象,该对象代表Future失败情况的异常
+   * 将failed方法与foreach一起使用可以访问异常
+   */
 
   urlSpec.failed.foreach {    
     case t => {      
       log(s"exception occurred - $t")     
     }    
   }
+  Thread.sleep(2000)
 
 }
 
-
+/**
+ * 使用Try类型,有两个子类型:Success类型用于表示成功执行操作结果
+ * 												Failure类型用于表示执行失败的异常对象
+ * 我们可以使用模式匹配功能确定Try对象是那种子类型
+ */
 object FuturesExceptions extends App {
   import scala.concurrent._
   import ExecutionContext.Implicits.global
@@ -176,9 +194,14 @@ object FuturesExceptions extends App {
    //onComplete 回调方式
     case Failure(t) => log(s"Failed due to $t")
   }
+  Thread.sleep(2000)
 
 }
-
+/**
+ * 使用Try类型,有两个子类型:Success类型用于表示成功执行操作结果
+ * 												Failure类型用于表示执行失败的异常对象
+ * 我们可以使用模式匹配功能确定Try对象是那种子类型
+ */
 
 object FuturesTry extends App {
   import scala.util._
