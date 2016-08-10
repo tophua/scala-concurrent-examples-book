@@ -35,17 +35,27 @@ object ParUid extends App {
   import scala.collection._
   import java.util.concurrent.atomic._
   private val uid = new AtomicLong(0L)
-
+/**
+ * 原子变量实现的incrementAndGet方法,使用并行集合,计算数值的唯一标识标
+ */
   val seqtime = timed {
     for (i <- 0 until 10000000) uid.incrementAndGet()
   }
+  //Sequential time 370.134 ms
   log(s"Sequential time $seqtime ms")
 
   val partime = timed {
+    //for循环中使用了并行集合,当调用并行集合中的foreach方法,集合中的元素会以并发方式被处理
+    //这意味着独立的线程同时调用指定的函数,因此必须适当的同步机制.
     for (i <- (0 until 10000000).par) uid.incrementAndGet()
   }
+  //Parallel time 714.495 ms  
   log(s"Parallel time $partime ms")
-
+ /**
+  * 结论这个并行版本的运行速度甚至更慢,该程序的输出结果表明,顺序foreach方法运行时间为370.134毫秒
+  * 而并行foreach方法运行时间为714.495毫秒.
+  * 主要原因:多个线程同时调用了原子变更量uid中的incrementAndGet方法,并且同时向一个内存位置执行写入操作
+  */
 }
 
 
