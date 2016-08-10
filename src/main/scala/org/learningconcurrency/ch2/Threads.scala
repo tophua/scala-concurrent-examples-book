@@ -3,11 +3,6 @@ package ch2
 import org.learningconcurrency._
 import ch2._
 
-
-
-
-
-
 object ThreadsMain extends App {
   //获取当前线程的名称
   val name = Thread.currentThread.getName
@@ -163,19 +158,3 @@ def thread(body: =>Unit):Thread={
     assert(!(x == 1 && y == 1), s"x = $x, y = $y")
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

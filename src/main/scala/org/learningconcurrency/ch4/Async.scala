@@ -7,6 +7,9 @@ import org.learningconcurrency._
 
 /**
  * 异步async
+ * async方法等价Future,它会执行一个异步计算并返回一个Future对象,
+ * await方法会接收一个Future对象,并返回该对象的值,然而与Await对象中的方法不同,awaity方法不会阻塞基础线程
+ * 
  */
 object AsyncBasic extends App {
   import scala.concurrent._
