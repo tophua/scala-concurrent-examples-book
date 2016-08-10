@@ -9,21 +9,24 @@ import ch5._
 
 object ParBasic extends App {
   import scala.collection._
-
+/**
+ * 示例使用Vector类,创建了一个包含500万个数字的Vector对象,然后使用Random类随机方式调整该对象排序
+ * 然后这段程序比较顺序的max方法和并行max方法的运行时间,这两个方法都用寻找整数集中的最大整数
+ */
   val numbers = scala.util.Random.shuffle(Vector.tabulate(5000000)(i => i))
 
   val seqtime = timed {
     val n = numbers.max
     println(s"largest number $n")
   }
-
+//顺序的max方法运行时间为381.411 毫秒
   log(s"Sequential time $seqtime ms")
 
   val partime = timed {
     val n = numbers.par.max
     println(s"largest number $n")
   }
-
+//并行的max方法的运行293.74 毫秒
   log(s"Parallel time $partime ms")
 }
 
