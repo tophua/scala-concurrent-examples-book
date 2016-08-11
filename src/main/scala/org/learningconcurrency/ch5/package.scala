@@ -15,7 +15,9 @@ package object ch5 {
     val end = System.nanoTime //记录执行完body后的时候
     ((end - start) / 1000) / 1000.0 //计算两个时间的差值
   }
-
+/**
+ * 在JVM测量其运行时间前,运行代码块N次,我们将N设置默认值200,尽管我们无法确定执行代码块200次之后JVM是否达到了稳定状态
+ */
   def warmedTimed[T](times: Int = 200)(body: =>T): Double = {
     for (_ <- 0 until times) body
     timed(body)

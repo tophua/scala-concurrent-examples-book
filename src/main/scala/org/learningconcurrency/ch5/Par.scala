@@ -91,7 +91,11 @@ object ParConfig extends App {
   }
   log(s"Parallel time $partime ms")  
 }
-
+/**
+ * 假设我们要查明TEXTAREA标记在Html文件中的作用,你可以编写一个程序 ,下载HTML规范文档并搜索第一个出现的TEXTAREA字符串 
+ * getHtmlSpec方法通过异步计算操作下载HTML规范,然后返回由HTML规范内容完善的Future对象,之后向该对象添加一个回调函数
+ * 一旦获得了HTML规范的内容后,就可以调用Future对象中的indexWhere方法,找到与正则表达式".*TEXTAREA.*"匹配的行
+ */
 
 object ParHtmlSpecSearch extends App {
   import scala.concurrent._
@@ -106,28 +110,43 @@ object ParHtmlSpecSearch extends App {
 
   getHtmlSpec() foreach { case specDoc =>
     log(s"Download complete!")
-
+    //GenSeq顺序和并发子类型,这样做使用该程序的顺序和并行版本的运行.
     def search(d: GenSeq[String]) = warmedTimed() {
       d.indexWhere(line => line.matches(".*TEXTAREA.*"))
     }
 
     val seqtime = search(specDoc)
+    //Sequential time 3.711 ms
     log(s"Sequential time $seqtime ms")
 
     val partime = search(specDoc.par)
+    //Parallel time 2.539 ms
     log(s"Parallel time $partime ms")
   }
-
+  /**
+   * 运行三次时间分别:3.729 ms,2.419 ms,3.711,2.539 
+   * 得出JVM已经达到稳定状态的错误结论,实际上在JVM适当优化该程序之前,我们应该运行该程序更多的次数
+   * 
+   * 
+   */
+Thread.sleep(5000)
 }
 
-
+/**
+ * 非并行化集合,调用非可并行化集合中的par方法,需要将它们的元素复制到新集合中
+ */
 object ParNonParallelizableCollections extends App {
   import scala.collection._
-
+ //调用List集合中的par方法时,需要将List集合中的元素复制到Vector集合中
   val list = List.fill(1000000)("")
   val vector = Vector.fill(1000000)("")
   log(s"list conversion time: ${timed(list.par)} ms")
   log(s"vector conversion time: ${timed(vector.par)} ms")
+  /**
+   * 结论:从顺序集合向并行集合的转换操作本向不是并行,而且有可能成为性能瓶颈
+   * main: list conversion time: 206.077 ms
+	 * main: vector conversion time: 0.053 ms
+   */
 }
 
 
