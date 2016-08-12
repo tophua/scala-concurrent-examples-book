@@ -19,7 +19,11 @@ object ConcurrentWrong extends App {
   
   def getUrlSpec(): Future[Seq[String]] = Future {
     val f = Source.fromURL("http://www.w3.org/Addressing/URL/url-spec.txt")
-    try f.getLines.toList finally f.close()
+    try{
+      f.getLines.toList 
+    }finally{
+      f.close()
+    }
   }
   def intersection(a: GenSet[String], b: GenSet[String]): GenSet[String] = {
     val result = new mutable.HashSet[String]
