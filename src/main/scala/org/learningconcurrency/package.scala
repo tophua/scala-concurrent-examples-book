@@ -1,9 +1,5 @@
 package org
 
-
-
-
-
 package object learningconcurrency {
 
   def log(msg: String) {

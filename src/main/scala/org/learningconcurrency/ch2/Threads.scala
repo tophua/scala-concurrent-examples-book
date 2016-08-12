@@ -60,14 +60,6 @@ object ThreadsSleep extends App {
 
 object ThreadsNondeterminism extends App {
   
-def thread(body: =>Unit):Thread={
-  
-  val t=new Thread{
-    override def run()=body
-  }
-  t.start()
-  t
-}
   val t = thread { log("New thread running.") }
   log("...")
   log("...")
@@ -79,33 +71,17 @@ def thread(body: =>Unit):Thread={
 
 object ThreadsCommunicate extends App {
     
-def thread(body: =>Unit):Thread={
-  
-  val t=new Thread{
-    override def run()=body
-  }
-  t.start()
-  t
-}
   var result: String = null
   val t = thread { result = "\nTitle\n" + "=" * 5 }
   t.join()
   log(result)
 }
 
-
+/***
+ * 线程不安全访问
+ */
 object ThreadsUnprotectedUid extends App {
-  
-def thread(body: =>Unit):Thread={
-  
-  val t=new Thread{
-    override def run()=body
-  }
-  t.start()
-  t
-}
   var uidCount = 0L
-
   def getUniqueId() = {
     val freshUid = uidCount + 1
     uidCount = freshUid
@@ -113,29 +89,24 @@ def thread(body: =>Unit):Thread={
   }
 
   def printUniqueIds(n: Int): Unit = {
+    //yield产生数组
     val uids = for (i <- 0 until n) yield getUniqueId()
     log(s"Generated uids: $uids")
   }
-
+  //线程处理
   val t = thread {
     printUniqueIds(5)
   }
+  //main处理
+  
   printUniqueIds(5)
   t.join()
-
+  //printUniqueIds(5)
 }
 
 
 object ThreadSharedStateAccessReordering extends App {
     
-def thread(body: =>Unit):Thread={
-  
-  val t=new Thread{
-    override def run()=body
-  }
-  t.start()
-  t
-}
   for (i <- 0 until 100000) {
     var a = false
     var b = false

@@ -13,10 +13,10 @@ import ch6._
 object CompositionMapAndFilter extends App {
   import rx.lang.scala._
   import scala.concurrent.duration._
-
+ //创建被观察者时
   val odds = Observable.interval(0.5.seconds).filter(_ % 2 == 1).map(n => s"odd number $n").take(5)
   odds.subscribe(log _, e => log(s"unexpected $e"), () => log("no more odds"))
-
+//yield 会把当前的元素记下来，保存在集合中，循环结束后将返回该集合
   val evens = for (n <- Observable.from(0 until 9); if n % 2 == 0) yield s"even number $n"
   evens.subscribe(log _)
 
