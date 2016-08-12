@@ -38,9 +38,9 @@ object AsyncHappy extends App {
     //该代码首先等待 task1 的结果，然后同时创建 task2 和 task3 future，并等待两个任务依次返回 future，最后等待 task4 的结果
     val future2 = task2(v1)
     val future3 = task3(v1)
-    val v2 = Await.result(future2, Duration.Inf)
-    val v3 = Await.result(future3, Duration.Inf)
-    val v4 = Await.result(task4(v2 + v3), Duration.Inf)
+    val v2 = Await.result(future2, Duration.Inf)//Duration.Inf 无线期等待
+    val v3 = Await.result(future3, Duration.Inf)//Duration.Inf 无线期等待
+    val v4 = Await.result(task4(v2 + v3), Duration.Inf)//Duration.Inf 无线期等待
     /**
      * 最后 3 行（创建和设置 result）使得该方法能够返回一个 Future[Int]。
      * 返回该 future，让此方法与我接下来展示的非阻塞形式一致，但该 future 将在该方法返回之前完成
@@ -92,7 +92,7 @@ object AsyncHappy extends App {
   def timeComplete(f: () => Future[Int], name: String) {
     println("Starting " + name)
     val start = System.currentTimeMillis
-    val result = Await.result(f(), Duration.Inf)
+    val result = Await.result(f(), Duration.Inf)//Duration.Inf 无线期等待,如果为负数没有等待完成
     val time = System.currentTimeMillis - start
     println(name + " returned " + result + " in " + time + " ms.")
   }

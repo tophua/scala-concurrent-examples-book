@@ -15,8 +15,10 @@ import scala.util.Success
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Promise
 /**
- * JVM 并发性: Scala 中的异步事件处理
+ * JVM 并发性: Scala 中的异步事件处理,
  * http://www.ibm.com/developerworks/cn/java/j-jvmc4/
+ * 
+ * Unhappy不恰当的;
  */
 object AsyncUnhappy extends App {
   import ExecutionContext.Implicits.global
@@ -31,12 +33,12 @@ object AsyncUnhappy extends App {
   def runBlocking() = {
     val result = Promise[Int]
     try {
-      val v1 = Await.result(task1(1), Duration.Inf)
+      val v1 = Await.result(task1(1), Duration.Inf)//Duration.Inf 无线期等待
       val future2 = task2(v1)
       val future3 = task3(v1)
-      val v2 = Await.result(future2, Duration.Inf)
-      val v3 = Await.result(future3, Duration.Inf)
-      val v4 = Await.result(task4(v2 + v3), Duration.Inf)
+      val v2 = Await.result(future2, Duration.Inf)//Duration.Inf 无线期等待
+      val v3 = Await.result(future3, Duration.Inf)//Duration.Inf 无线期等待
+      val v4 = Await.result(task4(v2 + v3), Duration.Inf)//Duration.Inf 无线期等待
       result.success(v4)
     } catch {
       case t: Throwable => result.failure(t)
