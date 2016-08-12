@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src/main/scala/org/learningconcurrency"/>
+	<classpathentry kind="src" path="src/main/scala/org/learningconcurrency">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry excluding="org/" kind="src" path="src/main/scala"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/commons-io-2.4.jar"/>
