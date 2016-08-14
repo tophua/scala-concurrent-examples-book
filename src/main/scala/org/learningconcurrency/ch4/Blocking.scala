@@ -4,11 +4,13 @@ package ch4
 import org.learningconcurrency._
 
 /**
+ * 
  * Future对象和阻塞操作,
  * Await对象result和ready都会阻塞线程
  * ready方法会阻塞调用者线程,直到指定的Future对象完善为止
  * result方法会阻塞调用者线程,但是如果Future对象已经被成功完善,那么该方法就会返回Future对象的完善值
  * 如果完善Future对象操作执行失败了,那么方法会将异常赋予Future对象.
+ * 
  */
 
 object BlockingAwait extends App {
