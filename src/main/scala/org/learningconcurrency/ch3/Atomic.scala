@@ -3,11 +3,15 @@ package ch3
 
 import org.learningconcurrency._
 import ch3._
-
+/**
+ * 原子变量
+ */
 object AtomicUid extends App {
   import java.util.concurrent.atomic._
+  //原子变量初始化为0
   private val uid = new AtomicLong(0L)
-
+ //incrementAndGet方法是一个复杂的可线性操作,它会同时读取变量uid值,计算该值加1得到结果,
+ //将结果写回变量uid中,然后返回这个结果
   def getUniqueId(): Long = uid.incrementAndGet()
 
   execute {

@@ -5,12 +5,18 @@ package ch2
 import org.learningconcurrency._
 import ch2._
 
-
+/**
+ * synchronized可以确保线程写入操作的可见性,还可以限制对共享内存区域进行的并发访问,限制访问共享资源的同步机制通常称为锁
+ * 
+ */
 
 object SynchronizedProtectedUid extends App {
 
   var uidCount = 0L
-
+/**
+ * synchronized(同步化)确保了由一个线程执行的同步化代码块不会同时再由其他线程执行,
+ * 还确保了同一个对象(this对象)中的其他同步代码不会被调用.
+ */
   def getUniqueId() = this.synchronized {
     val freshUid = uidCount + 1
     uidCount = freshUid
@@ -29,7 +35,9 @@ object SynchronizedProtectedUid extends App {
   t.join()
 
 }
-
+/**
+ * this.synchronized写入操作都是原子化,而且对对象x执行synchronized语句的所有线程都能够读到其他线程执行这些写入操作的情况
+ */
 
 // we should skip this one
 object SynchronizedSharedStateAccess extends App {
@@ -52,6 +60,9 @@ object SynchronizedSharedStateAccess extends App {
     }
     val t2 = thread {
       Thread.sleep(1)
+     /**
+     * 一个线程的写入操作能够立刻被其他线程读到,要确保其他线程能够读一个线程写入操作的情况,就必须适当使用同步化机制   
+     */
       this.synchronized { t2started = true }
       val t1s = this.synchronized { t1started }
       t1index = if (t1s) 0 else 1
@@ -64,7 +75,7 @@ object SynchronizedSharedStateAccess extends App {
 }
 
 /**
- * 同步
+ * Synchronized嵌套,一个线程可以同时拥有多个对象的监控器
  */
 object SynchronizedNesting extends App {
   import scala.collection._
