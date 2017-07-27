@@ -3,31 +3,31 @@ import org.learningconcurrency._
 import scala.concurrent.Future
 
 /**
- * Èç¹ûËµfuturesÊÇÎªÁËÒ»¸ö»¹Ã»ÓÐ´æÔÚµÄ½á¹û£¬¶øµ±³ÉÒ»ÖÖÖ»¶ÁÕ¼Î»·ûµÄ¶ÔÏóÀàÐÍÈ¥´´½¨£¬
- * ÄÇÃ´promise¾Í±»ÈÏÎªÊÇÒ»¸ö¿ÉÐ´µÄ£¬¿ÉÒÔÊµÏÖÒ»¸öfutureµÄµ¥Ò»¸³ÖµÈÝÆ÷,
- * promiseÍ¨¹ýÕâÖÖsuccess·½·¨¿ÉÒÔ³É¹¦È¥ÊµÏÖÒ»¸ö´øÓÐÖµµÄfuture. 
+ * å¦‚æžœè¯´futuresæ˜¯ä¸ºäº†ä¸€ä¸ªè¿˜æ²¡æœ‰å­˜åœ¨çš„ç»“æžœï¼Œè€Œå½“æˆä¸€ç§åªè¯»å ä½ç¬¦çš„å¯¹è±¡ç±»åž‹åŽ»åˆ›å»ºï¼Œ
+ * é‚£ä¹ˆpromiseå°±è¢«è®¤ä¸ºæ˜¯ä¸€ä¸ªå¯å†™çš„ï¼Œå¯ä»¥å®žçŽ°ä¸€ä¸ªfutureçš„å•ä¸€èµ‹å€¼å®¹å™¨,
+ * promiseé€šè¿‡è¿™ç§successæ–¹æ³•å¯ä»¥æˆåŠŸåŽ»å®žçŽ°ä¸€ä¸ªå¸¦æœ‰å€¼çš„future. 
  */
 object PromisesCreate extends App {
   /**
-   * ´´½¨Promisesc¶ÔÏó
+   * åˆ›å»ºPromisescå¯¹è±¡
    */
   import scala.concurrent._
   import ExecutionContext.Implicits.global
 
-  val p = Promise[String]//´æ´¢×Ö·û´®
+  val p = Promise[String]//å­˜å‚¨å­—ç¬¦ä¸²
   val q = Promise[String]
-  //Promise¶ÔÏóp¹ØÁªfuture¶ÔÏóÖÐ,Ìí¼ÓÁË»Øµ÷º¯Êýforeach
+  //Promiseå¯¹è±¡på…³è”futureå¯¹è±¡ä¸­,æ·»åŠ äº†å›žè°ƒå‡½æ•°foreach
   p.future.foreach {
     case text => log(s"Promise p succeeded with '$text'")
   }
-  //µÈ´ý1ÃëÊ±¼ä,ÔÚÍ¨¹ýµ÷ÓÃsuccess·½·¨ÍêÉÆ¶ÔÏópÖ®Ç°,¸Ã»Øµ÷º¯Êý²»»á±»µ÷ÓÃ
+  //ç­‰å¾…1ç§’æ—¶é—´,åœ¨é€šè¿‡è°ƒç”¨successæ–¹æ³•å®Œå–„å¯¹è±¡pä¹‹å‰,è¯¥å›žè°ƒå‡½æ•°ä¸ä¼šè¢«è°ƒç”¨
   Thread.sleep(1000)
   p.success("kept")
-  //trySuccess·Ö±ð¶ÔÓ¦success·½·¨,¸Ã·½·¨½ö»á·µ»Ø±íÃ÷¸Ã¸³Öµ²Ù×÷ÊÇ·ñ³É¹¦µÄ²¼¶ûÖµ
+  //trySuccessåˆ†åˆ«å¯¹åº”successæ–¹æ³•,è¯¥æ–¹æ³•ä»…ä¼šè¿”å›žè¡¨æ˜Žè¯¥èµ‹å€¼æ“ä½œæ˜¯å¦æˆåŠŸçš„å¸ƒå°”å€¼
   val secondAttempt = p.trySuccess("kept again")
 
   log(s"Second attempt to complete the same promise went well? $secondAttempt")
-  //q¹ØÁªµÄfuture¶ÔÏóÖ´ÐÐÖ´ÐÐÍêÉÆ²Ù×÷Ê§°ÜµÄÇé¿ö,²¢ÔÚ¸Ãfuture¶ÔÏóÖÐÌí¼ÓÁË»Øµ÷º¯Êýfailed foreach 
+  //qå…³è”çš„futureå¯¹è±¡æ‰§è¡Œæ‰§è¡Œå®Œå–„æ“ä½œå¤±è´¥çš„æƒ…å†µ,å¹¶åœ¨è¯¥futureå¯¹è±¡ä¸­æ·»åŠ äº†å›žè°ƒå‡½æ•°failed foreach 
   q.failure(new Exception("not kept"))
   q.future.failed.foreach {
     case t => log(s"Promise q failed with $t")
@@ -36,21 +36,21 @@ object PromisesCreate extends App {
 }
 
 /**
- * ×Ô¶¨Òå·½·¨Òì²½¼ÆËã
+ * è‡ªå®šä¹‰æ–¹æ³•å¼‚æ­¥è®¡ç®—
  */
 object PromisesCustomAsync extends App {
   import scala.concurrent._
   import ExecutionContext.Implicits.global
   import scala.util.control.NonFatal
 /**
- * myFuture·½·¨½ÓÊÕÒ»¸öÃûÎªbodyµÄÃüÃû²ÎÊý,¸Ã²ÎÊýÊÇÍ¨¹ýÒì²½¼ÆËã»ñµÃ
- * Ê×ÏÈ³ÌÐò»á´´½¨Ò»¸öPromise¶ÔÏó,È»ºó,Ëü»áÔÚglobalÖ´ÐÐÉÏÏÂÎÄÖÐÖ´ÐÐÒ»¸öÒì²½¼ÆËã²Ù×÷
- * ¸Ã¼ÆËã²Ù×÷»á»ñµÃbodyµÄÖµ²¢ÍêÉÆPromise¶ÔÏó,Èç¹ûbodyµÄ´úÂëÖ÷ÌåÅ×³öÁËÒ»¸ö·ÇÖÂÃüÒì³£,
- * ¸ÃÒì²½¼ÆËã²Ù×÷»áÒòÕâ¸öÒì³£¶øÎÞ·¨ÍêÉÆPromise¶ÔÏó,
- * Í¬Ê±myFuture·½·¨»áÔÚ¸ÃÒì²½¼ÆËã²Ù×÷¿ªÊ¼Ö´ÐÐºó, Á¢¼´·µ»ØFuture¶ÔÏó.
+ * myFutureæ–¹æ³•æŽ¥æ”¶ä¸€ä¸ªåä¸ºbodyçš„å‘½åå‚æ•°,è¯¥å‚æ•°æ˜¯é€šè¿‡å¼‚æ­¥è®¡ç®—èŽ·å¾—
+ * é¦–å…ˆç¨‹åºä¼šåˆ›å»ºä¸€ä¸ªPromiseå¯¹è±¡,ç„¶åŽ,å®ƒä¼šåœ¨globalæ‰§è¡Œä¸Šä¸‹æ–‡ä¸­æ‰§è¡Œä¸€ä¸ªå¼‚æ­¥è®¡ç®—æ“ä½œ
+ * è¯¥è®¡ç®—æ“ä½œä¼šèŽ·å¾—bodyçš„å€¼å¹¶å®Œå–„Promiseå¯¹è±¡,å¦‚æžœbodyçš„ä»£ç ä¸»ä½“æŠ›å‡ºäº†ä¸€ä¸ªéžè‡´å‘½å¼‚å¸¸,
+ * è¯¥å¼‚æ­¥è®¡ç®—æ“ä½œä¼šå› è¿™ä¸ªå¼‚å¸¸è€Œæ— æ³•å®Œå–„Promiseå¯¹è±¡,
+ * åŒæ—¶myFutureæ–¹æ³•ä¼šåœ¨è¯¥å¼‚æ­¥è®¡ç®—æ“ä½œå¼€å§‹æ‰§è¡ŒåŽ, ç«‹å³è¿”å›žFutureå¯¹è±¡.
  * 
- * ÕâÊÇ³£¼ûÉú³ÉFuture¶ÔÏóµÄÄ£Ê½,ÏÈ´´½¨Promise¶ÔÏó,È»ºóÍ¨¹ýÆäËû¼ÆËã²Ù×÷ÍêÉÆÕâ¸öPromise¶ÔÏó
- * ²¢·µ»ØÏàÓ¦µÄFuture¶ÔÏó,
+ * è¿™æ˜¯å¸¸è§ç”ŸæˆFutureå¯¹è±¡çš„æ¨¡å¼,å…ˆåˆ›å»ºPromiseå¯¹è±¡,ç„¶åŽé€šè¿‡å…¶ä»–è®¡ç®—æ“ä½œå®Œå–„è¿™ä¸ªPromiseå¯¹è±¡
+ * å¹¶è¿”å›žç›¸åº”çš„Futureå¯¹è±¡,
  */
   def myFuture[T](body: =>T): Future[T] = {
     val p = Promise[T]
@@ -79,7 +79,7 @@ object PromisesCustomAsync extends App {
 }
 
 /**
- * ×ª»»»ùÓÚ»Øµ÷º¯ÊýAPI
+ * è½¬æ¢åŸºäºŽå›žè°ƒå‡½æ•°API
  */
 object PromisesAndCallbacks extends App {
   import scala.concurrent._
@@ -88,17 +88,17 @@ object PromisesAndCallbacks extends App {
   import java.io.File
 
   def fileCreated(directory: String): Future[String] = {
-    val p = Promise[String]//´´½¨Ò»¸öPromise¶ÔÏó,È»ºóÍ¨¹ýÒ»Ð©¼ÆËã²Ù×÷ÑÓ³ÙÍêÉÆ¸ÃPromise¶ÔÏóµÄ²Ù×÷
-    //FileAlterationMonitor³äÐí¶©ÔÄÎÄ¼þÏµÍ³ÊÂ¼þ,Èç´´½¨ºÍÉ¾³ýÎÄ¼þÓëÄ¿Â¼
-    //FileAlterationMonitor¶ÔÏó»á¶¨ÆÚÉ¨ÃèÎÄ¼þÏµÍ³,ÒÔ²éÃ÷ÆäÖÐµÄ¸Ä±ä,Ö®ºóÎÒÃÇÐèÒªÔÙ´´½¨Ò»¸öFileAlterationObserver¶ÔÏó
-    //¸Ã¶ÔÏó´ú±í»Øµ÷º¯Êý,µ±Ä³¸öÎÄ¼þÔÚÎÄ¼þÏµÍ³ÖÐ±»´´½¨Ê±,FileAlterationObserver¶ÔÏóÖÐonFileCreate»áµ÷ÓÃ
+    val p = Promise[String]//åˆ›å»ºä¸€ä¸ªPromiseå¯¹è±¡,ç„¶åŽé€šè¿‡ä¸€äº›è®¡ç®—æ“ä½œå»¶è¿Ÿå®Œå–„è¯¥Promiseå¯¹è±¡çš„æ“ä½œ
+    //FileAlterationMonitorå……è®¸è®¢é˜…æ–‡ä»¶ç³»ç»Ÿäº‹ä»¶,å¦‚åˆ›å»ºå’Œåˆ é™¤æ–‡ä»¶ä¸Žç›®å½•
+    //FileAlterationMonitorå¯¹è±¡ä¼šå®šæœŸæ‰«ææ–‡ä»¶ç³»ç»Ÿ,ä»¥æŸ¥æ˜Žå…¶ä¸­çš„æ”¹å˜,ä¹‹åŽæˆ‘ä»¬éœ€è¦å†åˆ›å»ºä¸€ä¸ªFileAlterationObserverå¯¹è±¡
+    //è¯¥å¯¹è±¡ä»£è¡¨å›žè°ƒå‡½æ•°,å½“æŸä¸ªæ–‡ä»¶åœ¨æ–‡ä»¶ç³»ç»Ÿä¸­è¢«åˆ›å»ºæ—¶,FileAlterationObserverå¯¹è±¡ä¸­onFileCreateä¼šè°ƒç”¨
     
     val fileMonitor = new FileAlterationMonitor(1000)
     val observer = new FileAlterationObserver(directory)
     val listener = new FileAlterationListenerAdaptor {
-      //onFileCreate·½·¨»á½ÓÊÕÄ¿Â¼µÄÃû³Æ²¢·µ»ØÒ»¸öFuture¶ÔÏó,¸Ã¶ÔÏóÖÐº¬ÓÐÐÂ½¨Ä¿Â¼ÖÐµÚÒ»¸öÎÄ¼þµÄÃû³Æ
+      //onFileCreateæ–¹æ³•ä¼šæŽ¥æ”¶ç›®å½•çš„åç§°å¹¶è¿”å›žä¸€ä¸ªFutureå¯¹è±¡,è¯¥å¯¹è±¡ä¸­å«æœ‰æ–°å»ºç›®å½•ä¸­ç¬¬ä¸€ä¸ªæ–‡ä»¶çš„åç§°
       override def onFileCreate(file: File) {
-        try p.trySuccess(file.getName)//trySuccess·Ö±ð¶ÔÓ¦success·½·¨,¸Ã·½·¨½ö»á·µ»Ø±íÃ÷¸Ã¸³Öµ²Ù×÷ÊÇ·ñ³É¹¦µÄ²¼¶ûÖµ
+        try p.trySuccess(file.getName)//trySuccessåˆ†åˆ«å¯¹åº”successæ–¹æ³•,è¯¥æ–¹æ³•ä»…ä¼šè¿”å›žè¡¨æ˜Žè¯¥èµ‹å€¼æ“ä½œæ˜¯å¦æˆåŠŸçš„å¸ƒå°”å€¼
         finally fileMonitor.stop()
       }
     }
@@ -109,8 +109,8 @@ object PromisesAndCallbacks extends App {
     p.future
   }
 /**
- * Ê¹ÓÃFuture¶ÔÏó,¶©ÔÄÎÄ¼þÏµÍ³ÖÐµÚÒ»¸ö±»¸Ä±äµÄÎÄ¼þ,fileCreated·½·¨·µ»ØµÄFuture¶ÔÏóÖÐµÄforeach·½·¨
- * ÔÚ±à¼­Æ÷ÖÐ´´½¨Ò»¸öÐÂÎÄ¼þ,²¢¹Û²ì¸Ã³ÌÐò¼ì²âÐÂ½¨ÎÄ¼þµÄ·½Ê½.
+ * ä½¿ç”¨Futureå¯¹è±¡,è®¢é˜…æ–‡ä»¶ç³»ç»Ÿä¸­ç¬¬ä¸€ä¸ªè¢«æ”¹å˜çš„æ–‡ä»¶,fileCreatedæ–¹æ³•è¿”å›žçš„Futureå¯¹è±¡ä¸­çš„foreachæ–¹æ³•
+ * åœ¨ç¼–è¾‘å™¨ä¸­åˆ›å»ºä¸€ä¸ªæ–°æ–‡ä»¶,å¹¶è§‚å¯Ÿè¯¥ç¨‹åºæ£€æµ‹æ–°å»ºæ–‡ä»¶çš„æ–¹å¼.
  */
   fileCreated(".") foreach {
     case filename => log(s"Detected new file '$filename'")
@@ -149,19 +149,19 @@ object PromisesAndTimers extends App {
 
   private val timer = new Timer(true)
 /**
- * ÅÐ¶Ï³¬Ê±ÊÇÒ»ÖÖÎÞ·¨Í¨¹ýFuture¶ÔÏó»ñµÃµÄÊµÓÃ¹¦ÄÜ,
- * ¸Ã·½·¨½ÓÊÕ´ú±íºÁÃëÊýÖµµÄ±äÁ¿t,²¢ÔÚ±äÁ¿tÏÞ¶¨µÄÊ±¼äÄÚ·µ»ØÒÑÍêÉÆµÄFuture¶ÔÏó,
+ * åˆ¤æ–­è¶…æ—¶æ˜¯ä¸€ç§æ— æ³•é€šè¿‡Futureå¯¹è±¡èŽ·å¾—çš„å®žç”¨åŠŸèƒ½,
+ * è¯¥æ–¹æ³•æŽ¥æ”¶ä»£è¡¨æ¯«ç§’æ•°å€¼çš„å˜é‡t,å¹¶åœ¨å˜é‡té™å®šçš„æ—¶é—´å†…è¿”å›žå·²å®Œå–„çš„Futureå¯¹è±¡,
  * 
  */
   def timeout(millis: Long): Future[Unit] = {
-    val p = Promise[Unit]//Ê×ÏÈ´´½¨Promise¶ÔÏó,ÔÙÃ»ÓÐÍêÉÆÖ®Ç°,¸Ã¶ÔÏóÖÐº¬ÓÐµÄÐÅÏ¢¶¼ÊÇÃ»ÓÐÒâÒåµÄ
+    val p = Promise[Unit]//é¦–å…ˆåˆ›å»ºPromiseå¯¹è±¡,å†æ²¡æœ‰å®Œå–„ä¹‹å‰,è¯¥å¯¹è±¡ä¸­å«æœ‰çš„ä¿¡æ¯éƒ½æ˜¯æ²¡æœ‰æ„ä¹‰çš„
     timer.schedule(new TimerTask {
-     //Í¨¹ýTimerTaskµ÷ÓÃTimeÀàÖÐµÄschedule·½·¨,TimerTask¶ÔÏó»áÔÚ±äÁ¿tÏÞ¶¨µÄÊ±¼äÄÚÍêÉÆPromise¶ÔÏóp
+     //é€šè¿‡TimerTaskè°ƒç”¨Timeç±»ä¸­çš„scheduleæ–¹æ³•,TimerTaskå¯¹è±¡ä¼šåœ¨å˜é‡té™å®šçš„æ—¶é—´å†…å®Œå–„Promiseå¯¹è±¡p
       def run() = p success ()
     }, millis)
     p.future
   }
-//ÓÉtimeout·½·¨·µ»ØµÄFuture¶ÔÏó¿ÉÓÃÓÚÌí¼Ó»Øµ÷º¯Êý»òÕßÍ¨¹ý×éºÏ×ÓÓëÆäËûFuture¶ÔÏó×éºÏ
+//ç”±timeoutæ–¹æ³•è¿”å›žçš„Futureå¯¹è±¡å¯ç”¨äºŽæ·»åŠ å›žè°ƒå‡½æ•°æˆ–è€…é€šè¿‡ç»„åˆå­ä¸Žå…¶ä»–Futureå¯¹è±¡ç»„åˆ
   val f = timeout(1000).map(_ => "timeout!") or Future {
     Thread.sleep(999)
     "work completed!"

@@ -13,11 +13,11 @@ import scala.collection.convert.decorateAsScala._
 import org.apache.commons.io.FileUtils
 
 /***
- * ÎÄ¼şÏµÍ³API±ØĞëÄÜ¹»×öµ½ÒÔÏÂÁĞ¼¸µã:
- * 1)µ±Ä³¸öÏß³Ì´´½¨ĞÂÎÄ¼şÊ±,½«¸ÃÎÄ¼şÉèÖÃÎŞ·¨¸´ÖÆºÍÉ¾³ı
- * 2)µ±Ò»¸ö»ò¶à¸öÏß³ÌÕıÔÚ¸´ÖÆÎÄ¼şÊ±,½«¸ÃÎÄ¼şÉèÖÃÎªÎŞ·¨É¾³ı
- * 3)µ±Ä³¸öÏß³ÌÉ¾³ıÄ³¸öÎÄ¼şÊ±,½«¸ÃÎÄ¼şÉèÖÃÎªÎŞ·¨¸´ÖÆ
- * 4)ÔÚÎÄ¼ş¹ÜÀíÖĞÍ¬Ò»Ê±¿ÌÖ»ÄÜÓÉµ¥¸öÏß³ÌÉ¾³ıÎÄ¼ş
+ * æ–‡ä»¶ç³»ç»ŸAPIå¿…é¡»èƒ½å¤Ÿåšåˆ°ä»¥ä¸‹åˆ—å‡ ç‚¹:
+ * 1)å½“æŸä¸ªçº¿ç¨‹åˆ›å»ºæ–°æ–‡ä»¶æ—¶,å°†è¯¥æ–‡ä»¶è®¾ç½®æ— æ³•å¤åˆ¶å’Œåˆ é™¤
+ * 2)å½“ä¸€ä¸ªæˆ–å¤šä¸ªçº¿ç¨‹æ­£åœ¨å¤åˆ¶æ–‡ä»¶æ—¶,å°†è¯¥æ–‡ä»¶è®¾ç½®ä¸ºæ— æ³•åˆ é™¤
+ * 3)å½“æŸä¸ªçº¿ç¨‹åˆ é™¤æŸä¸ªæ–‡ä»¶æ—¶,å°†è¯¥æ–‡ä»¶è®¾ç½®ä¸ºæ— æ³•å¤åˆ¶
+ * 4)åœ¨æ–‡ä»¶ç®¡ç†ä¸­åŒä¸€æ—¶åˆ»åªèƒ½ç”±å•ä¸ªçº¿ç¨‹åˆ é™¤æ–‡ä»¶
  */
 
 object FileSystemTest extends App {
@@ -35,64 +35,64 @@ object FileSystemTest extends App {
 
 
 class FileSystem(val root: String) {
-//Ò»¸öÃûloggerµÄ¶ÀÁ¢ÊØ»¤Ïß³Ì
+//ä¸€ä¸ªåloggerçš„ç‹¬ç«‹å®ˆæŠ¤çº¿ç¨‹
   val logger = new Thread {
     setDaemon(true)
     override def run() {
       while (true) {
         /**
-         * µ÷ÓÃtake·½·¨ÊÇ³ö¶Ó²Ù×÷µÄ×èÈû°æ±¾,Ëü»á×èÖ¹Ïß³Ìloggerµ÷ÓÃËü,Ö±µ½¶ÓÁĞÖĞº¬ÓĞÏûÏ¢ÎªÖ¹.
-         * µ÷ÓÃtakeºó,Ïß³Ìlogger»áÍ¨¹ıµ÷ÓÃlog·½·¨Êä³öÏûÏ¢.
+         * è°ƒç”¨takeæ–¹æ³•æ˜¯å‡ºé˜Ÿæ“ä½œçš„é˜»å¡ç‰ˆæœ¬,å®ƒä¼šé˜»æ­¢çº¿ç¨‹loggerè°ƒç”¨å®ƒ,ç›´åˆ°é˜Ÿåˆ—ä¸­å«æœ‰æ¶ˆæ¯ä¸ºæ­¢.
+         * è°ƒç”¨takeå,çº¿ç¨‹loggerä¼šé€šè¿‡è°ƒç”¨logæ–¹æ³•è¾“å‡ºæ¶ˆæ¯.
          */
         val msg = messages.take() 
         log(msg)
       }
     }
   }
-//Ò»µ©mainÏß³ÌÖÕÖ¹ÔËĞĞºó,loggerÏß³ÌÒ²»á×Ô¶¯Í£Ö¹ÔËĞĞ
+//ä¸€æ—¦mainçº¿ç¨‹ç»ˆæ­¢è¿è¡Œå,loggerçº¿ç¨‹ä¹Ÿä¼šè‡ªåŠ¨åœæ­¢è¿è¡Œ
   logger.start()
 /**
- * LinkedBlockingQueue Ò»¸öÓÉÁ´½Ó½ÚµãÖ§³ÖµÄ¿ÉÑ¡ÓĞ½ç¶ÓÁĞ
- * ¸Ã¶ÓÁĞÉùÃ÷ÎªmessagesµÄË½ÓĞ±äÁ¿,
+ * LinkedBlockingQueue ä¸€ä¸ªç”±é“¾æ¥èŠ‚ç‚¹æ”¯æŒçš„å¯é€‰æœ‰ç•Œé˜Ÿåˆ—
+ * è¯¥é˜Ÿåˆ—å£°æ˜ä¸ºmessagesçš„ç§æœ‰å˜é‡,
  */
   private val messages = new LinkedBlockingQueue[String]
 /**
- * messages·½·¨½ö»áµ÷ÓÃ¶ÓÁĞmessagesÖĞµÄoffer,Ò²¿ÉÒÔÊ¹ÓÃadd»òÕßput·½·¨,ÒòÎªÕâ¸ö¶ÓÁĞÊÇÎŞ½çµÄ
- * ËùÒÔÕâĞ©·½·¨ÓÀÔ¶¶¼²»»áÅ×³öÒì³£»òÕß×èÈûµ÷ÓÃËüÃÇµÄÏß³Ì
+ * messagesæ–¹æ³•ä»…ä¼šè°ƒç”¨é˜Ÿåˆ—messagesä¸­çš„offer,ä¹Ÿå¯ä»¥ä½¿ç”¨addæˆ–è€…putæ–¹æ³•,å› ä¸ºè¿™ä¸ªé˜Ÿåˆ—æ˜¯æ— ç•Œçš„
+ * æ‰€ä»¥è¿™äº›æ–¹æ³•æ°¸è¿œéƒ½ä¸ä¼šæŠ›å‡ºå¼‚å¸¸æˆ–è€…é˜»å¡è°ƒç”¨å®ƒä»¬çš„çº¿ç¨‹
  */
   def logMessage(msg: String): Unit = messages.add(msg)
-//±íÊ¾ÌØÕ÷µÄ×´Ì¬
+//è¡¨ç¤ºç‰¹å¾çš„çŠ¶æ€
   sealed trait State
-//¿ÕÏĞ
+//ç©ºé—²
   class Idle extends State
-//ÕıÔÚ´´½¨ 
+//æ­£åœ¨åˆ›å»º 
   class Creating extends State
-//ÕıÔÚ¸´ÖÆ×´Ì¬ÖĞ,×Ö¶În»¹»á×·×Ùµ±Ç°ÒÔ²¢·¢·½Ê½ÕıÔÚÖ´ĞĞµÄ¸´ÖÆ²Ù×÷µÄÊıÁ¿
+//æ­£åœ¨å¤åˆ¶çŠ¶æ€ä¸­,å­—æ®µnè¿˜ä¼šè¿½è¸ªå½“å‰ä»¥å¹¶å‘æ–¹å¼æ­£åœ¨æ‰§è¡Œçš„å¤åˆ¶æ“ä½œçš„æ•°é‡
   class Copying(val n: Int) extends State
-//ÕıÔÚÉ¾³ı
+//æ­£åœ¨åˆ é™¤
   class Deleting extends State
-//isDir×Ö¶Î±íÃ÷ÁËÏàÓ¦µÄ¶ÔÏóÊÇÎÄ¼ş»¹ÊÇÄ¿Â¼,
+//isDirå­—æ®µè¡¨æ˜äº†ç›¸åº”çš„å¯¹è±¡æ˜¯æ–‡ä»¶è¿˜æ˜¯ç›®å½•,
   class Entry(val isDir: Boolean) {
-    //AtomicReferenceÔò¶ÔÓ¦ÆÕÍ¨µÄ¶ÔÏóÒıÓÃ,Ò²¾ÍÊÇËü¿ÉÒÔ±£Ö¤ÄãÔÚĞŞ¸Ä¶ÔÏóÒıÓÃÊ±µÄÏß³Ì°²È«ĞÔ¡£
+    //AtomicReferenceåˆ™å¯¹åº”æ™®é€šçš„å¯¹è±¡å¼•ç”¨,ä¹Ÿå°±æ˜¯å®ƒå¯ä»¥ä¿è¯ä½ åœ¨ä¿®æ”¹å¯¹è±¡å¼•ç”¨æ—¶çš„çº¿ç¨‹å®‰å…¨æ€§ã€‚
     val state = new AtomicReference[State](new Idle)
   }
-//¸Ã²¢·¢Ó³Éäº¬ÓĞÂ·¾¶ºÍÏàÓ¦µÄEntry¶ÔÏó,´´½¨ÁËFileSystem¶ÔÏóºó,²¢·¢Map¾Í»á±»Ìí¼ÓÊı¾İ
+//è¯¥å¹¶å‘æ˜ å°„å«æœ‰è·¯å¾„å’Œç›¸åº”çš„Entryå¯¹è±¡,åˆ›å»ºäº†FileSystemå¯¹è±¡å,å¹¶å‘Mapå°±ä¼šè¢«æ·»åŠ æ•°æ®
   val files: concurrent.Map[String, Entry] =
     //new ConcurrentHashMap().asScala
-   new concurrent.TrieMap()//TrieMapÈ·±£Ö´ĞĞÉ¾³ı»ò¸´ÖÆÎÄ¼ş²Ù×÷µÄÏß³Ì,ÎŞ·¨¸ÉÈÅÖ´ĞĞ¶ÁÈ¡ÎÄ¼ş²Ù×÷µÄÏß³Ì
- //iterateFiles µÚ¶ş¸ö²ÎÊı¹ıÂËÆ÷£¬µÚÈı¸ö²ÎÊıÊÇ·ñµİ¹é
+   new concurrent.TrieMap()//TrieMapç¡®ä¿æ‰§è¡Œåˆ é™¤æˆ–å¤åˆ¶æ–‡ä»¶æ“ä½œçš„çº¿ç¨‹,æ— æ³•å¹²æ‰°æ‰§è¡Œè¯»å–æ–‡ä»¶æ“ä½œçš„çº¿ç¨‹
+ //iterateFiles ç¬¬äºŒä¸ªå‚æ•°è¿‡æ»¤å™¨ï¼Œç¬¬ä¸‰ä¸ªå‚æ•°æ˜¯å¦é€’å½’
   for (file <- FileUtils.iterateFiles(new File(root), null, false).asScala) {
-    //asScala·½·¨ÄÜ¹»È·±£java¼¯ºÏ¿ÉÒÔ»ñµÃscala¼¯ºÏAPI.
-    files.put(file.getName, new Entry(false))//ÎÄ¼şÃûºÍÊµÌå¶ÔÏó(false)ÎÄ¼ş
+    //asScalaæ–¹æ³•èƒ½å¤Ÿç¡®ä¿javaé›†åˆå¯ä»¥è·å¾—scalaé›†åˆAPI.
+    files.put(file.getName, new Entry(false))//æ–‡ä»¶åå’Œå®ä½“å¯¹è±¡(false)æ–‡ä»¶
   }
 /**
- * prepareForDelete·½·¨»áÏÈ¶ÁÈ¡Ô­×Ó±äÁ¿µÄstateµÄÒıÓÃ,È»ºó½«¸ÃÖµ´æ´¢µ½¾Ö²¿±äÁ¿S0ÖĞ.
- * Ö®ºó¸Ã·½·¨»á¼ì²é¾Ö²¿±äÁ¿s0µÄÖµÊÇ·ñÎªIdle,²¢³¢ÊÔÒÔÔ­×Ó´¦Àí·½Ê½½«¸ÃÖµ¸ü¸ÄÎªDeleting
- * µ±ÁíÒ»¸öÏß³ÌÕıÔÚ´´½¨»ò¸´ÖÆ¸ÃÎÄ¼şÊ±,¾ÍÎŞ·¨¸´ÖÆÕâ¸öÎÄ¼ş,Òò´Ë¸ÃÎÄ¼ş¹ÜÀíÆ÷±¨¸æ´íÎó²¢·µ»Øfalse
- * Èç¹ûÁíÒ»¸öÏß³ÌÒÑ¾­É¾³ıÁËÕâ¸öÎÄ¼ş,ÄÇÃ´¸ÃÎÄ¼ş¹ÜÀíÆ÷½ö»á·µ»Øfalse
- * Ô­×Ó±äÁ¿Stats×÷ÓÃ¾ÍÏñËøÒ»Ñù,¾¡¹ÜËü¼´Ã»ÓĞ×èÈû ÆäËûÏß³ÌÒ²Ã»ÓĞÊ¹ÓÃÆäËûÏß³Ì´¦ÓÚµÈ´ı×´Ì¬,Èç¹ûprepareForDelete·µ»Øtrue
- * ¾ÍËµÃ÷ÎÒÃÇ¿ÉÒÔÓÃÏß³Ì°²È«É¾³ıÕâ¸öÎÄ¼ş,ÒòÎªÎÒÃÇÊ¹ÓÃÏß³ÌÊÇÎ¨Ò»Ò»¸ö½«state±äÁ¿µÄÖµ¸ü¸ÄÎªdeleteµÄÏß³Ì
- * Èç¹ûprepareForDelete·½·¨·µ»Øfalse,ÎÄ¼ş¹ÜÀíÆ÷¾Í»áÔÚUIÖĞ±¨¸æ´íÎó,¶ø²»»á×èÈûÖ´ĞĞÉ¾³ı²Ù×÷µÄÏß³Ì
+ * prepareForDeleteæ–¹æ³•ä¼šå…ˆè¯»å–åŸå­å˜é‡çš„stateçš„å¼•ç”¨,ç„¶åå°†è¯¥å€¼å­˜å‚¨åˆ°å±€éƒ¨å˜é‡S0ä¸­.
+ * ä¹‹åè¯¥æ–¹æ³•ä¼šæ£€æŸ¥å±€éƒ¨å˜é‡s0çš„å€¼æ˜¯å¦ä¸ºIdle,å¹¶å°è¯•ä»¥åŸå­å¤„ç†æ–¹å¼å°†è¯¥å€¼æ›´æ”¹ä¸ºDeleting
+ * å½“å¦ä¸€ä¸ªçº¿ç¨‹æ­£åœ¨åˆ›å»ºæˆ–å¤åˆ¶è¯¥æ–‡ä»¶æ—¶,å°±æ— æ³•å¤åˆ¶è¿™ä¸ªæ–‡ä»¶,å› æ­¤è¯¥æ–‡ä»¶ç®¡ç†å™¨æŠ¥å‘Šé”™è¯¯å¹¶è¿”å›false
+ * å¦‚æœå¦ä¸€ä¸ªçº¿ç¨‹å·²ç»åˆ é™¤äº†è¿™ä¸ªæ–‡ä»¶,é‚£ä¹ˆè¯¥æ–‡ä»¶ç®¡ç†å™¨ä»…ä¼šè¿”å›false
+ * åŸå­å˜é‡Statsä½œç”¨å°±åƒé”ä¸€æ ·,å°½ç®¡å®ƒå³æ²¡æœ‰é˜»å¡ å…¶ä»–çº¿ç¨‹ä¹Ÿæ²¡æœ‰ä½¿ç”¨å…¶ä»–çº¿ç¨‹å¤„äºç­‰å¾…çŠ¶æ€,å¦‚æœprepareForDeleteè¿”å›true
+ * å°±è¯´æ˜æˆ‘ä»¬å¯ä»¥ç”¨çº¿ç¨‹å®‰å…¨åˆ é™¤è¿™ä¸ªæ–‡ä»¶,å› ä¸ºæˆ‘ä»¬ä½¿ç”¨çº¿ç¨‹æ˜¯å”¯ä¸€ä¸€ä¸ªå°†stateå˜é‡çš„å€¼æ›´æ”¹ä¸ºdeleteçš„çº¿ç¨‹
+ * å¦‚æœprepareForDeleteæ–¹æ³•è¿”å›false,æ–‡ä»¶ç®¡ç†å™¨å°±ä¼šåœ¨UIä¸­æŠ¥å‘Šé”™è¯¯,è€Œä¸ä¼šé˜»å¡æ‰§è¡Œåˆ é™¤æ“ä½œçš„çº¿ç¨‹
  * 
  */
   @tailrec private def prepareForDelete(entry: Entry): Boolean = {
@@ -100,11 +100,11 @@ class FileSystem(val root: String) {
     s0 match {
       case i: Idle =>
         /**
-         * compareAndSet Èç¹ûµ±Ç°Öµ == Ô¤ÆÚÖµ£¬ÔòÒÔÔ­×Ó·½Ê½½«¸ÃÖµÉèÖÃÎª¸ø¶¨µÄ¸üĞÂÖµ¡£
-         * ²ÎÊı£º
-         * expect - Ô¤ÆÚÖµ
-         * update - ĞÂÖµ
-         * ·µ»Ø£ºÈç¹û³É¹¦£¬Ôò·µ»Ø true¡£·µ»Ø false Ö¸Ê¾Êµ¼ÊÖµÓëÔ¤ÆÚÖµ²»ÏàµÈ¡£
+         * compareAndSet å¦‚æœå½“å‰å€¼ == é¢„æœŸå€¼ï¼Œåˆ™ä»¥åŸå­æ–¹å¼å°†è¯¥å€¼è®¾ç½®ä¸ºç»™å®šçš„æ›´æ–°å€¼ã€‚
+         * å‚æ•°ï¼š
+         * expect - é¢„æœŸå€¼
+         * update - æ–°å€¼
+         * è¿”å›ï¼šå¦‚æœæˆåŠŸï¼Œåˆ™è¿”å› trueã€‚è¿”å› false æŒ‡ç¤ºå®é™…å€¼ä¸é¢„æœŸå€¼ä¸ç›¸ç­‰ã€‚
          */        
         if (entry.state.compareAndSet(s0, new Deleting)) true
         else prepareForDelete(entry)
@@ -119,8 +119,8 @@ class FileSystem(val root: String) {
     }
   }
   /**
-   * prepareForDelete·½·¨Í¨¹ıÔ­×Ó·½Ê½Ëø¶¨ÎÄ¼ş,ÒÔ±ãÖ´ĞĞÉ¾³ı²Ù×÷,È»ºó´Ófiles±äÁ¿´æ´¢µÄ²¢·¢Ó³ÉäÖĞÉ¾³ı¸ÃÎÄ¼ş,
-   * ¿ÉÍ¨¹ıÊµÏÖdeleteFile·½·¨É¾³ıÄ¿Â¼
+   * prepareForDeleteæ–¹æ³•é€šè¿‡åŸå­æ–¹å¼é”å®šæ–‡ä»¶,ä»¥ä¾¿æ‰§è¡Œåˆ é™¤æ“ä½œ,ç„¶åä»fileså˜é‡å­˜å‚¨çš„å¹¶å‘æ˜ å°„ä¸­åˆ é™¤è¯¥æ–‡ä»¶,
+   * å¯é€šè¿‡å®ç°deleteFileæ–¹æ³•åˆ é™¤ç›®å½•
    */
 
   def deleteFile(filename: String): Unit = {
@@ -131,23 +131,23 @@ class FileSystem(val root: String) {
         logMessage(s"Cannot delete - path '$filename' is a directory!")
       case Some(entry) =>
         /**
-         * execute·½·¨Òì²½·½Ê½É¾³ı¸ÃÎÄ¼ş,¸Ã·½·¨²»×èÈûµ÷ÓÃÕßÏß³Ì,Í¨¹ıµ÷ÓÃexecute·½·¨ÔËĞĞµÄ²¢·¢ÈÎÎñ,»áµ÷ÓÃprepareForDelete·½·¨
-         * Èç¹û·µ»Øtrue,ÄÇÃ´µ÷ÓÃdeleteQuietly·½·¨µÄ²Ù×÷¾ÍÊÇ°²È«.
+         * executeæ–¹æ³•å¼‚æ­¥æ–¹å¼åˆ é™¤è¯¥æ–‡ä»¶,è¯¥æ–¹æ³•ä¸é˜»å¡è°ƒç”¨è€…çº¿ç¨‹,é€šè¿‡è°ƒç”¨executeæ–¹æ³•è¿è¡Œçš„å¹¶å‘ä»»åŠ¡,ä¼šè°ƒç”¨prepareForDeleteæ–¹æ³•
+         * å¦‚æœè¿”å›true,é‚£ä¹ˆè°ƒç”¨deleteQuietlyæ–¹æ³•çš„æ“ä½œå°±æ˜¯å®‰å…¨.
          */
         execute {
           if (prepareForDelete(entry)) {
-            //°²È«É¾³ı
+            //å®‰å…¨åˆ é™¤
             if (FileUtils.deleteQuietly(new File(filename)))
-              files.remove(filename)//¸ÃÎÄ¼ş¾Í´Ó±äÁ¿files´æ´¢µÄ²¢·¢MapÖĞÉ¾³ı.
+              files.remove(filename)//è¯¥æ–‡ä»¶å°±ä»å˜é‡fileså­˜å‚¨çš„å¹¶å‘Mapä¸­åˆ é™¤.
           }
         }
     }
   }
 /**
- * Ö»ÓĞµ±ÎÄ¼ş´¦ÓÚIdle»òCopying×´Ì¬Ê±,²ÅÄÜ¶ÔÆäÖ´ĞĞ¸´ÖÆ²Ù×÷,Òò´ËÎÒÃÇĞèÒªÍ¨¹ıÔ­×Ó·½Ê½½«ÎÄ¼ş×´Ì¬´ÓIdleÇĞ»»µ½Copying
- * »òÕßÍ¨¹ıÔöÁ¿Öµn½«ÎÄ¼ş×´Ì¬´ÓÒ»¸öCopying×´Ì¬ÇĞ»»µ½ÁíÒ»¸öCopying×´Ì¬
+ * åªæœ‰å½“æ–‡ä»¶å¤„äºIdleæˆ–CopyingçŠ¶æ€æ—¶,æ‰èƒ½å¯¹å…¶æ‰§è¡Œå¤åˆ¶æ“ä½œ,å› æ­¤æˆ‘ä»¬éœ€è¦é€šè¿‡åŸå­æ–¹å¼å°†æ–‡ä»¶çŠ¶æ€ä»Idleåˆ‡æ¢åˆ°Copying
+ * æˆ–è€…é€šè¿‡å¢é‡å€¼nå°†æ–‡ä»¶çŠ¶æ€ä»ä¸€ä¸ªCopyingçŠ¶æ€åˆ‡æ¢åˆ°å¦ä¸€ä¸ªCopyingçŠ¶æ€
  */
-  @tailrec private def acquire(entry: Entry): Boolean = {//»ñÈ¡acquire
+  @tailrec private def acquire(entry: Entry): Boolean = {//è·å–acquire
     val s0 = entry.state.get
     s0 match {
       case _: Creating | _: Deleting =>
@@ -158,17 +158,17 @@ class FileSystem(val root: String) {
         else acquire(entry)
       case c: Copying =>
         /**
-         * compareAndSet·½·¨×÷ÓÃÊÇÊ×ÏÈ¼ì²éµ±Ç°ÒıÓÃÊÇ·ñµÈÓÚÔ¤ÆÚÒıÓÃ£¬²¢ÇÒµ±Ç°±êÖ¾ÊÇ·ñµÈÓÚÔ¤ÆÚ±êÖ¾£¬Èç¹ûÈ«²¿ÏàµÈ£¬
-         * ÔòÒÔÔ­×Ó·½Ê½½«¸ÃÒıÓÃºÍ¸Ã±êÖ¾µÄÖµÉèÖÃÎª¸ø¶¨µÄ¸üĞÂÖµ
+         * compareAndSetæ–¹æ³•ä½œç”¨æ˜¯é¦–å…ˆæ£€æŸ¥å½“å‰å¼•ç”¨æ˜¯å¦ç­‰äºé¢„æœŸå¼•ç”¨ï¼Œå¹¶ä¸”å½“å‰æ ‡å¿—æ˜¯å¦ç­‰äºé¢„æœŸæ ‡å¿—ï¼Œå¦‚æœå…¨éƒ¨ç›¸ç­‰ï¼Œ
+         * åˆ™ä»¥åŸå­æ–¹å¼å°†è¯¥å¼•ç”¨å’Œè¯¥æ ‡å¿—çš„å€¼è®¾ç½®ä¸ºç»™å®šçš„æ›´æ–°å€¼
          */
         if (entry.state.compareAndSet(s0, new Copying(c.n + 1))) true
         else acquire(entry)
     }
   }
 /**
- * Ïß³ÌÍê³É¸´ÖÆÎÄ¼ş²Ù×÷ºó,¸ÃÏß³Ì±ØĞëÊÍ·ÅCopyingËø,Í¨¹ıÏàÓ¦µÄrelease·½·¨¿ÉÒÔ×öµ½
- * ¸Ã·½·¨¼õÉÙCopying¼ÆÊı»òÕß½«ÎÄ¼ş×´Ì¬¸ü¸ÄÎªIdle,´Ë´¦ÒªµãÊÇ:±ØĞëÔÚ±»¸´ÖÆµÄÎÄ¼ş´´½¨Íê³É.
- * ¸Õ´ÓCreating×´Ì¬ÇĞ»»µ½Idle×´Ì¬ºó¾Íµ÷ÓÃ¸Ã·½·¨
+ * çº¿ç¨‹å®Œæˆå¤åˆ¶æ–‡ä»¶æ“ä½œå,è¯¥çº¿ç¨‹å¿…é¡»é‡Šæ”¾Copyingé”,é€šè¿‡ç›¸åº”çš„releaseæ–¹æ³•å¯ä»¥åšåˆ°
+ * è¯¥æ–¹æ³•å‡å°‘Copyingè®¡æ•°æˆ–è€…å°†æ–‡ä»¶çŠ¶æ€æ›´æ”¹ä¸ºIdle,æ­¤å¤„è¦ç‚¹æ˜¯:å¿…é¡»åœ¨è¢«å¤åˆ¶çš„æ–‡ä»¶åˆ›å»ºå®Œæˆ.
+ * åˆšä»CreatingçŠ¶æ€åˆ‡æ¢åˆ°IdleçŠ¶æ€åå°±è°ƒç”¨è¯¥æ–¹æ³•
  */
   @tailrec private def release(entry: Entry): Unit = {
     val s0 = entry.state.get
@@ -187,7 +187,7 @@ class FileSystem(val root: String) {
     }
   }
 /***
- * ¸Ã·½·¨»á¼ì²éfilesÓ³ÉäÖĞ°üº¬¸ÃÌõÄ¿,ÄÇÃ´copyFile·½·¨¾Í»áÍ¨¹ıÔËĞĞÒ»¸ö²¢·¢¸´ÖÆ¸ÃÌõÄ¿´ú±íµÄÎÄ¼ş
+ * è¯¥æ–¹æ³•ä¼šæ£€æŸ¥filesæ˜ å°„ä¸­åŒ…å«è¯¥æ¡ç›®,é‚£ä¹ˆcopyFileæ–¹æ³•å°±ä¼šé€šè¿‡è¿è¡Œä¸€ä¸ªå¹¶å‘å¤åˆ¶è¯¥æ¡ç›®ä»£è¡¨çš„æ–‡ä»¶
  * 
  */
   def copyFile(src: String, dest: String): Unit = {
@@ -199,20 +199,20 @@ class FileSystem(val root: String) {
       case Some(srcEntry) =>
         execute {
           if (acquire(srcEntry)) try {
-            //acquire»ñÈ¡¸ÃÎÄ¼şµÄ¼à¿ØÆ÷ÒÔ±ãÖ´ĞĞ¸´ÖÆ²Ù×÷,²¢´´½¨Ò»¸ö´ú±ícreating×´Ì¬µÄdestEntryÌõÄ¿
+            //acquireè·å–è¯¥æ–‡ä»¶çš„ç›‘æ§å™¨ä»¥ä¾¿æ‰§è¡Œå¤åˆ¶æ“ä½œ,å¹¶åˆ›å»ºä¸€ä¸ªä»£è¡¨creatingçŠ¶æ€çš„destEntryæ¡ç›®
             val destEntry = new Entry(false)            
             destEntry.state.set(new Creating)
-            //putIfAbsent ·µ»ØÓëÖ¸¶¨¼ü¹ØÁªµÄÒÔÇ°µÄÖµ£¬»òÈç¹ûÃ»ÓĞ¼üÓ³ÉäNone
+            //putIfAbsent è¿”å›ä¸æŒ‡å®šé”®å…³è”çš„ä»¥å‰çš„å€¼ï¼Œæˆ–å¦‚æœæ²¡æœ‰é”®æ˜ å°„None
             /**
-             * putIfAbsent¸Ã·½·¨»á¼ì²éfilesÓ³ÉäÖĞÊÇ·ñº¬ÓĞ´ú±íÎÄ¼şÂ·¾¶destµÄ¼ü
-             * Èç¹ûfilesÓ³ÉäÃ»ÓĞdestºÍdestEntry¼üÖµ¶Ô,¸Ã·½·¨ÏòfilesÌí¼Ó¸ÃÌõÄ¿            
-             * ´Ë¿ÌsrcEntryºÍdestEntryÌõÄ¿¶¼»áËø¶¨,
+             * putIfAbsentè¯¥æ–¹æ³•ä¼šæ£€æŸ¥filesæ˜ å°„ä¸­æ˜¯å¦å«æœ‰ä»£è¡¨æ–‡ä»¶è·¯å¾„destçš„é”®
+             * å¦‚æœfilesæ˜ å°„æ²¡æœ‰destå’ŒdestEntryé”®å€¼å¯¹,è¯¥æ–¹æ³•å‘filesæ·»åŠ è¯¥æ¡ç›®            
+             * æ­¤åˆ»srcEntryå’ŒdestEntryæ¡ç›®éƒ½ä¼šé”å®š,
              */
             if (files.putIfAbsent(dest, destEntry) == None) try {
-              //ÎÄ¼ş¸´ÖÆ
+              //æ–‡ä»¶å¤åˆ¶
               FileUtils.copyFile(new File(src), new File(dest))
-            } finally release(destEntry)//ÊÍ·ÅdestEntry
-          } finally release(srcEntry)//ÊÍ·ÅsrcEntry
+            } finally release(destEntry)//é‡Šæ”¾destEntry
+          } finally release(srcEntry)//é‡Šæ”¾srcEntry
         }
     }
   }

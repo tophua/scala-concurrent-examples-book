@@ -7,7 +7,7 @@ import ch6._
 import scala.reactive._
 
 /**
- * Alternative Ìæ´úµÄ, ±¸Ñ¡
+ * Alternative æ›¿ä»£çš„, å¤‡é€‰
  */
 
 object AkkaStreams extends App {

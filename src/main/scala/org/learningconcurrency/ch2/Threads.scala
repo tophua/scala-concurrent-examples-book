@@ -4,7 +4,7 @@ import org.learningconcurrency._
 import ch2._
 
 object ThreadsMain extends App {
-  //»ñÈ¡µ±Ç°Ïß³ÌµÄÃû³Æ
+  //è·å–å½“å‰çº¿ç¨‹çš„åç§°
   val name = Thread.currentThread.getName
   println(s"I am the thread $name")
 }
@@ -13,7 +13,7 @@ object ThreadsMain extends App {
 object ThreadsStart extends App {
   class MyThread extends Thread {
     /**
-     * Æô¶¯Ïß³Ì
+     * å¯åŠ¨çº¿ç¨‹
      */
     override def run(): Unit = {
       println(s"I am ${Thread.currentThread.getName}")
@@ -29,7 +29,7 @@ object ThreadsStart extends App {
 object ThreadsCreation extends App {
 
  /**
-  *Ïß³Ì´´½¨
+  *çº¿ç¨‹åˆ›å»º
   */
   class MyThread extends Thread {
     override def run(): Unit = {
@@ -40,8 +40,8 @@ object ThreadsCreation extends App {
 
   t.start()
   /**
-   * ½«mainÏß³ÌÇĞ»»µ½µÈ´ı×´Ì¬,Ö±µ½±äÁ¿tÖĞµÄĞÂÏß³ÌÖ´ĞĞÍê±ÏÎªÖ¹,ÖØµãÊÇ´¦ÓÚµÈ´ı×´Ì¬µÄÏß³Ì»á½»³ö´¦ÀíÆ÷¿ØÖÆÈ¨,
-   * OS¿ÉÒÔ½«´¦ÀíÆ÷·ÖÅä¸øÆäËûµÈ´ı¿ÉÔËĞĞÏß³Ì.
+   * å°†mainçº¿ç¨‹åˆ‡æ¢åˆ°ç­‰å¾…çŠ¶æ€,ç›´åˆ°å˜é‡tä¸­çš„æ–°çº¿ç¨‹æ‰§è¡Œå®Œæ¯•ä¸ºæ­¢,é‡ç‚¹æ˜¯å¤„äºç­‰å¾…çŠ¶æ€çš„çº¿ç¨‹ä¼šäº¤å‡ºå¤„ç†å™¨æ§åˆ¶æƒ,
+   * OSå¯ä»¥å°†å¤„ç†å™¨åˆ†é…ç»™å…¶ä»–ç­‰å¾…å¯è¿è¡Œçº¿ç¨‹.
    */
   
   t.join() 
@@ -63,8 +63,8 @@ object ThreadsSleep extends App {
     log("Completed.")
   }
    /**
-   * ½«mainÏß³ÌÇĞ»»µ½µÈ´ı×´Ì¬,Ö±µ½±äÁ¿tÖĞµÄĞÂÏß³ÌÖ´ĞĞÍê±ÏÎªÖ¹,ÖØµãÊÇ´¦ÓÚµÈ´ı×´Ì¬µÄÏß³Ì»á½»³ö´¦ÀíÆ÷¿ØÖÆÈ¨,
-   * OS¿ÉÒÔ½«´¦ÀíÆ÷·ÖÅä¸øÆäËûµÈ´ı¿ÉÔËĞĞÏß³Ì.
+   * å°†mainçº¿ç¨‹åˆ‡æ¢åˆ°ç­‰å¾…çŠ¶æ€,ç›´åˆ°å˜é‡tä¸­çš„æ–°çº¿ç¨‹æ‰§è¡Œå®Œæ¯•ä¸ºæ­¢,é‡ç‚¹æ˜¯å¤„äºç­‰å¾…çŠ¶æ€çš„çº¿ç¨‹ä¼šäº¤å‡ºå¤„ç†å™¨æ§åˆ¶æƒ,
+   * OSå¯ä»¥å°†å¤„ç†å™¨åˆ†é…ç»™å…¶ä»–ç­‰å¾…å¯è¿è¡Œçº¿ç¨‹.
    */
   t.join()
   log("New thread joined.")
@@ -74,7 +74,7 @@ object ThreadsSleep extends App {
 
 object ThreadsNondeterminism extends App {
   /**
-   * logÓï¾ä,ÔÚ±äÁ¿tÏß³ÌÖĞµÄµ÷ÓÃlog·½·¨µÄÓï¾äÖ®Ç°,¿ÉÄÜÖ®ºó³öÏÖ.´ó¶àÊıÏß³Ì·ÇÈ·¶¨
+   * logè¯­å¥,åœ¨å˜é‡tçº¿ç¨‹ä¸­çš„è°ƒç”¨logæ–¹æ³•çš„è¯­å¥ä¹‹å‰,å¯èƒ½ä¹‹åå‡ºç°.å¤§å¤šæ•°çº¿ç¨‹éç¡®å®š
    */
   val t = thread { log("New thread running.") }
   log("...")
@@ -87,8 +87,8 @@ object ThreadsNondeterminism extends App {
 
 object ThreadsCommunicate extends App {
    /**
-    * Ô­·½Ê½Ö´ĞĞ, t.join()±Ë´ËµÈ´ı¶Ô·½Ö±µ½Ö´ĞĞÍê±Ï,½»³ö´¦ÀíÆ÷¿ØÖÆÈ¨Ö®Ç°Ö´ĞĞ,¶Ôresult±äÁ¿Ö´ĞĞµÄ¸³Öµ²Ù×÷.
-    * ËùÒÔresultÓÀÔ¶²»»áÎªnullÖµ
+    * åŸæ–¹å¼æ‰§è¡Œ, t.join()å½¼æ­¤ç­‰å¾…å¯¹æ–¹ç›´åˆ°æ‰§è¡Œå®Œæ¯•,äº¤å‡ºå¤„ç†å™¨æ§åˆ¶æƒä¹‹å‰æ‰§è¡Œ,å¯¹resultå˜é‡æ‰§è¡Œçš„èµ‹å€¼æ“ä½œ.
+    * æ‰€ä»¥resultæ°¸è¿œä¸ä¼šä¸ºnullå€¼
     */
   var result: String = null
   val t = thread { result = "\nTitle\n" + "=" * 5 }
@@ -97,33 +97,33 @@ object ThreadsCommunicate extends App {
 }
 
 /***
- * Ïß³Ì²»°²È«·ÃÎÊ
+ * çº¿ç¨‹ä¸å®‰å…¨è®¿é—®
  */
 object ThreadsUnprotectedUid extends App {
   /**
    * 
    */
-  var uidCount = 0L//²¢·¢·½Ê½¶ÁÈ¡±äÁ¿uidCountµÄÖµ,¸Ã±äÁ¿µÄ³õÊ¼ÖµÎª0,
+  var uidCount = 0L//å¹¶å‘æ–¹å¼è¯»å–å˜é‡uidCountçš„å€¼,è¯¥å˜é‡çš„åˆå§‹å€¼ä¸º0,
   def getUniqueId() = {
-    val freshUid = uidCount + 1  //freshUid ÊÇÒ»¸ö¾Ö²¿±äÁ¿,Ëü»ñµÃÊÇÏß³ÌÕ»ÄÚ´æ,ËùÓĞÏß³Ì¶¼ÄÜ¹»¿´µ½¸Ã±äÁ¿µÄ¶ÀÁ¢ÊµÀı
+    val freshUid = uidCount + 1  //freshUid æ˜¯ä¸€ä¸ªå±€éƒ¨å˜é‡,å®ƒè·å¾—æ˜¯çº¿ç¨‹æ ˆå†…å­˜,æ‰€æœ‰çº¿ç¨‹éƒ½èƒ½å¤Ÿçœ‹åˆ°è¯¥å˜é‡çš„ç‹¬ç«‹å®ä¾‹
     uidCount = freshUid 
     freshUid
   }
 
   def printUniqueIds(n: Int): Unit = {
-    //yield²úÉúÊı×é
+    //yieldäº§ç”Ÿæ•°ç»„
     val uids = for (i <- 0 until n) yield getUniqueId()
     log(s"Generated uids: $uids")
   }
-  //Ïß³Ì´¦Àí
+  //çº¿ç¨‹å¤„ç†
   val t = thread {
-    printUniqueIds(5)//Ïß³Ì²¢·¢Ö´ĞĞ
+    printUniqueIds(5)//çº¿ç¨‹å¹¶å‘æ‰§è¡Œ
   }
-  //mainÏß³ÌÖ´ĞĞ
+  //mainçº¿ç¨‹æ‰§è¡Œ
   printUniqueIds(5)
   t.join()
   /**
-   * ÕâÁ½¸öÏß³ÌÍ¨¹ıËæ»úË³Ğò½«ÊıÖµ1Ğ´»Ø±äÁ¿uidCountÖĞ,È»ºóËüÃÇ¶¼·µ»ØÒ»¸ö·ÇÎ¨Ò»±êÊ¶·û´®1
+   * è¿™ä¸¤ä¸ªçº¿ç¨‹é€šè¿‡éšæœºé¡ºåºå°†æ•°å€¼1å†™å›å˜é‡uidCountä¸­,ç„¶åå®ƒä»¬éƒ½è¿”å›ä¸€ä¸ªéå”¯ä¸€æ ‡è¯†ç¬¦ä¸²1
    * Thread-0: Generated uids: Vector(1, 11, 13, 15, 17)
 	 * main: Generated uids: Vector(1, 3, 5, 7, 9)
 	 * 
@@ -131,14 +131,14 @@ object ThreadsUnprotectedUid extends App {
   
 }
 /**
- * ²»Ê¹ÓÃsynchronizedÓï¾äµ¼ÖÂµÄÑÏÖØ´íÎó,Ê¹ÓÃ²¼¶ûÖµÈÆ¹ısynchronizedÓï¾ä
+ * ä¸ä½¿ç”¨synchronizedè¯­å¥å¯¼è‡´çš„ä¸¥é‡é”™è¯¯,ä½¿ç”¨å¸ƒå°”å€¼ç»•è¿‡synchronizedè¯­å¥
  */
 
 object ThreadSharedStateAccessReordering extends App {
    /**
-    * ÏÂÃæµÄ³ÌĞòÖĞÁ½¸öÏß³Ì(T1ºÍT2)·ÃÎÊÒ»¶Ô²¼¶û±äÁ¿(aºÍb)ºÍÒ»¶ÔÕûĞÍ±äÁ¿(xºÍy),
-    * Ïß³Ìt1½«±äÁ¿aÉèÖÃÎªtrue,È»ºó¶ÁÈ¡±äÁ¿bµÄÖµ,Èç¹û±äÁ¿bµÄÖµÎªtrue,ÄÇÃ´Ïß³Ìt1¾Í»á½«0¸³Óè±äÁ¿y
-    * ·ñÔò½«1¸³Óè±äÁ¿y
+    * ä¸‹é¢çš„ç¨‹åºä¸­ä¸¤ä¸ªçº¿ç¨‹(T1å’ŒT2)è®¿é—®ä¸€å¯¹å¸ƒå°”å˜é‡(aå’Œb)å’Œä¸€å¯¹æ•´å‹å˜é‡(xå’Œy),
+    * çº¿ç¨‹t1å°†å˜é‡aè®¾ç½®ä¸ºtrue,ç„¶åè¯»å–å˜é‡bçš„å€¼,å¦‚æœå˜é‡bçš„å€¼ä¸ºtrue,é‚£ä¹ˆçº¿ç¨‹t1å°±ä¼šå°†0èµ‹äºˆå˜é‡y
+    * å¦åˆ™å°†1èµ‹äºˆå˜é‡y
     */
   for (i <- 0 until 100000) {
     var a = false
@@ -157,8 +157,8 @@ object ThreadSharedStateAccessReordering extends App {
       x = if (a) 0 else 1
     }
     /**
-     * ÒÔÉÏ³ÌĞò·¶µÄ´íÎóÒ»¸öÏß³ÌµÄĞ´Èë²Ù×÷ÄÜ¹»Á¢¿Ì±»ÆäËûÏß³Ì¶Áµ½,ÒªÈ·±£ÆäËûÏß³ÌÄÜ¹»¶ÁÒ»¸öÏß³ÌĞ´Èë²Ù×÷µÄÇé¿ö
-     * ¾Í±ØĞëÊÊµ±Ê¹ÓÃÍ¬²½»¯»úÖÆ
+     * ä»¥ä¸Šç¨‹åºèŒƒçš„é”™è¯¯ä¸€ä¸ªçº¿ç¨‹çš„å†™å…¥æ“ä½œèƒ½å¤Ÿç«‹åˆ»è¢«å…¶ä»–çº¿ç¨‹è¯»åˆ°,è¦ç¡®ä¿å…¶ä»–çº¿ç¨‹èƒ½å¤Ÿè¯»ä¸€ä¸ªçº¿ç¨‹å†™å…¥æ“ä½œçš„æƒ…å†µ
+     * å°±å¿…é¡»é€‚å½“ä½¿ç”¨åŒæ­¥åŒ–æœºåˆ¶
      */
   
     t1.join()

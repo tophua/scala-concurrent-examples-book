@@ -5,7 +5,9 @@ import org.learningconcurrency._
 import ch7._
 
 
-
+/**
+  * 基于软件的事务的内存
+  */
 
 object AtomicHistoryBad extends App {
   import java.util.concurrent.atomic._

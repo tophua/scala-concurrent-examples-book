@@ -15,10 +15,10 @@ import scala.util.Success
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Promise
 /**
- * JVM ²¢·¢ĞÔ: Scala ÖĞµÄÒì²½ÊÂ¼ş´¦Àí,
+ * JVM å¹¶å‘æ€§: Scala ä¸­çš„å¼‚æ­¥äº‹ä»¶å¤„ç†,
  * http://www.ibm.com/developerworks/cn/java/j-jvmc4/
  * 
- * Unhappy²»Ç¡µ±µÄ;
+ * Unhappyä¸æ°å½“çš„;
  */
 object AsyncUnhappy extends App {
   import ExecutionContext.Implicits.global
@@ -33,12 +33,12 @@ object AsyncUnhappy extends App {
   def runBlocking() = {
     val result = Promise[Int]
     try {
-      val v1 = Await.result(task1(1), Duration.Inf)//Duration.Inf ÎŞÏßÆÚµÈ´ı
+      val v1 = Await.result(task1(1), Duration.Inf)//Duration.Inf æ— çº¿æœŸç­‰å¾…
       val future2 = task2(v1)
       val future3 = task3(v1)
-      val v2 = Await.result(future2, Duration.Inf)//Duration.Inf ÎŞÏßÆÚµÈ´ı
-      val v3 = Await.result(future3, Duration.Inf)//Duration.Inf ÎŞÏßÆÚµÈ´ı
-      val v4 = Await.result(task4(v2 + v3), Duration.Inf)//Duration.Inf ÎŞÏßÆÚµÈ´ı
+      val v2 = Await.result(future2, Duration.Inf)//Duration.Inf æ— çº¿æœŸç­‰å¾…
+      val v3 = Await.result(future3, Duration.Inf)//Duration.Inf æ— çº¿æœŸç­‰å¾…
+      val v4 = Await.result(task4(v2 + v3), Duration.Inf)//Duration.Inf æ— çº¿æœŸç­‰å¾…
       result.success(v4)
     } catch {
       case t: Throwable => result.failure(t)
@@ -83,14 +83,14 @@ object AsyncUnhappy extends App {
 
   /** Run tasks with async macro. */
   def runAsync(): Future[Int] = {
-    async {//async´Ëµ÷ÓÃ½«¸Ã´úÂë¿éÉùÃ÷ÎªÒì²½Ö´ĞĞµÄ´úÂë£¬²¢ÔÚÄ¬ÈÏÇé¿öÏÂÒì²½Ö´ĞĞËü£¬È»ºó·µ»ØÒ»¸ö future ±íÊ¾¸Ã´úÂë¿éµÄÖ´ĞĞ½á¹û
-      val v1 = await(task1(1))//await()·½·¨ÏÔÊ¾ÁËºÎ´¦ĞèÒªÒ»¸ö future µÄ½á¹û
+    async {//asyncæ­¤è°ƒç”¨å°†è¯¥ä»£ç å—å£°æ˜ä¸ºå¼‚æ­¥æ‰§è¡Œçš„ä»£ç ï¼Œå¹¶åœ¨é»˜è®¤æƒ…å†µä¸‹å¼‚æ­¥æ‰§è¡Œå®ƒï¼Œç„¶åè¿”å›ä¸€ä¸ª future è¡¨ç¤ºè¯¥ä»£ç å—çš„æ‰§è¡Œç»“æœ
+      val v1 = await(task1(1))//await()æ–¹æ³•æ˜¾ç¤ºäº†ä½•å¤„éœ€è¦ä¸€ä¸ª future çš„ç»“æœ
       val a = task2(v1)
       val b = task3(v1)
       /**
-       * async ºê½«´úÂë×ª»»Îª×´Ì¬»úÀàµÄ·½Ê½£¬¸ÃºêµÄÊ¹ÓÃÓĞÒ»Ğ©ÏŞÖÆ
-       * ×îÃ÷ÏÔµÄÏŞÖÆÊÇ£¬²»ÄÜ½« await() Ç¶Ì×ÔÚ async ´úÂë¿éÖĞµÄÁíÒ»¸ö¶ÔÏó»ò±Õ°üÄÚ£¨°üÀ¨Ò»¸öº¯Êı¶¨Òå£©¡£
-       * Ò²²»ÄÜ½« await() Ç¶Ì×ÔÚÒ»¸ö try »ò catch ÄÚ
+       * async å®å°†ä»£ç è½¬æ¢ä¸ºçŠ¶æ€æœºç±»çš„æ–¹å¼ï¼Œè¯¥å®çš„ä½¿ç”¨æœ‰ä¸€äº›é™åˆ¶
+       * æœ€æ˜æ˜¾çš„é™åˆ¶æ˜¯ï¼Œä¸èƒ½å°† await() åµŒå¥—åœ¨ async ä»£ç å—ä¸­çš„å¦ä¸€ä¸ªå¯¹è±¡æˆ–é—­åŒ…å†…ï¼ˆåŒ…æ‹¬ä¸€ä¸ªå‡½æ•°å®šä¹‰ï¼‰ã€‚
+       * ä¹Ÿä¸èƒ½å°† await() åµŒå¥—åœ¨ä¸€ä¸ª try æˆ– catch å†…
        */
       await(task4(await(a) + await(b)))
     }

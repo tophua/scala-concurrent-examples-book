@@ -2,17 +2,17 @@ package ch4
 
 import org.learningconcurrency._
 /**
- * Future ËüÊÇÒ»¸öÈİÆ÷ÀàĞÍ£¬´ú±íÒ»¸ö´úÂë×îÖÕ»á·µ»ØµÄTÀàĞÍ½á¹û¡£²»¹ı£¬´úÂë¿ÉÄÜ»á³ö´í»òÖ´ĞĞ³¬Ê±£¬
- * ËùÒÔµ±FutureÍê³ÉÊ±£¬ËüÓĞ¿ÉÄÜÍêÈ«Ã»ÓĞ±»³É¹¦Ö´ĞĞ£¬ÕâÊ±Ëü»á´ú±íÒ»¸öÒì³£
- *  Future ±íÊ¾Ò»¸ö¿ÉÄÜ»¹Ã»ÓĞÊµ¼ÊÍê³ÉµÄÒì²½ÈÎÎñµÄ½á¹û,
- *  Õë¶ÔÕâ¸ö½á¹û¿ÉÒÔÌí¼Ó Callback ÒÔ±ãÔÚÈÎÎñÖ´ĞĞ³É¹¦»òÊ§°Üºó×ö³ö¶ÔÓ¦µÄ²Ù×÷
+ * Future å®ƒæ˜¯ä¸€ä¸ªå®¹å™¨ç±»å‹ï¼Œä»£è¡¨ä¸€ä¸ªä»£ç æœ€ç»ˆä¼šè¿”å›çš„Tç±»å‹ç»“æœã€‚ä¸è¿‡ï¼Œä»£ç å¯èƒ½ä¼šå‡ºé”™æˆ–æ‰§è¡Œè¶…æ—¶ï¼Œ
+ * æ‰€ä»¥å½“Futureå®Œæˆæ—¶ï¼Œå®ƒæœ‰å¯èƒ½å®Œå…¨æ²¡æœ‰è¢«æˆåŠŸæ‰§è¡Œï¼Œè¿™æ—¶å®ƒä¼šä»£è¡¨ä¸€ä¸ªå¼‚å¸¸
+ *  Future è¡¨ç¤ºä¸€ä¸ªå¯èƒ½è¿˜æ²¡æœ‰å®é™…å®Œæˆçš„å¼‚æ­¥ä»»åŠ¡çš„ç»“æœ,
+ *  é’ˆå¯¹è¿™ä¸ªç»“æœå¯ä»¥æ·»åŠ  Callback ä»¥ä¾¿åœ¨ä»»åŠ¡æ‰§è¡ŒæˆåŠŸæˆ–å¤±è´¥ååšå‡ºå¯¹åº”çš„æ“ä½œ
  */
 object FuturesComputation extends App {
   /**
-   * Computation¼ÆËã
-   *  Futures Ö´ĞĞ¼ÆËã
-   * 1,Ê×ÏÈÒıÈëglobalÖ´ĞĞÉÏÏÂÎÄ,¿ÉÒÔÈ·±£ÔÚÈ«¾ÖÉÏÏÂÎÄÖĞÖ´ĞĞFuture¼ÆËã
-   * µ÷ÓÃlog·½·¨µÄ´ÎĞò²»ÊÇÈ·¶¨,ºó¸ú´úÂë¿éµÄFuturesµ¥Àı¶ÔÏó,ÊÇÎªµ÷ÓÃApply·½·¨¶øÌí¼ÓÓï·¨ÌÇ
+   * Computationè®¡ç®—
+   *  Futures æ‰§è¡Œè®¡ç®—
+   * 1,é¦–å…ˆå¼•å…¥globalæ‰§è¡Œä¸Šä¸‹æ–‡,å¯ä»¥ç¡®ä¿åœ¨å…¨å±€ä¸Šä¸‹æ–‡ä¸­æ‰§è¡ŒFutureè®¡ç®—
+   * è°ƒç”¨logæ–¹æ³•çš„æ¬¡åºä¸æ˜¯ç¡®å®š,åè·Ÿä»£ç å—çš„Futureså•ä¾‹å¯¹è±¡,æ˜¯ä¸ºè°ƒç”¨Applyæ–¹æ³•è€Œæ·»åŠ è¯­æ³•ç³–
    * 
    */
   import scala.concurrent._
@@ -27,8 +27,8 @@ object FuturesComputation extends App {
 }
 
 /**
- *  Í¨¹ıFutures¼ÆËã,Ê¹ÓÃSource.fromFile¶ÔÏó¶ÁÈ¡build.sbtÎÄ¼şÄÚÈİ
- * 1,Ê×ÏÈÒıÈëglobalÖ´ĞĞÉÏÏÂÎÄ,¿ÉÒÔÈ·±£ÔÚÈ«¾ÖÉÏÏÂÎÄÖĞÖ´ĞĞFuture¼ÆËã
+ *  é€šè¿‡Futuresè®¡ç®—,ä½¿ç”¨Source.fromFileå¯¹è±¡è¯»å–build.sbtæ–‡ä»¶å†…å®¹
+ * 1,é¦–å…ˆå¼•å…¥globalæ‰§è¡Œä¸Šä¸‹æ–‡,å¯ä»¥ç¡®ä¿åœ¨å…¨å±€ä¸Šä¸‹æ–‡ä¸­æ‰§è¡ŒFutureè®¡ç®—
  * 
  * 
  */
@@ -36,7 +36,7 @@ object FuturesDataType extends App {
   import scala.concurrent._
   import ExecutionContext.Implicits.global
   import scala.io.Source
- //Í¨¹ıFutures¼ÆËã,Ê¹ÓÃSource.fromFile¶ÔÏó¶ÁÈ¡build.sbtÎÄ¼şÄÚÈİ
+ //é€šè¿‡Futuresè®¡ç®—,ä½¿ç”¨Source.fromFileå¯¹è±¡è¯»å–build.sbtæ–‡ä»¶å†…å®¹
   val buildFile: Future[String] = Future {
     val f = Source.fromFile("build.sbt")
     try f.getLines.mkString("\n") finally f.close()
@@ -44,21 +44,21 @@ object FuturesDataType extends App {
 
   log(s"started reading build file asynchronously")
   /**
-   * mainÏß³Ì»áµ÷ÓÃFuture¶ÔÏóÖĞµÄisCompleted·½·¨,¸ÃFuture¶ÔÏóÎªÍ¨¹ıÖ´ĞĞFuture¼ÆËã»ñµÃbuildFile¶ÔÏó
-   * ¶ÁÈ¡build.sbtÎÄ¼şµÄ²Ù×÷ºÜ¿ÉÄÜºÜ¿ìÍê³É,Òò´ËisCompleted·½·¨»á·µ»Øfalse,
-   * ¹ı250ºÁÃëºó,mainÏß³Ì»áÔÙ´Îµ÷ÓÃisCompleted·½·¨»á·µ»Øtrue,
-   * ×îºómainÏß³Ì»áµ÷ÓÃvalue·½·¨,¸Ã·½·¨»á·µ»Øbuild.sbÎÄ¼şµÄÄÚÈİ
+   * mainçº¿ç¨‹ä¼šè°ƒç”¨Futureå¯¹è±¡ä¸­çš„isCompletedæ–¹æ³•,è¯¥Futureå¯¹è±¡ä¸ºé€šè¿‡æ‰§è¡ŒFutureè®¡ç®—è·å¾—buildFileå¯¹è±¡
+   * è¯»å–build.sbtæ–‡ä»¶çš„æ“ä½œå¾ˆå¯èƒ½å¾ˆå¿«å®Œæˆ,å› æ­¤isCompletedæ–¹æ³•ä¼šè¿”å›false,
+   * è¿‡250æ¯«ç§’å,mainçº¿ç¨‹ä¼šå†æ¬¡è°ƒç”¨isCompletedæ–¹æ³•ä¼šè¿”å›true,
+   * æœ€åmainçº¿ç¨‹ä¼šè°ƒç”¨valueæ–¹æ³•,è¯¥æ–¹æ³•ä¼šè¿”å›build.sbæ–‡ä»¶çš„å†…å®¹
    * 
    */
-  log(s"status: ${buildFile.isCompleted}")//µ±Òì²½²Ù×÷Íê³ÉÁËÇÒ·µ»ØÁËtrueÖµ,ÊÇsuccess
+  log(s"status: ${buildFile.isCompleted}")//å½“å¼‚æ­¥æ“ä½œå®Œæˆäº†ä¸”è¿”å›äº†trueå€¼,æ˜¯success
   Thread.sleep(250)
-  log(s"status: ${buildFile.isCompleted}")//µ±Òì²½²Ù×÷Ã»ÓĞÍê³É·µ»Øfalse
-  log(s"status: ${buildFile.value}")//»¹»ØÖµ
+  log(s"status: ${buildFile.isCompleted}")//å½“å¼‚æ­¥æ“ä½œæ²¡æœ‰å®Œæˆè¿”å›false
+  log(s"status: ${buildFile.value}")//è¿˜å›å€¼
 
 }
 /**
- * Futures¶ÔÏóµÄ»Øµ÷º¯Êı
- * ´Ów3ÍøÖĞ²éÕÒ³öËùÓĞµ¥´Êtelnet.
+ * Futureså¯¹è±¡çš„å›è°ƒå‡½æ•°
+ * ä»w3ç½‘ä¸­æŸ¥æ‰¾å‡ºæ‰€æœ‰å•è¯telnet.
  */
 
 object FuturesCallbacks extends App {
@@ -66,13 +66,13 @@ object FuturesCallbacks extends App {
   import ExecutionContext.Implicits.global
   import scala.io.Source
 /**
- * ´Ów3ÍøÕ¾»ñµÃurl¹æ·¶µÄÎÄµµ,Ê¹ÓÃSource¶ÔÏó´æ´¢¸ÃÎÄ¼şµÄÄÚÈİ,²¢Ê¹ÓÃgetUrlSpecÎÄ¼şÖĞµÄFuture¶ÔÏó
- * ÒÔÒì²½·½Ê½Ö´ĞĞHttpÇëÇó²Ù×÷,getUrlSpec·½·¨»áÏÈµ÷ÓÃfromURL»ñÈ¡º¬ÓĞÎÄ±¾ÎÄµµµÄSource¶ÔÏó,È»ºó»áµ÷ÓÃ
- * getLines·½·¨»ñÈ¡ÎÄµµÖĞµÄĞĞÁĞ±í.
+ * ä»w3ç½‘ç«™è·å¾—urlè§„èŒƒçš„æ–‡æ¡£,ä½¿ç”¨Sourceå¯¹è±¡å­˜å‚¨è¯¥æ–‡ä»¶çš„å†…å®¹,å¹¶ä½¿ç”¨getUrlSpecæ–‡ä»¶ä¸­çš„Futureå¯¹è±¡
+ * ä»¥å¼‚æ­¥æ–¹å¼æ‰§è¡ŒHttpè¯·æ±‚æ“ä½œ,getUrlSpecæ–¹æ³•ä¼šå…ˆè°ƒç”¨fromURLè·å–å«æœ‰æ–‡æœ¬æ–‡æ¡£çš„Sourceå¯¹è±¡,ç„¶åä¼šè°ƒç”¨
+ * getLinesæ–¹æ³•è·å–æ–‡æ¡£ä¸­çš„è¡Œåˆ—è¡¨.
  */
   
   def getUrlSpec(): Future[Seq[String]] = Future {
-    //ÒÔÒì²½·½Ê½Ö´ĞĞhttpÇëÇó²Ù×÷
+    //ä»¥å¼‚æ­¥æ–¹å¼æ‰§è¡Œhttpè¯·æ±‚æ“ä½œ
     val f = Source.fromURL("http://www.w3.org/Addressing/URL/url-spec.txt")
     try {
       f.getLines.toList
@@ -83,29 +83,29 @@ object FuturesCallbacks extends App {
 
   val urlSpec: Future[Seq[String]] = getUrlSpec()
 /**
- * ÒªÔÚFuture¶ÔÏóurlSpecÖĞÕÒµ½°üº¬ÓĞµ¥´ÊtelnetµÄĞĞ,¿ÉÒÔÊ¹ÓÃfind·½·¨
- * ¸Ã·½·¨½«ĞĞµÄÁĞ±íºÍĞèÒªËÑË÷µÄµ¥´Ê½ÓÊÕÎª²ÎÊı,²¢ÇÒ·µ»Øº¬ÓĞÆ¥ÅäÄÚÈİµÄ×Ö·û´®.
- * ½ÓÊÕÒ»¸öSeqÀàĞÍµÄ²ÎÊı,¶øurlSpec¶ÔÏó·µ»ØFuture[Seq[String]],Òò´ËÎŞ·¨½«Future¶ÔÏóurlSpec
- * Ö±½Ó·¢ËÍ¸øfind·½·¨,¶øÇÒÔÚ³ÌĞòµ÷ÓÃfind·½·¨Ê±,¸ÃFutureºÜ¿ÉÄÜ»¹ÎŞ·¨Ê¹ÓÃ.
+ * è¦åœ¨Futureå¯¹è±¡urlSpecä¸­æ‰¾åˆ°åŒ…å«æœ‰å•è¯telnetçš„è¡Œ,å¯ä»¥ä½¿ç”¨findæ–¹æ³•
+ * è¯¥æ–¹æ³•å°†è¡Œçš„åˆ—è¡¨å’Œéœ€è¦æœç´¢çš„å•è¯æ¥æ”¶ä¸ºå‚æ•°,å¹¶ä¸”è¿”å›å«æœ‰åŒ¹é…å†…å®¹çš„å­—ç¬¦ä¸².
+ * æ¥æ”¶ä¸€ä¸ªSeqç±»å‹çš„å‚æ•°,è€ŒurlSpecå¯¹è±¡è¿”å›Future[Seq[String]],å› æ­¤æ— æ³•å°†Futureå¯¹è±¡urlSpec
+ * ç›´æ¥å‘é€ç»™findæ–¹æ³•,è€Œä¸”åœ¨ç¨‹åºè°ƒç”¨findæ–¹æ³•æ—¶,è¯¥Futureå¾ˆå¯èƒ½è¿˜æ— æ³•ä½¿ç”¨.
  */
   def find(lines: Seq[String], word: String) = lines.zipWithIndex.collect {
-    //zipWithIndex£¬ ·µ»Ø¶ÔÅ¼ÁĞ±í£¬µÚ¶ş¸ö×é³É²¿·ÖÊÇÔªËØÏÂ±ê  
+    //zipWithIndexï¼Œ è¿”å›å¯¹å¶åˆ—è¡¨ï¼Œç¬¬äºŒä¸ªç»„æˆéƒ¨åˆ†æ˜¯å…ƒç´ ä¸‹æ ‡  
     case (line, n) if line.contains(word) => (n, line)
-  }.mkString("\n")//´Ëµü´úÆ÷×ª»»Îª×Ö·û´®
+  }.mkString("\n")//æ­¤è¿­ä»£å™¨è½¬æ¢ä¸ºå­—ç¬¦ä¸²
 /**
- * ÎÒÃÇÊ¹ÓÃforeach·½·¨ÎªÕâ¸öFutureÌí¼ÓÒ»¸ö»Øµ÷º¯Êı,×¢ÒâonSuccess·½·¨Óëforeach·½·¨µÈ¼Û,µ«onSuccess·½·¨¿ÉÄÜ
- * »áÔÚscala 2.11Ö®ºó±»ÆúÓÃ,foreach·½·¨½ÓÊÕÆ«º¯Êı×÷ÎªÆä²ÎÊı 
+ * æˆ‘ä»¬ä½¿ç”¨foreachæ–¹æ³•ä¸ºè¿™ä¸ªFutureæ·»åŠ ä¸€ä¸ªå›è°ƒå‡½æ•°,æ³¨æ„onSuccessæ–¹æ³•ä¸foreachæ–¹æ³•ç­‰ä»·,ä½†onSuccessæ–¹æ³•å¯èƒ½
+ * ä¼šåœ¨scala 2.11ä¹‹åè¢«å¼ƒç”¨,foreachæ–¹æ³•æ¥æ”¶åå‡½æ•°ä½œä¸ºå…¶å‚æ•° 
  */
-  urlSpec.foreach {//foreach½ÓÊÕÒ»¸öÆ«º¯Êı
+  urlSpec.foreach {//foreachæ¥æ”¶ä¸€ä¸ªåå‡½æ•°
     case lines => log(s"Found occurrences of 'telnet'\n${find(lines, "telnet")}\n")
   }
   /**
   * Thread.sleep
-  * ´Ë´¦µÄÒªµãÊÇ:Ìí¼Ó»Øµ÷º¯ÊıÊÇ·Ç×èÈû²Ù×÷,»Øµ÷ÓÃº¯Êı×¢²áºó,mainÏß³ÌÖĞÓÃµÄlogÓï¾ä»áÁ¢¼´Ö´ĞĞ
- 	* µ«ÊÇÖ´ĞĞ»Øµ÷º¯ÊıÖĞlogÓï¾äµÄÊ±¼ä¿ÉÒÔÍíµÃ¶à
- 	* ÔÚFuture¶ÔÏó±»ÍêÉÆºó,ÎŞĞëÁ¢¿Ìµ÷ÓÃ»Øµ÷²ÎÊı,´ó¶àÊıÖ´ĞĞÉÏÏÂÎÄÍ¨¹ıµ÷ÓÃÈÎÎñ,ÒÔÒì²½·½Ê½´¦Àí»Øµ÷º¯Êı
+  * æ­¤å¤„çš„è¦ç‚¹æ˜¯:æ·»åŠ å›è°ƒå‡½æ•°æ˜¯éé˜»å¡æ“ä½œ,å›è°ƒç”¨å‡½æ•°æ³¨å†Œå,mainçº¿ç¨‹ä¸­ç”¨çš„logè¯­å¥ä¼šç«‹å³æ‰§è¡Œ
+ 	* ä½†æ˜¯æ‰§è¡Œå›è°ƒå‡½æ•°ä¸­logè¯­å¥çš„æ—¶é—´å¯ä»¥æ™šå¾—å¤š
+ 	* åœ¨Futureå¯¹è±¡è¢«å®Œå–„å,æ— é¡»ç«‹åˆ»è°ƒç”¨å›è°ƒå‚æ•°,å¤§å¤šæ•°æ‰§è¡Œä¸Šä¸‹æ–‡é€šè¿‡è°ƒç”¨ä»»åŠ¡,ä»¥å¼‚æ­¥æ–¹å¼å¤„ç†å›è°ƒå‡½æ•°
    */
-   Thread.sleep(2000)//Ìí¼Ó´Ë·½·¨Èç¹û²»Ìí¼Ó²»Òì²½µ÷ÓÃ²»ÏÔÊ¾ĞÅÏ¢
+   Thread.sleep(2000)//æ·»åŠ æ­¤æ–¹æ³•å¦‚æœä¸æ·»åŠ ä¸å¼‚æ­¥è°ƒç”¨ä¸æ˜¾ç¤ºä¿¡æ¯
    log("callbacks registered, continuing with other work")
 
 /**
@@ -128,7 +128,7 @@ object FuturesCallbacks extends App {
  * (938,   The use of URLs containing passwords is clearly unwise. )
  */
    /**
-    * Future¶ÔÏóÌí¼Ó¶à¸ö»Øµ÷º¯Êı,Èç¹ûÎÒÃÇ»¹ÏëÔÚÎÄµµÖĞÕÒ³öËùÓĞµ¥´Êpassword,¿ÉÒÔÔÙÌí¼ÓÒ»¸ö»Øµ÷º¯Êı
+    * Futureå¯¹è±¡æ·»åŠ å¤šä¸ªå›è°ƒå‡½æ•°,å¦‚æœæˆ‘ä»¬è¿˜æƒ³åœ¨æ–‡æ¡£ä¸­æ‰¾å‡ºæ‰€æœ‰å•è¯password,å¯ä»¥å†æ·»åŠ ä¸€ä¸ªå›è°ƒå‡½æ•°
     */
   urlSpec.foreach {
     lines => log(s"Found occurrences of 'password'\n${find(lines, "password")}\n")
@@ -141,25 +141,25 @@ object FuturesCallbacks extends App {
 }
 
 /**
- * Failure¼ÆËãºÍÒì³£´¦Àí
+ * Failureè®¡ç®—å’Œå¼‚å¸¸å¤„ç†
  */
 object FuturesFailure extends App {
   import scala.concurrent._
   import ExecutionContext.Implicits.global
   import scala.io.Source
 /**
- * µ±ÍêÉÆFuture¶ÔÏóµÄ²Ù×÷±»Ö´ĞĞºó,ÓĞ¿ÉÄÜ³É¹¦Future¶ÔÏó,Ò²ÓĞ¿ÉÄÜÊ§°ÜFuture¶ÔÏó, 
+ * å½“å®Œå–„Futureå¯¹è±¡çš„æ“ä½œè¢«æ‰§è¡Œå,æœ‰å¯èƒ½æˆåŠŸFutureå¯¹è±¡,ä¹Ÿæœ‰å¯èƒ½å¤±è´¥Futureå¯¹è±¡, 
  */
   val urlSpec: Future[String] = Future {
     /**
-     * ÏòÒ»¸ö·Ç·¨µÄURL·¢ËÍÁËhttpÇëÇó,fromURL·½·¨Å×³öÁËÒ»¸öÒì³£,¶øÇÒFuture¶ÔÏóurlSpecµÄ²Ù×÷Ê§°ÜÁË.
+     * å‘ä¸€ä¸ªéæ³•çš„URLå‘é€äº†httpè¯·æ±‚,fromURLæ–¹æ³•æŠ›å‡ºäº†ä¸€ä¸ªå¼‚å¸¸,è€Œä¸”Futureå¯¹è±¡urlSpecçš„æ“ä½œå¤±è´¥äº†.
      */
     Source.fromURL("http://www.w3.org/non-existent-url-spec.txt").mkString
   }
   /**
-   * foreach·½·¨»á½ÓÊÕ´¦Àí³É¹¦ÍêÉÆµÄFuture¶ÔÏóµÄ»Øµ÷º¯Êı,
-   * failed·½·¨»á½ÓÊÕ´¦Àí½ÓÊ§°ÜÇé¿öµÄ»Øµ÷º¯Êı,·µ»ØFuture[Throwable]¶ÔÏó,¸Ã¶ÔÏó´ú±íFutureÊ§°ÜÇé¿öµÄÒì³£
-   * ½«failed·½·¨ÓëforeachÒ»ÆğÊ¹ÓÃ¿ÉÒÔ·ÃÎÊÒì³£
+   * foreachæ–¹æ³•ä¼šæ¥æ”¶å¤„ç†æˆåŠŸå®Œå–„çš„Futureå¯¹è±¡çš„å›è°ƒå‡½æ•°,
+   * failedæ–¹æ³•ä¼šæ¥æ”¶å¤„ç†æ¥å¤±è´¥æƒ…å†µçš„å›è°ƒå‡½æ•°,è¿”å›Future[Throwable]å¯¹è±¡,è¯¥å¯¹è±¡ä»£è¡¨Futureå¤±è´¥æƒ…å†µçš„å¼‚å¸¸
+   * å°†failedæ–¹æ³•ä¸foreachä¸€èµ·ä½¿ç”¨å¯ä»¥è®¿é—®å¼‚å¸¸
    */
 
   urlSpec.failed.foreach {    
@@ -172,10 +172,10 @@ object FuturesFailure extends App {
 }
 
 /**
- * ÎªÁËÊ¹´úÂë¼ò½à,ÓĞÊ±ºòÒªÔÚÍ¬Ò»¸ö»Øµ÷º¯ÊıÖĞ´¦Àí³É¹¦ºÍÊ§°ÜµÄÇé¿ö
- * Ê¹ÓÃTryÀàĞÍ,ÓĞÁ½¸ö×ÓÀàĞÍ:SuccessÀàĞÍÓÃÓÚ±íÊ¾³É¹¦Ö´ĞĞ²Ù×÷½á¹û
- * 												FailureÀàĞÍÓÃÓÚ±íÊ¾Ö´ĞĞÊ§°ÜµÄÒì³£¶ÔÏó
- * ÎÒÃÇ¿ÉÒÔÊ¹ÓÃÄ£Ê½Æ¥Åä¹¦ÄÜÈ·¶¨Try¶ÔÏóÊÇÄÇÖÖ×ÓÀàĞÍ
+ * ä¸ºäº†ä½¿ä»£ç ç®€æ´,æœ‰æ—¶å€™è¦åœ¨åŒä¸€ä¸ªå›è°ƒå‡½æ•°ä¸­å¤„ç†æˆåŠŸå’Œå¤±è´¥çš„æƒ…å†µ
+ * ä½¿ç”¨Tryç±»å‹,æœ‰ä¸¤ä¸ªå­ç±»å‹:Successç±»å‹ç”¨äºè¡¨ç¤ºæˆåŠŸæ‰§è¡Œæ“ä½œç»“æœ
+ * 												Failureç±»å‹ç”¨äºè¡¨ç¤ºæ‰§è¡Œå¤±è´¥çš„å¼‚å¸¸å¯¹è±¡
+ * æˆ‘ä»¬å¯ä»¥ä½¿ç”¨æ¨¡å¼åŒ¹é…åŠŸèƒ½ç¡®å®šTryå¯¹è±¡æ˜¯é‚£ç§å­ç±»å‹
  */
 object FuturesExceptions extends App {
   import scala.concurrent._
@@ -184,18 +184,18 @@ object FuturesExceptions extends App {
 
   val file = Future { Source.fromFile(".gitignore-SAMPLE").getLines.mkString("\n") }
 
-  //³É¹¦»Øµ÷
+  //æˆåŠŸå›è°ƒ
   file.foreach {
     text => log(text)
   }
-  //Ê§°Ü»Øµ÷
-  file.failed foreach {//Òì³£´¦Àí,Å×³öÒì³£ÀàĞÍFileNotFoundException
+  //å¤±è´¥å›è°ƒ
+  file.failed foreach {//å¼‚å¸¸å¤„ç†,æŠ›å‡ºå¼‚å¸¸ç±»å‹FileNotFoundException
     case fnfe: java.io.FileNotFoundException => log(s"Cannot find file - $fnfe")
     case t => log(s"Failed due to $t")
   }
   import scala.util.{Try, Success, Failure}
 
-  file.onComplete {//»Øµ÷º¯ÊıÊ±,ÎÒÃÇÊ¹ÓÃÌá¹©Success[T]ÖµºÍFailure[T]ÖµÆ¥ÅäµÄÆ«º¯Êı
+  file.onComplete {//å›è°ƒå‡½æ•°æ—¶,æˆ‘ä»¬ä½¿ç”¨æä¾›Success[T]å€¼å’ŒFailure[T]å€¼åŒ¹é…çš„åå‡½æ•°
     case Success(text) => log(text)
     case Failure(t) => log(s"Failed due to $t")
   }
@@ -203,16 +203,16 @@ object FuturesExceptions extends App {
 
 }
 /**
- * Ê¹ÓÃTryÀàĞÍ,ÓĞÁ½¸ö×ÓÀàĞÍ:SuccessÀàĞÍÓÃÓÚ±íÊ¾³É¹¦Ö´ĞĞ²Ù×÷½á¹û
- * 												FailureÀàĞÍÓÃÓÚ±íÊ¾Ö´ĞĞÊ§°ÜµÄÒì³£¶ÔÏó
- * ÎÒÃÇ¿ÉÒÔÊ¹ÓÃÄ£Ê½Æ¥Åä¹¦ÄÜÈ·¶¨Try¶ÔÏóÊÇÄÇÖÖ×ÓÀàĞÍ
+ * ä½¿ç”¨Tryç±»å‹,æœ‰ä¸¤ä¸ªå­ç±»å‹:Successç±»å‹ç”¨äºè¡¨ç¤ºæˆåŠŸæ‰§è¡Œæ“ä½œç»“æœ
+ * 												Failureç±»å‹ç”¨äºè¡¨ç¤ºæ‰§è¡Œå¤±è´¥çš„å¼‚å¸¸å¯¹è±¡
+ * æˆ‘ä»¬å¯ä»¥ä½¿ç”¨æ¨¡å¼åŒ¹é…åŠŸèƒ½ç¡®å®šTryå¯¹è±¡æ˜¯é‚£ç§å­ç±»å‹
  */
 
 object FuturesTry extends App {
   import scala.util._
 /**
- * Try[String]¶ÔÏóÊÇÍ¨¹ıÍ¬²½·½Ê½Ê¹ÓÃµÄ²»¿É±ä¶ÔÏó,ÓëFuture¶ÔÏó²»Í¬,´Ó±»´´½¨µÄÄÇÒ»¿ÌÆğ,Try[String]¾Í»áº¬ÓĞÒ»¸öÖµ
- * »òÒì³£,ÓëÆäËµÏñFuture¶ÔÏó,µ¹²»ÈçËµËü¸üÏñ¼¯ºÏ.
+ * Try[String]å¯¹è±¡æ˜¯é€šè¿‡åŒæ­¥æ–¹å¼ä½¿ç”¨çš„ä¸å¯å˜å¯¹è±¡,ä¸Futureå¯¹è±¡ä¸åŒ,ä»è¢«åˆ›å»ºçš„é‚£ä¸€åˆ»èµ·,Try[String]å°±ä¼šå«æœ‰ä¸€ä¸ªå€¼
+ * æˆ–å¼‚å¸¸,ä¸å…¶è¯´åƒFutureå¯¹è±¡,å€’ä¸å¦‚è¯´å®ƒæ›´åƒé›†åˆ.
  */
   val threadName: Try[String] = Try(Thread.currentThread.getName)
   val someText: Try[String] = Try("Try objects are created synchronously")
@@ -229,8 +229,8 @@ object FuturesTry extends App {
 }
 
 /**
- * ÖÂÃüÒì³£
- * Ç°Ãæ½éÉÜFuture¶ÔÏó»áÊ§Ğ§µÄÇé¿ö,FutureÎŞ·¨²¶×½µÄThrowable¶ÔÏó,
+ * è‡´å‘½å¼‚å¸¸
+ * å‰é¢ä»‹ç»Futureå¯¹è±¡ä¼šå¤±æ•ˆçš„æƒ…å†µ,Futureæ— æ³•æ•æ‰çš„Throwableå¯¹è±¡,
  */
 object FuturesNonFatal extends App {
   import scala.concurrent._
@@ -243,8 +243,8 @@ object FuturesNonFatal extends App {
   Thread.sleep(2000)
 }
 /**
- * Future¶ÔÏóÖĞµÄº¯Êı×éºÏ
- * ÒıÈëFuture¶ÔÏóºó¾Í½«×èÈûÏß³ÌµÄÔğÈÎ,´ÓAPIÉÏ×ªÒÆµ½ÁËµ÷ÓÃÕßÏß³ÌÉíÉÏ,
+ * Futureå¯¹è±¡ä¸­çš„å‡½æ•°ç»„åˆ
+ * å¼•å…¥Futureå¯¹è±¡åå°±å°†é˜»å¡çº¿ç¨‹çš„è´£ä»»,ä»APIä¸Šè½¬ç§»åˆ°äº†è°ƒç”¨è€…çº¿ç¨‹èº«ä¸Š,
  */
 
 object FuturesClumsyCallback extends App {
@@ -255,11 +255,11 @@ object FuturesClumsyCallback extends App {
   import scala.io.Source
   import scala.collection.convert.decorateAsScala._
 /**
- * blacklistFile¸Ã·½·¨»á¶ÁÈ¡ÎÄ¼ş.gitignoreÄÚÈİ,
- * ¹ıÂÇµô¿Õ°×ĞĞºÍËùÓĞÒÔ#¿ªÍ·µÄ×¢ÊÍĞĞ,findFiles·½·¨µİ¹é²éÕÒ·ûºÏÎÄ¼şÃû(gitignore)
- * ·µ»ØµÄFuture¶ÔÏó,×îÖÕ»áº¬ÓĞÒ»¸ö×Ö·û´®ÁĞ±í,´ú±íSBTÎÄ¼ş´æ´¢Ä¿Â¼ÖĞÓÉscala´´½¨µÄÎÄ¼ş.
+ * blacklistFileè¯¥æ–¹æ³•ä¼šè¯»å–æ–‡ä»¶.gitignoreå†…å®¹,
+ * è¿‡è™‘æ‰ç©ºç™½è¡Œå’Œæ‰€æœ‰ä»¥#å¼€å¤´çš„æ³¨é‡Šè¡Œ,findFilesæ–¹æ³•é€’å½’æŸ¥æ‰¾ç¬¦åˆæ–‡ä»¶å(gitignore)
+ * è¿”å›çš„Futureå¯¹è±¡,æœ€ç»ˆä¼šå«æœ‰ä¸€ä¸ªå­—ç¬¦ä¸²åˆ—è¡¨,ä»£è¡¨SBTæ–‡ä»¶å­˜å‚¨ç›®å½•ä¸­ç”±scalaåˆ›å»ºçš„æ–‡ä»¶.
  * 
- * Òì²½²Ù×÷¶ÁÈ¡ÎÄ¼şÄÚÈİ
+ * å¼‚æ­¥æ“ä½œè¯»å–æ–‡ä»¶å†…å®¹
  */
   def blacklistFile(filename: String) = Future {
     val lines = Source.fromFile(filename).getLines
@@ -267,16 +267,16 @@ object FuturesClumsyCallback extends App {
   }
   
   /**
-   * Òì²½¶ÁÈ¡ÎÄ¼şµÄÄÚÈİ,ÒÔÒì²½·½Ê½É¨ÃèÏîÄ¿Ä¿Â¼ÖĞµÄËùÓĞÎÄ¼ş²¢¶ÔËüÃÇÖ´ĞĞÆ¥Åä²Ù×÷
+   * å¼‚æ­¥è¯»å–æ–‡ä»¶çš„å†…å®¹,ä»¥å¼‚æ­¥æ–¹å¼æ‰«æé¡¹ç›®ç›®å½•ä¸­çš„æ‰€æœ‰æ–‡ä»¶å¹¶å¯¹å®ƒä»¬æ‰§è¡ŒåŒ¹é…æ“ä½œ
    * 
-   * ½«¸ñÊ½ÁĞ±íÌá½»¸ø¸Ã·½·¨ºó,¸Ã·½·¨¿ÉÒÔÕÒµ½µ±Ç°Ä¿Â¼ÖĞ·ûºÏÕâĞ©¸ñÊ½µÄËùÓĞÎÄ¼ş
+   * å°†æ ¼å¼åˆ—è¡¨æäº¤ç»™è¯¥æ–¹æ³•å,è¯¥æ–¹æ³•å¯ä»¥æ‰¾åˆ°å½“å‰ç›®å½•ä¸­ç¬¦åˆè¿™äº›æ ¼å¼çš„æ‰€æœ‰æ–‡ä»¶
    */
   def findFiles(patterns: List[String]): List[String] = {
     val root = new File(".")
     //println(root.getAbsolutePath+"|||||"+root.getCanonicalPath)
     for {
-      //iterateFiles·½·¨¿ªÔ´IO°üÖĞ,»á·µ»ØÕâĞ©ÏîÄ¿ÎÄ¼şµÄJavaµü´úÆ÷,Òò´Ë¿ÉÒÔÍ¨¹ıµ÷ÓÃasScala·½·¨½«
-      //Ö®×ª»»ÎªScalaµü´úÆ÷,È»ºó»ñµÃËùÓĞÆ¥ÅäµÄÎÄ¼şÂ·¾¶
+      //iterateFilesæ–¹æ³•å¼€æºIOåŒ…ä¸­,ä¼šè¿”å›è¿™äº›é¡¹ç›®æ–‡ä»¶çš„Javaè¿­ä»£å™¨,å› æ­¤å¯ä»¥é€šè¿‡è°ƒç”¨asScalaæ–¹æ³•å°†
+      //ä¹‹è½¬æ¢ä¸ºScalaè¿­ä»£å™¨,ç„¶åè·å¾—æ‰€æœ‰åŒ¹é…çš„æ–‡ä»¶è·¯å¾„
       f <- iterateFiles(root, null, true).asScala.toList
       pat <- patterns
       abspat = root.getCanonicalPath + File.separator + pat
@@ -289,8 +289,8 @@ object FuturesClumsyCallback extends App {
     
   }
   /**
-   * Í¨¹ıFuture¶ÔÏóÖĞµÄº¯Êı×éºÏ¿ÉÒÔÔÚforÍÆµ¼Óï¾äÖĞÊ¹ÓÃFuture¶ÔÏó,¶øÇÒÍ¨³£±ÈÊ¹ÓÃ»Øµ÷º¯ÊıÖ±¹Û.
-   * Ê¹ÓÃforeach¿ÉÒÔ±Ü¿ª³¹µ××èÈûµÄÇé¿ö
+   * é€šè¿‡Futureå¯¹è±¡ä¸­çš„å‡½æ•°ç»„åˆå¯ä»¥åœ¨foræ¨å¯¼è¯­å¥ä¸­ä½¿ç”¨Futureå¯¹è±¡,è€Œä¸”é€šå¸¸æ¯”ä½¿ç”¨å›è°ƒå‡½æ•°ç›´è§‚.
+   * ä½¿ç”¨foreachå¯ä»¥é¿å¼€å½»åº•é˜»å¡çš„æƒ…å†µ
    * 
    */
 //val lines = Source.fromFile(".gitignore").getLines
@@ -304,7 +304,7 @@ object FuturesClumsyCallback extends App {
   }
   
   /**
-   * ¿ÉÒÔÊ¹ÓÃMap·½Ê½¼ò»¯²Ù×÷,Map·½·¨½ÓÊÕº¯Êıf,²¢·µ»ØĞÂµÄFuture¶ÔÏó,
+   * å¯ä»¥ä½¿ç”¨Mapæ–¹å¼ç®€åŒ–æ“ä½œ,Mapæ–¹æ³•æ¥æ”¶å‡½æ•°f,å¹¶è¿”å›æ–°çš„Futureå¯¹è±¡,
    */
   
   def blacklistFiles(filename: String):Future[List[String]]=blacklistFile(filename).map(patterns => findFiles(patterns))
@@ -313,8 +313,8 @@ object FuturesClumsyCallback extends App {
    //System.exit(0);
 }
 /**
- * Ê¹ÓÃMap·½Ê½¼ò»¯²Ù×÷,Map·½·¨½ÓÊÕº¯Êıf,²¢·µ»ØĞÂµÄFuture¶ÔÏó,
- * ÎÒÃÇÊ¹ÓÃFuture¶ÔÏó,´Óbuild.sbtÎÄ¼şÖĞ»ñ×î³¤µÄÒ»ĞĞ,
+ * ä½¿ç”¨Mapæ–¹å¼ç®€åŒ–æ“ä½œ,Mapæ–¹æ³•æ¥æ”¶å‡½æ•°f,å¹¶è¿”å›æ–°çš„Futureå¯¹è±¡,
+ * æˆ‘ä»¬ä½¿ç”¨Futureå¯¹è±¡,ä»build.sbtæ–‡ä»¶ä¸­è·æœ€é•¿çš„ä¸€è¡Œ,
  */
 
 object FuturesMap extends App {
@@ -322,19 +322,19 @@ object FuturesMap extends App {
   import ExecutionContext.Implicits.global
   import scala.io.Source
   import scala.util.Success
-//´ÓÓ²ÅÌ¶ÁÈ¡¸ÃÎÄ¼ş
+//ä»ç¡¬ç›˜è¯»å–è¯¥æ–‡ä»¶
   val buildFile = Future { Source.fromFile("build.sbt").getLines }
- //Òì²½¶ÁÈ¡ÎÄ¼ş
+ //å¼‚æ­¥è¯»å–æ–‡ä»¶
   val gitignoreFile = Future { Source.fromFile(".gitignore-SAMPLE").getLines }
 /**
- * Future.map·½·¨¿ÉÒÔ½«Ò»¸öFuture¶ÔÏóÖĞµÄÖµÓëÁíÒ»¸öFuture¶ÔÏóÖĞµÄÖµ¶ÔÓ¦ÆğÀ´,¸Ã·½·¨²»»á×èÈûÏß³Ì,»áÁ¢¼´»Ø·µ»ØFuture¶ÔÏó
- * µ±³õÊ¼µÄFuture¶ÔÏóÍ¨¹ıÄ³¸öÖµÍêÉÆºó,±»·µ»ØFuture[S]¶ÔÏó×îÖÕ»á±»f(x)·½·¨ÍêÉÆ
+ * Future.mapæ–¹æ³•å¯ä»¥å°†ä¸€ä¸ªFutureå¯¹è±¡ä¸­çš„å€¼ä¸å¦ä¸€ä¸ªFutureå¯¹è±¡ä¸­çš„å€¼å¯¹åº”èµ·æ¥,è¯¥æ–¹æ³•ä¸ä¼šé˜»å¡çº¿ç¨‹,ä¼šç«‹å³å›è¿”å›Futureå¯¹è±¡
+ * å½“åˆå§‹çš„Futureå¯¹è±¡é€šè¿‡æŸä¸ªå€¼å®Œå–„å,è¢«è¿”å›Future[S]å¯¹è±¡æœ€ç»ˆä¼šè¢«f(x)æ–¹æ³•å®Œå–„
  */
-  val longestBuildLine = buildFile.map(lines => lines.maxBy(_.length))//»ñ×î³¤µÄÒ»ĞĞ  
+  val longestBuildLine = buildFile.map(lines => lines.maxBy(_.length))//è·æœ€é•¿çš„ä¸€è¡Œ  
   longestBuildLine.onComplete {
     case Success(line) => log(s"the longest line is '$line'")
   }
-  //Ê¹ÓÃforÍÆµ¼Óï¾ä,Òì³£´¦Àí
+  //ä½¿ç”¨foræ¨å¯¼è¯­å¥,å¼‚å¸¸å¤„ç†
   val longestGitignoreLine = for (lines <- gitignoreFile) yield lines.maxBy(_.length)
   longestGitignoreLine.failed.foreach {
     case t => log(s"no longest line, because ${t.getMessage}")
@@ -342,18 +342,18 @@ object FuturesMap extends App {
    Thread.sleep(2000)
 }
 /**
- * Raw Î´¼Ó¹¤µÄ; ÎŞ¾­ÑéµÄ
+ * Raw æœªåŠ å·¥çš„; æ— ç»éªŒçš„
  */
 
 object FuturesFlatMapRaw extends App {
   import scala.concurrent._
   import ExecutionContext.Implicits.global
   import scala.io.Source
-//Òì²½·½Ê½»ñÈ¡ÍøÂçÎÄ¼ş
+//å¼‚æ­¥æ–¹å¼è·å–ç½‘ç»œæ–‡ä»¶
   val netiquette = Future { Source.fromURL("http://www.ietf.org/rfc/rfc1855.txt").mkString }
-  //Òì²½·½Ê½»ñÈ¡±êÌâ¹æ·¶
+  //å¼‚æ­¥æ–¹å¼è·å–æ ‡é¢˜è§„èŒƒ
   val urlSpec = Future { Source.fromURL("http://www.w3.org/Addressing/URL/url-spec.txt").mkString }
-  //Ê¹ÓÃflatMapºÍmap×éºÏ
+  //ä½¿ç”¨flatMapå’Œmapç»„åˆ
   val answer = netiquette.flatMap { nettext =>
     urlSpec.map { urltext =>
       "First, read this: " + nettext + ". Now, try this: " + urltext
@@ -372,7 +372,7 @@ object FuturesFlatMap extends App {
   import ExecutionContext.Implicits.global
   import scala.io.Source
 /**
- * Í¨¹ıÒşº¬·½Ê½ÔÚforÍÆµ¼Óï¾äÖĞÊ¹ÓÃflatMap·½·¨
+ * é€šè¿‡éšå«æ–¹å¼åœ¨foræ¨å¯¼è¯­å¥ä¸­ä½¿ç”¨flatMapæ–¹æ³•
  */
   val netiquette = Future { Source.fromURL("http://www.ietf.org/rfc/rfc1855.txt").mkString }
   val urlSpec = Future { Source.fromURL("http://www.w3.org/Addressing/URL/url-spec.txt").mkString }
@@ -383,9 +383,9 @@ object FuturesFlatMap extends App {
     "First of all, read this: " + nettext + " Once you're done, try this: " + urltext
   }
 /**
- * ¾­¹ı±àÒëºó,¸ÃforÍÆµ¼Óï¾ä¾Í»á±äÎªÊ¹ÓÃflatMap·½·¨µÄ´úÂë,ÕâÑùÊ¹ÓÃÎÒÃÇµÄ¹¤×÷±äµÃ¼òµ¥¶àÁË,Õâ¶Î³ÌĞòµÄ¿É¶ÁĞÔ·Ç³£¸ß.
- * ¶ÔÓÚFuture¶ÔÏónetiquetteÖĞµÄnettextÖµºÍFuture¶ÔÏóurltextÖµÀ´Ëµ,answerÊÇÍ¨¹ı½«nettextºÍurltextÖµÁ¬½ÓÆğÀ´Éú³ÉĞÂ
- * µÄFuture¶ÔÏó
+ * ç»è¿‡ç¼–è¯‘å,è¯¥foræ¨å¯¼è¯­å¥å°±ä¼šå˜ä¸ºä½¿ç”¨flatMapæ–¹æ³•çš„ä»£ç ,è¿™æ ·ä½¿ç”¨æˆ‘ä»¬çš„å·¥ä½œå˜å¾—ç®€å•å¤šäº†,è¿™æ®µç¨‹åºçš„å¯è¯»æ€§éå¸¸é«˜.
+ * å¯¹äºFutureå¯¹è±¡netiquetteä¸­çš„nettextå€¼å’ŒFutureå¯¹è±¡urltextå€¼æ¥è¯´,answeræ˜¯é€šè¿‡å°†nettextå’Œurltextå€¼è¿æ¥èµ·æ¥ç”Ÿæˆæ–°
+ * çš„Futureå¯¹è±¡
  */
   answer.foreach {
     case contents => log(contents)
@@ -399,8 +399,8 @@ object FuturesDifferentFlatMap extends App {
   import ExecutionContext.Implicits.global
   import scala.io.Source
 /**
- * forÍÆµ¼Óï¾änettextÊÇ´ÓµÚÒ»¸öFuture¶ÔÏó±»ÍêÉÆºó,ÍêÉÆµÚ¶ş¸öFuture¶ÔÏóµÄ²Ù×÷²Å»á±»Ö´ĞĞ,
- * µ±Òì²½·½Ê½Ê¹ÓÃnettextÖµ¼ÆËãµÚ¶ş¸öFuture¶ÔÏóµÄÍêÉÆÊ±,ÕâÖÖÄ£Ê½²ÅÓĞÒâÒå
+ * foræ¨å¯¼è¯­å¥nettextæ˜¯ä»ç¬¬ä¸€ä¸ªFutureå¯¹è±¡è¢«å®Œå–„å,å®Œå–„ç¬¬äºŒä¸ªFutureå¯¹è±¡çš„æ“ä½œæ‰ä¼šè¢«æ‰§è¡Œ,
+ * å½“å¼‚æ­¥æ–¹å¼ä½¿ç”¨nettextå€¼è®¡ç®—ç¬¬äºŒä¸ªFutureå¯¹è±¡çš„å®Œå–„æ—¶,è¿™ç§æ¨¡å¼æ‰æœ‰æ„ä¹‰
  */
   val answer = for {
     nettext <- Future { Source.fromURL("http://www.ietf.org/rfc/rfc1855.txt").mkString }
@@ -421,7 +421,7 @@ object FuturesRecover extends App {
   import ExecutionContext.Implicits.global
   import scala.io.Source
 /**
- * FutureÌá¹©³ö´íÊ±ÏÔÊ¾Ä¬ÈÏÏûÏ¢
+ * Futureæä¾›å‡ºé”™æ—¶æ˜¾ç¤ºé»˜è®¤æ¶ˆæ¯
  */
   val netiquetteUrl = "http://www.ietf.org/rfc/rfc1855.doc"
   val netiquette = Future { Source.fromURL(netiquetteUrl).mkString } recover {

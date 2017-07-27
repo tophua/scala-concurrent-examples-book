@@ -4,14 +4,14 @@ package ch3
 import org.learningconcurrency._
 import ch3._
 /**
- * Ô­×Ó±äÁ¿
+ * åŸå­å˜é‡
  */
 object AtomicUid extends App {
   import java.util.concurrent.atomic._
-  //Ô­×Ó±äÁ¿³õÊ¼»¯Îª0
+  //åŸå­å˜é‡åˆå§‹åŒ–ä¸º0
   private val uid = new AtomicLong(0L)
- //incrementAndGet·½·¨ÊÇÒ»¸ö¸´ÔÓµÄ¿ÉÏßĞÔ²Ù×÷,Ëü»áÍ¬Ê±¶ÁÈ¡±äÁ¿uidÖµ,¼ÆËã¸ÃÖµ¼Ó1µÃµ½½á¹û,
- //½«½á¹ûĞ´»Ø±äÁ¿uidÖĞ,È»ºó·µ»ØÕâ¸ö½á¹û
+ //incrementAndGetæ–¹æ³•æ˜¯ä¸€ä¸ªå¤æ‚çš„å¯çº¿æ€§æ“ä½œ,å®ƒä¼šåŒæ—¶è¯»å–å˜é‡uidå€¼,è®¡ç®—è¯¥å€¼åŠ 1å¾—åˆ°ç»“æœ,
+ //å°†ç»“æœå†™å›å˜é‡uidä¸­,ç„¶åè¿”å›è¿™ä¸ªç»“æœ
   def getUniqueId(): Long = uid.incrementAndGet()
 
   execute {

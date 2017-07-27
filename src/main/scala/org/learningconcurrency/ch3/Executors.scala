@@ -5,32 +5,32 @@ import org.learningconcurrency._
 import ch3._
 import java.util.concurrent.TimeUnit
 /**
- * ÊµÀý»¯ForkJoinPool½Ó¿Ú·½Ê½,ÒÔ¼°¶ÔÆäÌá½»ÄÜ¹»Í¨¹ýÒì²½·½Ê½´¦ÀíµÄÈÎÎñµÄ·½Ê½
+ * å®žä¾‹åŒ–ForkJoinPoolæŽ¥å£æ–¹å¼,ä»¥åŠå¯¹å…¶æäº¤èƒ½å¤Ÿé€šè¿‡å¼‚æ­¥æ–¹å¼å¤„ç†çš„ä»»åŠ¡çš„æ–¹å¼
  */
 object ExecutorsCreate extends App {
   import scala.concurrent._
   import java.util.concurrent.TimeUnit
   /**
-   * Fork/Join¿ò¼ÜÊÇJava7Ìá¹©ÁËµÄÒ»¸öÓÃÓÚ²¢ÐÐÖ´ÐÐÈÎÎñµÄ¿ò¼Ü£¬ ÊÇÒ»¸ö°Ñ´óÈÎÎñ·Ö¸î³ÉÈô¸É¸öÐ¡ÈÎÎñ£¬
-   * ×îÖÕ»ã×ÜÃ¿¸öÐ¡ÈÎÎñ½á¹ûºóµÃµ½´óÈÎÎñ½á¹ûµÄ¿ò¼Ü
+   * Fork/Joinæ¡†æž¶æ˜¯Java7æä¾›äº†çš„ä¸€ä¸ªç”¨äºŽå¹¶è¡Œæ‰§è¡Œä»»åŠ¡çš„æ¡†æž¶ï¼Œ æ˜¯ä¸€ä¸ªæŠŠå¤§ä»»åŠ¡åˆ†å‰²æˆè‹¥å¹²ä¸ªå°ä»»åŠ¡ï¼Œ
+   * æœ€ç»ˆæ±‡æ€»æ¯ä¸ªå°ä»»åŠ¡ç»“æžœåŽå¾—åˆ°å¤§ä»»åŠ¡ç»“æžœçš„æ¡†æž¶
    * 
-   * ForkJoinPool:ForkJoinTaskÐèÒªÍ¨¹ýForkJoinPoolÀ´Ö´ÐÐ£¬ÈÎÎñ·Ö¸î³öµÄ×ÓÈÎÎñ»áÌí¼Óµ½µ±Ç°¹¤×÷Ïß³ÌËùÎ¬»¤µÄË«¶Ë¶ÓÁÐÖÐ£¬½øÈë¶ÓÁÐµÄÍ·²¿¡£
-   * µ±Ò»¸ö¹¤×÷Ïß³ÌµÄ¶ÓÁÐÀïÔÝÊ±Ã»ÓÐÈÎÎñÊ±£¬Ëü»áËæ»ú´ÓÆäËû¹¤×÷Ïß³ÌµÄ¶ÓÁÐµÄÎ²²¿»ñÈ¡Ò»¸öÈÎÎñ
+   * ForkJoinPool:ForkJoinTaskéœ€è¦é€šè¿‡ForkJoinPoolæ¥æ‰§è¡Œï¼Œä»»åŠ¡åˆ†å‰²å‡ºçš„å­ä»»åŠ¡ä¼šæ·»åŠ åˆ°å½“å‰å·¥ä½œçº¿ç¨‹æ‰€ç»´æŠ¤çš„åŒç«¯é˜Ÿåˆ—ä¸­ï¼Œè¿›å…¥é˜Ÿåˆ—çš„å¤´éƒ¨ã€‚
+   * å½“ä¸€ä¸ªå·¥ä½œçº¿ç¨‹çš„é˜Ÿåˆ—é‡Œæš‚æ—¶æ²¡æœ‰ä»»åŠ¡æ—¶ï¼Œå®ƒä¼šéšæœºä»Žå…¶ä»–å·¥ä½œçº¿ç¨‹çš„é˜Ÿåˆ—çš„å°¾éƒ¨èŽ·å–ä¸€ä¸ªä»»åŠ¡
    **/
-  val executor = new java.util.concurrent.ForkJoinPool //ÊµÀý»¯ForkJoinPoolÀà
+  val executor = new java.util.concurrent.ForkJoinPool //å®žä¾‹åŒ–ForkJoinPoolç±»
   /**
-   * ForkJoinPool½Ó¿Úexecute½ÓÊÕRunnable
+   * ForkJoinPoolæŽ¥å£executeæŽ¥æ”¶Runnable
    */
   executor.execute(new Runnable {
     def run() = log("This task is run asynchronously.")
   })
   //
    //Thread.sleep(500)
-  //²»Ê¹ÓÃThread.sleep,ÉèÖÃÍê³ÉËùÓÐÈÎÎñËùÐèµÄ×î³¤µÈ´ýÊ±¼ä
+  //ä¸ä½¿ç”¨Thread.sleep,è®¾ç½®å®Œæˆæ‰€æœ‰ä»»åŠ¡æ‰€éœ€çš„æœ€é•¿ç­‰å¾…æ—¶é—´
    executor.awaitTermination(60, TimeUnit.SECONDS)
 }
 /**
- * ExecutionContextÀàµÄ°éÉú¶ÔÏóº¬ÓÐÄ¬ÈÏµÄÉÏÏÂÎÄ,¸Ã¶ÔÏóµÄÄÚ²¿Ê¹ÓÃForkJoinPoolÊµÀý
+ * ExecutionContextç±»çš„ä¼´ç”Ÿå¯¹è±¡å«æœ‰é»˜è®¤çš„ä¸Šä¸‹æ–‡,è¯¥å¯¹è±¡çš„å†…éƒ¨ä½¿ç”¨ForkJoinPoolå®žä¾‹
  */
 
 object ExecutionContextGlobal extends App {
@@ -40,13 +40,13 @@ object ExecutionContextGlobal extends App {
     def run() = log("Running on the execution context.")
   })
   Thread.sleep(1000)
-  //²»Ê¹ÓÃThread.sleep,ÉèÖÃÍê³ÉËùÓÐÈÎÎñËùÐèµÄ×î³¤µÈ´ýÊ±¼ä
+  //ä¸ä½¿ç”¨Thread.sleep,è®¾ç½®å®Œæˆæ‰€æœ‰ä»»åŠ¡æ‰€éœ€çš„æœ€é•¿ç­‰å¾…æ—¶é—´
    
 }
 /**
- * ExecutionContextÀàµÄ°éÉú¶ÔÏó¶¨ÒåÁ½¸ö·½·¨ExecutionContextExecutorºÍExecutionContextExecutorService
- * ¸ÃÀý×ÓÍ¨¹ýnew forkjoin.ForkJoinPool´´½¨ExecutionContextExecutor¶ÔÏó,ÒâÎ¶×ÅÕâ¸öForkJoinPoolÊµÀýÍ¨³£»á
- * ÔÚÆäËûÏß³Ì³ØÖÐ±£³ÖÄ¬ÈÏÏß³ÌÊý,ÊµÀýÈ«¾Ö¶ÔÏóExecutionContext´úÂë¸ü¼Ó¼ò½à.
+ * ExecutionContextç±»çš„ä¼´ç”Ÿå¯¹è±¡å®šä¹‰ä¸¤ä¸ªæ–¹æ³•ExecutionContextExecutorå’ŒExecutionContextExecutorService
+ * è¯¥ä¾‹å­é€šè¿‡new forkjoin.ForkJoinPoolåˆ›å»ºExecutionContextExecutorå¯¹è±¡,æ„å‘³ç€è¿™ä¸ªForkJoinPoolå®žä¾‹é€šå¸¸ä¼š
+ * åœ¨å…¶ä»–çº¿ç¨‹æ± ä¸­ä¿æŒé»˜è®¤çº¿ç¨‹æ•°,å®žä¾‹å…¨å±€å¯¹è±¡ExecutionContextä»£ç æ›´åŠ ç®€æ´.
  * 
  */
 
@@ -59,7 +59,7 @@ object ExecutionContextCreate extends App {
 
 }
 /**
- * ÉùÃ÷32¸ö¶ÀÁ¢²Ù×÷,Ã¿¸ö²Ù×÷»á³ÖÐøÁ½ÃëÖÓ,²¢Ö´ÐÐÍê³ÉÖ®Ç°ÓµÓÐ10ÃëµÄµÈ´ýÊ±¼ä
+ * å£°æ˜Ž32ä¸ªç‹¬ç«‹æ“ä½œ,æ¯ä¸ªæ“ä½œä¼šæŒç»­ä¸¤ç§’é’Ÿ,å¹¶æ‰§è¡Œå®Œæˆä¹‹å‰æ‹¥æœ‰10ç§’çš„ç­‰å¾…æ—¶é—´
  */
 
 object ExecutionContextSleep extends App {

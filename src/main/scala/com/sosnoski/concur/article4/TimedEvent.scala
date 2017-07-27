@@ -6,39 +6,39 @@ import java.util.TimerTask
 import scala.concurrent._
 
 /** Create Future[T] instances which will be completed after a delay.
- *  ½¨Ä£Òì²½ÊÂ¼ş
+ *  å»ºæ¨¡å¼‚æ­¥äº‹ä»¶
   */
 object TimedEvent {
-  //Scala ´úÂëÊ¹ÓÃÒ»¸ö java.util.Timer À´°²ÅÅ java.util.TimerTask ÔÚÒ»¸öÑÓ³ÙÖ®ºóÖ´ĞĞ
+  //Scala ä»£ç ä½¿ç”¨ä¸€ä¸ª java.util.Timer æ¥å®‰æ’ java.util.TimerTask åœ¨ä¸€ä¸ªå»¶è¿Ÿä¹‹åæ‰§è¡Œ
   val timer = new Timer
 /**
- * delayedSuccess º¯Êı¶¨ÖÆÁËÒ»¸öÈÎÎñ£¬ÔÚÔËĞĞÊ±³É¹¦Íê³ÉÒ»¸ö Scala Future[T]£¬È»ºó½«¸Ã future ·µ»Ø¸øµ÷ÓÃ·½¡£
- * delayedSuccess º¯Êı·µ»ØÏàÍ¬ÀàĞÍµÄ future£¬µ«Ê¹ÓÃÁËÒ»¸öÔÚÍê³É future Ê±·¢Éú IllegalArgumentException Òì³£µÄÊ§°ÜÈÎÎñ
+ * delayedSuccess å‡½æ•°å®šåˆ¶äº†ä¸€ä¸ªä»»åŠ¡ï¼Œåœ¨è¿è¡Œæ—¶æˆåŠŸå®Œæˆä¸€ä¸ª Scala Future[T]ï¼Œç„¶åå°†è¯¥ future è¿”å›ç»™è°ƒç”¨æ–¹ã€‚
+ * delayedSuccess å‡½æ•°è¿”å›ç›¸åŒç±»å‹çš„ futureï¼Œä½†ä½¿ç”¨äº†ä¸€ä¸ªåœ¨å®Œæˆ future æ—¶å‘ç”Ÿ IllegalArgumentException å¼‚å¸¸çš„å¤±è´¥ä»»åŠ¡
  */
   /** Return a Future which completes successfully with the supplied value after secs seconds. */
   def delayedSuccess[T](secs: Int, value: T): Future[T] = {
-    val result = Promise[T]//Promise ½»ÓÉÈÎÎñÖ´ĞĞÕß£¬ÈÎÎñÖ´ĞĞÕßÍ¨¹ı Promise ¿ÉÒÔ±ê¼ÇÈÎÎñÍê³É»òÕßÊ§°Ü
-    //java.util.TimerTask ÔÚÒ»¸öÑÓ³ÙÖ®ºóÖ´ĞĞ¡£Ã¿¸ö TimerTask ÔÚÔËĞĞÊ±Íê³ÉÒ»¸öÓĞ¹ØÁªµÄ future
+    val result = Promise[T]//Promise äº¤ç”±ä»»åŠ¡æ‰§è¡Œè€…ï¼Œä»»åŠ¡æ‰§è¡Œè€…é€šè¿‡ Promise å¯ä»¥æ ‡è®°ä»»åŠ¡å®Œæˆæˆ–è€…å¤±è´¥
+    //java.util.TimerTask åœ¨ä¸€ä¸ªå»¶è¿Ÿä¹‹åæ‰§è¡Œã€‚æ¯ä¸ª TimerTask åœ¨è¿è¡Œæ—¶å®Œæˆä¸€ä¸ªæœ‰å…³è”çš„ future
     timer.schedule(new TimerTask() {
       def run() = {
         result.success(value)
       }
     }, secs * 1000)
-    // //Future ±íÊ¾Ò»¸ö¿ÉÄÜ»¹Ã»ÓĞÊµ¼ÊÍê³ÉµÄÒì²½ÈÎÎñµÄ½á¹û£¬Õë¶ÔÕâ¸ö½á¹û¿ÉÒÔÌí¼Ó Callback ÒÔ±ãÔÚÈÎÎñÖ´ĞĞ³É¹¦»òÊ§°Üºó×ö³ö¶ÔÓ¦µÄ²Ù×÷
+    // //Future è¡¨ç¤ºä¸€ä¸ªå¯èƒ½è¿˜æ²¡æœ‰å®é™…å®Œæˆçš„å¼‚æ­¥ä»»åŠ¡çš„ç»“æœï¼Œé’ˆå¯¹è¿™ä¸ªç»“æœå¯ä»¥æ·»åŠ  Callback ä»¥ä¾¿åœ¨ä»»åŠ¡æ‰§è¡ŒæˆåŠŸæˆ–å¤±è´¥ååšå‡ºå¯¹åº”çš„æ“ä½œ
     result.future
   }
 
   /** Return a Future which completes failing with an IllegalArgumentException after secs
     * seconds. */
   def delayedFailure(secs: Int, msg: String): Future[Int] = {
-    val result = Promise[Int]//Promise ½»ÓÉÈÎÎñÖ´ĞĞÕß£¬ÈÎÎñÖ´ĞĞÕßÍ¨¹ı Promise ¿ÉÒÔ±ê¼ÇÈÎÎñÍê³É»òÕßÊ§°Ü
+    val result = Promise[Int]//Promise äº¤ç”±ä»»åŠ¡æ‰§è¡Œè€…ï¼Œä»»åŠ¡æ‰§è¡Œè€…é€šè¿‡ Promise å¯ä»¥æ ‡è®°ä»»åŠ¡å®Œæˆæˆ–è€…å¤±è´¥
     timer.schedule(new TimerTask() {
       def run() = {
         result.failure(new IllegalArgumentException(msg))
       }
     }, secs * 1000)
     
-    //Future ±íÊ¾Ò»¸ö¿ÉÄÜ»¹Ã»ÓĞÊµ¼ÊÍê³ÉµÄÒì²½ÈÎÎñµÄ½á¹û£¬Õë¶ÔÕâ¸ö½á¹û¿ÉÒÔÌí¼Ó Callback ÒÔ±ãÔÚÈÎÎñÖ´ĞĞ³É¹¦»òÊ§°Üºó×ö³ö¶ÔÓ¦µÄ²Ù×÷
+    //Future è¡¨ç¤ºä¸€ä¸ªå¯èƒ½è¿˜æ²¡æœ‰å®é™…å®Œæˆçš„å¼‚æ­¥ä»»åŠ¡çš„ç»“æœï¼Œé’ˆå¯¹è¿™ä¸ªç»“æœå¯ä»¥æ·»åŠ  Callback ä»¥ä¾¿åœ¨ä»»åŠ¡æ‰§è¡ŒæˆåŠŸæˆ–å¤±è´¥ååšå‡ºå¯¹åº”çš„æ“ä½œ
     result.future
   }
 }

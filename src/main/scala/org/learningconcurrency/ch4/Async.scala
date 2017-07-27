@@ -6,9 +6,9 @@ import org.learningconcurrency._
 
 
 /**
- * Òì²½async
- * async·½·¨µÈ¼ÛFuture,Ëü»áÖ´ĞĞÒ»¸öÒì²½¼ÆËã²¢·µ»ØÒ»¸öFuture¶ÔÏó,
- * await·½·¨»á½ÓÊÕÒ»¸öFuture¶ÔÏó,²¢·µ»Ø¸Ã¶ÔÏóµÄÖµ,È»¶øÓëAwait¶ÔÏóÖĞµÄ·½·¨²»Í¬,awaity·½·¨²»»á×èÈû»ù´¡Ïß³Ì
+ * å¼‚æ­¥async
+ * asyncæ–¹æ³•ç­‰ä»·Future,å®ƒä¼šæ‰§è¡Œä¸€ä¸ªå¼‚æ­¥è®¡ç®—å¹¶è¿”å›ä¸€ä¸ªFutureå¯¹è±¡,
+ * awaitæ–¹æ³•ä¼šæ¥æ”¶ä¸€ä¸ªFutureå¯¹è±¡,å¹¶è¿”å›è¯¥å¯¹è±¡çš„å€¼,ç„¶è€Œä¸Awaitå¯¹è±¡ä¸­çš„æ–¹æ³•ä¸åŒ,awaityæ–¹æ³•ä¸ä¼šé˜»å¡åŸºç¡€çº¿ç¨‹
  * 
  */
 object AsyncBasic extends App {
@@ -56,10 +56,10 @@ object AsyncWhile extends App {
   import ExecutionContext.Implicits.global
   import scala.async.Async.{async, await}
 /**
- * Òì²½Ö´ĞĞ async
+ * å¼‚æ­¥æ‰§è¡Œ async
  **/
   def delay(nSeconds: Int) = async {
-    blocking {//scala°ü blocking
+    blocking {//scalaåŒ… blocking
       Thread.sleep(nSeconds * 1000)
     }
   }

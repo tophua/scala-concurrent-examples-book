@@ -7,16 +7,16 @@ import ch3._
 
 
 /**
- * ����ֵ:��ָ�ڵ�һ�α���ȡʱ,����ֵ�������Ҳ����ʽ������г�ʼ����ֵ,
- * ������ֵͨ��ͬ,��ֵͨ���ڱ�����ʱ����ʼ��,�������ֵ�ڳ����д�û�б���ȡ,��ô��Զ�����ʼ��
- * ���Ҳ���Ḷ����ʼ������Ĵ���.
+ * 惰性值:是指在第一次被读取时,由其值定义中右侧表达式对其进行初始化的值,
+ * 在与普通值不同,普通值会在被创建时被初始化,如果惰性值在程序中从没有被读取,那么永远不会初始化
+ * 因此也不会付出初始化所需的代价.
  */
 
 object LazyValsCreate extends App {
   import scala.concurrent._
   /**
-   * ����ֵֻӦ���̷߳�����ʱ���г�ʼ��,�������ʼ����������ֻ��ִ��һ��,
-   * �����̷߳���������obj��nonֵ
+   * 惰性值只应在线程访问它时进行初始化,而且其初始化操作至多只能执行一次,
+   * 两个线程访问了两个obj和non值
    */
   lazy val obj = new AnyRef
   lazy val nondeterministic = s"made by ${Thread.currentThread.getName}"
@@ -31,7 +31,7 @@ object LazyValsCreate extends App {
 }
 
 /**
- * ����ֵ
+ * 惰性值
  */
 object LazyValsObject extends App {
   object Lazy {
@@ -39,7 +39,7 @@ object LazyValsObject extends App {
   }
 
   log("Main thread is about to reference Lazy.")
-  Lazy //�ڵ����д����е�һ�α�����,���ʼ�������Ż�����,���Ҳ����������ö��������г�ʼ������
+  Lazy //在第四行代码中第一次被引用,其初始化方法才会运行,而且不是在声明该对象是运行初始化方法
   log("Main thread completed.")
 }
 

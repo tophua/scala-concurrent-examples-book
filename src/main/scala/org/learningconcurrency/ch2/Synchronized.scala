@@ -6,7 +6,7 @@ import org.learningconcurrency._
 import ch2._
 
 /**
- * synchronized¿ÉÒÔÈ·±£Ïß³ÌÐ´Èë²Ù×÷µÄ¿É¼ûÐÔ,»¹¿ÉÒÔÏÞÖÆ¶Ô¹²ÏíÄÚ´æÇøÓò½øÐÐµÄ²¢·¢·ÃÎÊ,ÏÞÖÆ·ÃÎÊ¹²Ïí×ÊÔ´µÄÍ¬²½»úÖÆÍ¨³£³ÆÎªËø
+ * synchronizedå¯ä»¥ç¡®ä¿çº¿ç¨‹å†™å…¥æ“ä½œçš„å¯è§æ€§,è¿˜å¯ä»¥é™åˆ¶å¯¹å…±äº«å†…å­˜åŒºåŸŸè¿›è¡Œçš„å¹¶å‘è®¿é—®,é™åˆ¶è®¿é—®å…±äº«èµ„æºçš„åŒæ­¥æœºåˆ¶é€šå¸¸ç§°ä¸ºé”
  * 
  */
 
@@ -14,8 +14,8 @@ object SynchronizedProtectedUid extends App {
 
   var uidCount = 0L
 /**
- * synchronized(Í¬²½»¯)È·±£ÁËÓÉÒ»¸öÏß³ÌÖ´ÐÐµÄÍ¬²½»¯´úÂë¿é²»»áÍ¬Ê±ÔÙÓÉÆäËûÏß³ÌÖ´ÐÐ,
- * »¹È·±£ÁËÍ¬Ò»¸ö¶ÔÏó(this¶ÔÏó)ÖÐµÄÆäËûÍ¬²½´úÂë²»»á±»µ÷ÓÃ.
+ * synchronized(åŒæ­¥åŒ–)ç¡®ä¿äº†ç”±ä¸€ä¸ªçº¿ç¨‹æ‰§è¡Œçš„åŒæ­¥åŒ–ä»£ç å—ä¸ä¼šåŒæ—¶å†ç”±å…¶ä»–çº¿ç¨‹æ‰§è¡Œ,
+ * è¿˜ç¡®ä¿äº†åŒä¸€ä¸ªå¯¹è±¡(thiså¯¹è±¡)ä¸­çš„å…¶ä»–åŒæ­¥ä»£ç ä¸ä¼šè¢«è°ƒç”¨.
  */
   def getUniqueId() = this.synchronized {
     val freshUid = uidCount + 1
@@ -36,7 +36,7 @@ object SynchronizedProtectedUid extends App {
 
 }
 /**
- * this.synchronizedÐ´Èë²Ù×÷¶¼ÊÇÔ­×Ó»¯,¶øÇÒ¶Ô¶ÔÏóxÖ´ÐÐsynchronizedÓï¾äµÄËùÓÐÏß³Ì¶¼ÄÜ¹»¶Áµ½ÆäËûÏß³ÌÖ´ÐÐÕâÐ©Ð´Èë²Ù×÷µÄÇé¿ö
+ * this.synchronizedå†™å…¥æ“ä½œéƒ½æ˜¯åŽŸå­åŒ–,è€Œä¸”å¯¹å¯¹è±¡xæ‰§è¡Œsynchronizedè¯­å¥çš„æ‰€æœ‰çº¿ç¨‹éƒ½èƒ½å¤Ÿè¯»åˆ°å…¶ä»–çº¿ç¨‹æ‰§è¡Œè¿™äº›å†™å…¥æ“ä½œçš„æƒ…å†µ
  */
 
 // we should skip this one
@@ -46,14 +46,14 @@ object SynchronizedSharedStateAccess extends App {
     var t2started = false
     var t1index = 0
     var t2index = 0
-  //ÏÂÃæÁ½¸öÏß³Ì(t1,t2)·ÃÎÊÒ»¶Ô²¼¶ûÐÍ±äÁ¿(aºÍb)ºÍÒ»¶Ô±äÁ¿(x,y)
-  //Ïß³Ìt1½«±äÁ¿aÉèÖÃÎªtrue,È»ºó¼ÇÈ¡±äÁ¿bµÄÖµ,Èç¹û±äÁ¿bµÄÖµÎªtrue
-  //Ïß³Ìt1¾Í»á½«0¸³Óè±äÁ¿y,·ñÔò¾Í»á½«1¸³Óè±äÁ¿y
+  //ä¸‹é¢ä¸¤ä¸ªçº¿ç¨‹(t1,t2)è®¿é—®ä¸€å¯¹å¸ƒå°”åž‹å˜é‡(aå’Œb)å’Œä¸€å¯¹å˜é‡(x,y)
+  //çº¿ç¨‹t1å°†å˜é‡aè®¾ç½®ä¸ºtrue,ç„¶åŽè®°å–å˜é‡bçš„å€¼,å¦‚æžœå˜é‡bçš„å€¼ä¸ºtrue
+  //çº¿ç¨‹t1å°±ä¼šå°†0èµ‹äºˆå˜é‡y,å¦åˆ™å°±ä¼šå°†1èµ‹äºˆå˜é‡y
     val t1 = thread {
       Thread.sleep(1)    
-      //µ±³öÏÖ¶à¸öÏß³Ì¶¼»á·ÃÎÊ¶ÁÈ¡»òÐ´ÈëÄ³¸ö×´Ì¬Ê±,¾ÍÓ¦¸Ã¶Ô¶ÔÏóÊ¹ÓÃsynchronizedÓï¾ä
-      //ÕâÑù×ö¿ÉÒÔÔÚ×î´ó³Ì¶ÈÉÏÈ·±£µ¥¸öÏß³ÌËæÊ±Ö´ÐÐ¶ÔÏóÖÐsynchronizedÓï¾ä,¿ÉÒÔÈ·±£Ò»¸öÏß³Ì¶ÔÄÚ´æ
-      //Ö´ÐÐµÄËùÓÐÐ´Èë²Ù×÷,¶ÔÓÚÍ¬Ò»¸ö¶ÔÏóÖ´ÐÐsynchronizedÓï¾äµÄËùÓÐºóÐøÏß³Ì¶¼ÊÇ¿É¼ûµÄ
+      //å½“å‡ºçŽ°å¤šä¸ªçº¿ç¨‹éƒ½ä¼šè®¿é—®è¯»å–æˆ–å†™å…¥æŸä¸ªçŠ¶æ€æ—¶,å°±åº”è¯¥å¯¹å¯¹è±¡ä½¿ç”¨synchronizedè¯­å¥
+      //è¿™æ ·åšå¯ä»¥åœ¨æœ€å¤§ç¨‹åº¦ä¸Šç¡®ä¿å•ä¸ªçº¿ç¨‹éšæ—¶æ‰§è¡Œå¯¹è±¡ä¸­synchronizedè¯­å¥,å¯ä»¥ç¡®ä¿ä¸€ä¸ªçº¿ç¨‹å¯¹å†…å­˜
+      //æ‰§è¡Œçš„æ‰€æœ‰å†™å…¥æ“ä½œ,å¯¹äºŽåŒä¸€ä¸ªå¯¹è±¡æ‰§è¡Œsynchronizedè¯­å¥çš„æ‰€æœ‰åŽç»­çº¿ç¨‹éƒ½æ˜¯å¯è§çš„
       this.synchronized { t1started = true }
       val t2s = this.synchronized { t2started }
       t2index = if (t2started) 0 else 1
@@ -61,7 +61,7 @@ object SynchronizedSharedStateAccess extends App {
     val t2 = thread {
       Thread.sleep(1)
      /**
-     * Ò»¸öÏß³ÌµÄÐ´Èë²Ù×÷ÄÜ¹»Á¢¿Ì±»ÆäËûÏß³Ì¶Áµ½,ÒªÈ·±£ÆäËûÏß³ÌÄÜ¹»¶ÁÒ»¸öÏß³ÌÐ´Èë²Ù×÷µÄÇé¿ö,¾Í±ØÐëÊÊµ±Ê¹ÓÃÍ¬²½»¯»úÖÆ   
+     * ä¸€ä¸ªçº¿ç¨‹çš„å†™å…¥æ“ä½œèƒ½å¤Ÿç«‹åˆ»è¢«å…¶ä»–çº¿ç¨‹è¯»åˆ°,è¦ç¡®ä¿å…¶ä»–çº¿ç¨‹èƒ½å¤Ÿè¯»ä¸€ä¸ªçº¿ç¨‹å†™å…¥æ“ä½œçš„æƒ…å†µ,å°±å¿…é¡»é€‚å½“ä½¿ç”¨åŒæ­¥åŒ–æœºåˆ¶   
      */
       this.synchronized { t2started = true }
       val t1s = this.synchronized { t1started }
@@ -75,39 +75,39 @@ object SynchronizedSharedStateAccess extends App {
 }
 
 /**
- * SynchronizedÇ¶Ì×,Ò»¸öÏß³Ì¿ÉÒÔÍ¬Ê±ÓµÓÐ¶à¸ö¶ÔÏóµÄ¼à¿ØÆ÷
+ * SynchronizedåµŒå¥—,ä¸€ä¸ªçº¿ç¨‹å¯ä»¥åŒæ—¶æ‹¥æœ‰å¤šä¸ªå¯¹è±¡çš„ç›‘æŽ§å™¨
  */
 object SynchronizedNesting extends App {
   import scala.collection._
   private val transfers = mutable.ArrayBuffer[String]()
   /**
-   * ArrayBufferÊý×éÊµÏÖµÄÊÇÒ»¸ö×¨ÃÅÓÉµ¥Ïß³ÌÊ¹ÓÃµÄ¼¯ºÏ,Òò´ËÎÒÃÇÓ¦¸Ã·ÀÖ¹Ëü±»Ö´ÐÐ²¢·¢Ð´Èë²Ù×÷
+   * ArrayBufferæ•°ç»„å®žçŽ°çš„æ˜¯ä¸€ä¸ªä¸“é—¨ç”±å•çº¿ç¨‹ä½¿ç”¨çš„é›†åˆ,å› æ­¤æˆ‘ä»¬åº”è¯¥é˜²æ­¢å®ƒè¢«æ‰§è¡Œå¹¶å‘å†™å…¥æ“ä½œ
    */
   def logTransfer(name: String, n: Int): Unit = transfers.synchronized {
     transfers += s"transfer to account '$name' = $n"
   }
   /**
-   * ÕËºÅAccount¶ÔÏóº¬ÓÐÆäËùÓÐÕßµÄÐÅÏ¢ÒÔ¼°ËûÃÇÓµÓÐµÄ×Ê½ðÊý¶î
+   * è´¦å·Accountå¯¹è±¡å«æœ‰å…¶æ‰€æœ‰è€…çš„ä¿¡æ¯ä»¥åŠä»–ä»¬æ‹¥æœ‰çš„èµ„é‡‘æ•°é¢
    */
   class Account(val name: String, var money: Int)
   /**
-   * ÏòÕËºÅÖÐ³äÖµ,¸ÃÏµÍ³»áÊ¹ÓÃadd·½·¨»ñÈ¡Ö¸¶¨Account¶ÔÏóµÄ¼à¿ØÆ÷
-   * ²¢ÐÞ¸Ä¸Ã¶ÔÏóÖÐµÄmoney×Ö¶Î
+   * å‘è´¦å·ä¸­å……å€¼,è¯¥ç³»ç»Ÿä¼šä½¿ç”¨addæ–¹æ³•èŽ·å–æŒ‡å®šAccountå¯¹è±¡çš„ç›‘æŽ§å™¨
+   * å¹¶ä¿®æ”¹è¯¥å¯¹è±¡ä¸­çš„moneyå­—æ®µ
    */
-  def add(account: Account, n: Int) = account.synchronized {//»ñµÃtransfers¼à¿ØÆ÷
-    account.money += n//Èç¹û×ªÕË½ð¶î³¬¹ý10¸ö»õ±Òµ¥Î»,ÐèÒª¸Ã²Ù×÷¼ÇÂ¼ÏÂÀ´
+  def add(account: Account, n: Int) = account.synchronized {//èŽ·å¾—transfersç›‘æŽ§å™¨
+    account.money += n//å¦‚æžœè½¬è´¦é‡‘é¢è¶…è¿‡10ä¸ªè´§å¸å•ä½,éœ€è¦è¯¥æ“ä½œè®°å½•ä¸‹æ¥
     if (n > 10) logTransfer(account.name, n)
   }
-  //Ö÷Ó¦ÓÃ³ÌÐò´´½¨Á½¸ö¶ÀÁ¢µÄÕËºÅºÍÓÃÓÚÖ´ÐÐ×ªÕËµÄ3¸öÏß³Ì,Ò»µ©ËùÓÐÏß³Ì¶¼Íê³ÉÁËËüÃÇµÄ×ªÕË²Ù×÷
-  //mainÏß³Ì¾Í»áÊä³öËùÓÐÒÑ¼ÇÂ¼µÄ×ªÕËÐÅÏ¢
+  //ä¸»åº”ç”¨ç¨‹åºåˆ›å»ºä¸¤ä¸ªç‹¬ç«‹çš„è´¦å·å’Œç”¨äºŽæ‰§è¡Œè½¬è´¦çš„3ä¸ªçº¿ç¨‹,ä¸€æ—¦æ‰€æœ‰çº¿ç¨‹éƒ½å®Œæˆäº†å®ƒä»¬çš„è½¬è´¦æ“ä½œ
+  //mainçº¿ç¨‹å°±ä¼šè¾“å‡ºæ‰€æœ‰å·²è®°å½•çš„è½¬è´¦ä¿¡æ¯
   val jane = new Account("Jane", 100)
   val john = new Account("John", 200)
   val t1 = thread { add(jane, 5) }
   val t2 = thread { add(john, 50) }
   val t3 = thread { add(jane, 70) }
   /**
-   * Õâ¸öÀý×ÓÊ¹ÓÃsynchronizedÓï¾ä,ÄÜ¹»·ÀÖ¹Ïß³Ìt1ºÍt3ÒÔ²¢·¢·½Ê½ÐÞ¸ÄJaner µÄÕËºÅÐÅÏ¢,ÆÆ»µÕâ¸öÕËºÅ
-   * Ïß³Ìt2ºÍt3»¹»á·ÃÎÊtransfers¼à¿ØÆ÷µÄÊ¹ÓÃ¼ÇÂ¼
+   * è¿™ä¸ªä¾‹å­ä½¿ç”¨synchronizedè¯­å¥,èƒ½å¤Ÿé˜²æ­¢çº¿ç¨‹t1å’Œt3ä»¥å¹¶å‘æ–¹å¼ä¿®æ”¹Janer çš„è´¦å·ä¿¡æ¯,ç ´åè¿™ä¸ªè´¦å·
+   * çº¿ç¨‹t2å’Œt3è¿˜ä¼šè®¿é—®transfersç›‘æŽ§å™¨çš„ä½¿ç”¨è®°å½•
    */
   t1.join(); 
   t2.join(); 
@@ -116,8 +116,8 @@ object SynchronizedNesting extends App {
 }
 
 /**
- * ËÀËø:ÊÇÖ¸Á½¸ö»ò¶à¸ö¿ØÖÆÁ÷ÊµÌåÔÚ¼ÌÐøÖ´ÐÐ×Ô¼ºµÄ²Ù×÷Ç°,µÈ´ý¶Ô·½ÏÈÍê³É²Ù×÷µÄÇé¿ö.
- * µÈ´ýµÄÔ­ÒòÊÇÃ¿¸ö¿ØÖÆÁ÷ÊµÌå¶¼¶ÀÕ¼ÁË,ÆäËû¿ØÖÆÁ÷ÊµÌå±ØÐë»ñµÃºó²ÅÄÜ¼ÌÐøÖ´ÐÐÆäËû²Ù×÷µÄ×ÊÔ´
+ * æ­»é”:æ˜¯æŒ‡ä¸¤ä¸ªæˆ–å¤šä¸ªæŽ§åˆ¶æµå®žä½“åœ¨ç»§ç»­æ‰§è¡Œè‡ªå·±çš„æ“ä½œå‰,ç­‰å¾…å¯¹æ–¹å…ˆå®Œæˆæ“ä½œçš„æƒ…å†µ.
+ * ç­‰å¾…çš„åŽŸå› æ˜¯æ¯ä¸ªæŽ§åˆ¶æµå®žä½“éƒ½ç‹¬å äº†,å…¶ä»–æŽ§åˆ¶æµå®žä½“å¿…é¡»èŽ·å¾—åŽæ‰èƒ½ç»§ç»­æ‰§è¡Œå…¶ä»–æ“ä½œçš„èµ„æº
  * 
  */
 object SynchronizedDeadlock extends App {
@@ -139,12 +139,12 @@ object SynchronizedDeadlock extends App {
 }
 
 /**
- * ·ÀÖ¹ËÀËøµÄ·½·¨
+ * é˜²æ­¢æ­»é”çš„æ–¹æ³•
  */
 object SynchronizedNoDeadlock extends App {
   import SynchronizedProtectedUid._
   class Account(val name: String, var money: Int) {
-    val uid = getUniqueId()//»ñÈ¡ÕËºÅµÄË³Ðò
+    val uid = getUniqueId()//èŽ·å–è´¦å·çš„é¡ºåº
   }
   def send(a1: Account, a2: Account, n: Int) {
     def adjust() {
@@ -189,38 +189,38 @@ object SynchronizedDuplicates extends App {
 }
 
 /**
- * Ïß³Ì³Ø:Í¬Ò»¸öÏß³ÌÓ¦¸ÃÓÉÐí¶à¸öÇëÇó·´¸´Ê¹ÓÃ,ÕâÐ©¿ÉÖØ¸´µÄÏß³Ì×éÍ¨³£³ÆÎªÏß³Ì³Ø
+ * çº¿ç¨‹æ± :åŒä¸€ä¸ªçº¿ç¨‹åº”è¯¥ç”±è®¸å¤šä¸ªè¯·æ±‚åå¤ä½¿ç”¨,è¿™äº›å¯é‡å¤çš„çº¿ç¨‹ç»„é€šå¸¸ç§°ä¸ºçº¿ç¨‹æ± 
  */
 object SynchronizedBadPool extends App {
   import scala.collection._
   /**
- * Ê¹ÓÃQueue´æ´¢±»µ÷¶ÈµÄ´úÂë¿é,Ê¹ÓÃº¯Êý() => UnitÉèÖÃÕâÐ©´úÂë¿é
+ * ä½¿ç”¨Queueå­˜å‚¨è¢«è°ƒåº¦çš„ä»£ç å—,ä½¿ç”¨å‡½æ•°() => Unitè®¾ç½®è¿™äº›ä»£ç å—
  */
   private val tasks = mutable.Queue[() => Unit]()
   /**
- * Ïß³ÌWorker·´¸´µ÷ÓÃpoll·½·¨,ÔÚ±äÁ¿task´æ´¢µÄ¶ÔÏóÖÐÊµÏÖÍ¬²½»¯,
- * ¼ì²é¸Ã¶ÔÏó´ú±íµÄ¶ÓÁÐÊÇ·ñÎª¿Õ,poll·½·¨Õ¹Ê¾ÁËsynchronizedÓï¾ä¿ÉÒÔ·µ»ØÒ»¸öÖµ
+ * çº¿ç¨‹Workeråå¤è°ƒç”¨pollæ–¹æ³•,åœ¨å˜é‡taskå­˜å‚¨çš„å¯¹è±¡ä¸­å®žçŽ°åŒæ­¥åŒ–,
+ * æ£€æŸ¥è¯¥å¯¹è±¡ä»£è¡¨çš„é˜Ÿåˆ—æ˜¯å¦ä¸ºç©º,pollæ–¹æ³•å±•ç¤ºäº†synchronizedè¯­å¥å¯ä»¥è¿”å›žä¸€ä¸ªå€¼
  */
   val worker = new Thread {
     def poll(): Option[() => Unit] = tasks.synchronized {
-      //·µ»ØÒ»¸ö¿ÉÑ¡µÄSomeÖµ,·ñÔò¸ÃÓï¾ä·µ»ØÒ»¸öNone,dequeueµ¯³ö¶ÓÁÐ
+      //è¿”å›žä¸€ä¸ªå¯é€‰çš„Someå€¼,å¦åˆ™è¯¥è¯­å¥è¿”å›žä¸€ä¸ªNone,dequeueå¼¹å‡ºé˜Ÿåˆ—
       if (tasks.nonEmpty) Some(tasks.dequeue()) else None
     }
    
     override def run() = while (true) poll() match {
-      case Some(task) => task()//Èç¹û·½·¨Ôòµ÷ÓÃ
+      case Some(task) => task()//å¦‚æžœæ–¹æ³•åˆ™è°ƒç”¨
       case None =>
     }
   }
-  //ÉèÖÃÊØ»¤Ïß³Ì,ÉèÖÃÊØ»¤Ïß³ÌµÄÔ­Òò,synchronized·½·¨ÏòËü·¢ËÍÈÎÎñ,
-  //¸Ã·½·¨»áµ÷ÓÃÖ¸¶¨µÄ´úÂë¿é,ÒÔ±ã×îÖÕÖ´ÐÐworkerÏß³Ì
+  //è®¾ç½®å®ˆæŠ¤çº¿ç¨‹,è®¾ç½®å®ˆæŠ¤çº¿ç¨‹çš„åŽŸå› ,synchronizedæ–¹æ³•å‘å®ƒå‘é€ä»»åŠ¡,
+  //è¯¥æ–¹æ³•ä¼šè°ƒç”¨æŒ‡å®šçš„ä»£ç å—,ä»¥ä¾¿æœ€ç»ˆæ‰§è¡Œworkerçº¿ç¨‹
   worker.setDaemon(true)
-  //ÔËÐÐworkÏß³Ì
+  //è¿è¡Œworkçº¿ç¨‹
   worker.start()
-  //ÉèÖÃÊØ»¤Ïß³ÌµÄÔ­Òò,synchronized·½·¨ÏòËü·¢ËÍÈÎÎñ,
-  //¸Ã·½·¨»áµ÷ÓÃÖ¸¶¨µÄ´úÂë¿é,ÒÔ±ã×îÖÕÖ´ÐÐworkerÏß³Ì
+  //è®¾ç½®å®ˆæŠ¤çº¿ç¨‹çš„åŽŸå› ,synchronizedæ–¹æ³•å‘å®ƒå‘é€ä»»åŠ¡,
+  //è¯¥æ–¹æ³•ä¼šè°ƒç”¨æŒ‡å®šçš„ä»£ç å—,ä»¥ä¾¿æœ€ç»ˆæ‰§è¡Œworkerçº¿ç¨‹
   def asynchronous(body: =>Unit) = tasks.synchronized {
-    tasks.enqueue(() => body)//²åÈë¶ÓÁÐ
+    tasks.enqueue(() => body)//æ’å…¥é˜Ÿåˆ—
   }
 
   asynchronous { log("Hello") }
@@ -229,43 +229,43 @@ object SynchronizedBadPool extends App {
 }
 
 /**
- * mainÏß³Ì×¼±¸ÁËSomeÏûÏ¢,Ê¹Ö®ÏÔÊ¾¸ÃÏûÏ¢
+ * mainçº¿ç¨‹å‡†å¤‡äº†Someæ¶ˆæ¯,ä½¿ä¹‹æ˜¾ç¤ºè¯¥æ¶ˆæ¯
  */
 object SynchronizedGuardedBlocks extends App {
-  val lock = new AnyRef //locak¶ÔÏóÖÐµÄ¼à¿ØÆ÷,
+  val lock = new AnyRef //locakå¯¹è±¡ä¸­çš„ç›‘æŽ§å™¨,
   var message: Option[String] = None
-  //greeterÏß³ÌÍ¨¹ý»ñÈ¡lock¶ÔÏóµÄ¼à¿ØÆ÷¿ªÊ¼ÆäÔËÐÐ¹ý³Ì,²¢¼ì²émainÏß³ÌÎªÆä×¼±¸µÄÏûÏ¢ÊÇ·ñÎªNoneÀàÐÍ
-  //Èç¹û¸ÃÏûÏ¢ÎªNoneÀàÐÍ,ÄÇÃ´greeterÏß³Ì¾Í²»»áÏÔÊ¾ÈÎÎñÐÅÏ¢,¶øÇÒ»áµ÷ÓÃlock¶ÔÏóÖÐµÄwait·½·¨
+  //greeterçº¿ç¨‹é€šè¿‡èŽ·å–lockå¯¹è±¡çš„ç›‘æŽ§å™¨å¼€å§‹å…¶è¿è¡Œè¿‡ç¨‹,å¹¶æ£€æŸ¥mainçº¿ç¨‹ä¸ºå…¶å‡†å¤‡çš„æ¶ˆæ¯æ˜¯å¦ä¸ºNoneç±»åž‹
+  //å¦‚æžœè¯¥æ¶ˆæ¯ä¸ºNoneç±»åž‹,é‚£ä¹ˆgreeterçº¿ç¨‹å°±ä¸ä¼šæ˜¾ç¤ºä»»åŠ¡ä¿¡æ¯,è€Œä¸”ä¼šè°ƒç”¨lockå¯¹è±¡ä¸­çš„waitæ–¹æ³•
   val greeter = thread {
     lock.synchronized {
-      //µ±Ïß³ÌTµ÷ÓÃÁËÄ³¸ö¶ÔÏóÖÐµÄwait·½·¨ºó,Ïß³ÌT¾Í»áÊÍ·Å¸Ã¶ÔÏóµÄ¼à¿ØÆ÷²¢ÇÐ»»µ½µÈ´ý×´Ì¬,Ö±µ½ÆäËûÏß³Ìµ÷ÓÃÁË
-      //¸Ã¶ÔÏóÖÐµÄnotify·½·¨ºó,Ïß³ÌT²Å»áÇÐ»»»ØÕýÔÚÔËÐÐ×´Ì¬.
-      while (message == None) lock.wait()//½«Ïß³ÌÇÐ»»ÎªµÈ´ý×´Ì¬
+      //å½“çº¿ç¨‹Tè°ƒç”¨äº†æŸä¸ªå¯¹è±¡ä¸­çš„waitæ–¹æ³•åŽ,çº¿ç¨‹Tå°±ä¼šé‡Šæ”¾è¯¥å¯¹è±¡çš„ç›‘æŽ§å™¨å¹¶åˆ‡æ¢åˆ°ç­‰å¾…çŠ¶æ€,ç›´åˆ°å…¶ä»–çº¿ç¨‹è°ƒç”¨äº†
+      //è¯¥å¯¹è±¡ä¸­çš„notifyæ–¹æ³•åŽ,çº¿ç¨‹Tæ‰ä¼šåˆ‡æ¢å›žæ­£åœ¨è¿è¡ŒçŠ¶æ€.
+      while (message == None) lock.wait()//å°†çº¿ç¨‹åˆ‡æ¢ä¸ºç­‰å¾…çŠ¶æ€
       log(message.get)
     }
   }
   lock.synchronized {
     message = Some("Hello!")
-    lock.notify()//½«Ïß³ÌÇÐ»»ÎªÕýÔÚÔËÐÐ×´Ì¬
+    lock.notify()//å°†çº¿ç¨‹åˆ‡æ¢ä¸ºæ­£åœ¨è¿è¡ŒçŠ¶æ€
   }
   greeter.join()
 }
 
 /**
- * Ïß³Ì³Ø:Í¬Ò»¸öÏß³ÌÓ¦¸ÃÓÉÐí¶à¸öÇëÇó·´¸´Ê¹ÓÃ,ÕâÐ©¿ÉÖØ¸´µÄÏß³Ì×éÍ¨³£³ÆÎªÏß³Ì³Ø
+ * çº¿ç¨‹æ± :åŒä¸€ä¸ªçº¿ç¨‹åº”è¯¥ç”±è®¸å¤šä¸ªè¯·æ±‚åå¤ä½¿ç”¨,è¿™äº›å¯é‡å¤çš„çº¿ç¨‹ç»„é€šå¸¸ç§°ä¸ºçº¿ç¨‹æ± 
  */
 object SynchronizedPool extends App {
   import scala.collection._
 /**
- * Ê¹ÓÃQueue´æ´¢±»µ÷¶ÈµÄ´úÂë¿é,Ê¹ÓÃº¯Êý() => UnitÉèÖÃÕâÐ©´úÂë¿é
+ * ä½¿ç”¨Queueå­˜å‚¨è¢«è°ƒåº¦çš„ä»£ç å—,ä½¿ç”¨å‡½æ•°() => Unitè®¾ç½®è¿™äº›ä»£ç å—
  */
   private val tasks = mutable.Queue[() => Unit]()
 /**
- * Ïß³ÌWorker·´¸´µ÷ÓÃpoll·½·¨,ÔÚ±äÁ¿task´æ´¢µÄ¶ÔÏóÖÐÊµÏÖÍ¬²½»¯,
- * ¼ì²é¸Ã¶ÔÏó´ú±íµÄ¶ÓÁÐÊÇ·ñÎª¿Õ,poll·½·¨Õ¹Ê¾ÁËsynchronizedÓï¾ä¿ÉÒÔ·µ»ØÒ»¸öÖµ
+ * çº¿ç¨‹Workeråå¤è°ƒç”¨pollæ–¹æ³•,åœ¨å˜é‡taskå­˜å‚¨çš„å¯¹è±¡ä¸­å®žçŽ°åŒæ­¥åŒ–,
+ * æ£€æŸ¥è¯¥å¯¹è±¡ä»£è¡¨çš„é˜Ÿåˆ—æ˜¯å¦ä¸ºç©º,pollæ–¹æ³•å±•ç¤ºäº†synchronizedè¯­å¥å¯ä»¥è¿”å›žä¸€ä¸ªå€¼
  */
-  object Worker extends Thread {//½«WorkerÉèÖÃÒ»¸öµ¥Àý¶ÔÏó,ÔÚ¸Ã³ÌÐòÖÐ,ÓÉpollÏß³Ìµ÷ÓÃtasks¶ÔÏóÖÐµÄwait·½·¨
-    //È»ºó¸ÃÏß³Ì½øÈëµÈ´ý×´Ì¬,Ö±µ½mainÏß³ÌÏòtasks¶ÔÏóÖÐÌí¼ÓÒ»¸ö´úÂë¿é²¢µ÷ÓÃsynchronized·½·¨ÖÐµÄnotify·½·¨ÎªÖ¹
+  object Worker extends Thread {//å°†Workerè®¾ç½®ä¸€ä¸ªå•ä¾‹å¯¹è±¡,åœ¨è¯¥ç¨‹åºä¸­,ç”±pollçº¿ç¨‹è°ƒç”¨taskså¯¹è±¡ä¸­çš„waitæ–¹æ³•
+    //ç„¶åŽè¯¥çº¿ç¨‹è¿›å…¥ç­‰å¾…çŠ¶æ€,ç›´åˆ°mainçº¿ç¨‹å‘taskså¯¹è±¡ä¸­æ·»åŠ ä¸€ä¸ªä»£ç å—å¹¶è°ƒç”¨synchronizedæ–¹æ³•ä¸­çš„notifyæ–¹æ³•ä¸ºæ­¢
     
     setDaemon(true)
     def poll() = tasks.synchronized {
@@ -273,7 +273,7 @@ object SynchronizedPool extends App {
       tasks.dequeue()
     }
     override def run() = while (true) {
-      val task = poll() // poll() ·½·¨¶¼ÊÇ´Ó¶ÓÁÐÖÐÉ¾³ýµÚÒ»¸öÔªËØ£¨head£©,ÔÚÓÃ¿Õ¼¯ºÏµ÷ÓÃÊ±²»ÊÇÅ×³öÒì³£
+      val task = poll() // poll() æ–¹æ³•éƒ½æ˜¯ä»Žé˜Ÿåˆ—ä¸­åˆ é™¤ç¬¬ä¸€ä¸ªå…ƒç´ ï¼ˆheadï¼‰,åœ¨ç”¨ç©ºé›†åˆè°ƒç”¨æ—¶ä¸æ˜¯æŠ›å‡ºå¼‚å¸¸
       task()
     }
   }
@@ -293,7 +293,7 @@ object SynchronizedPool extends App {
 object SynchronizedGracefulShutdown extends App {
   import scala.collection._
   import scala.annotation.tailrec
-  //Queue Ò»¸ö¶ÓÁÐ¾ÍÊÇÒ»¸öÏÈÈëÏÈ³ö£¨FIFO£©µÄÊý¾Ý½á¹¹,
+  //Queue ä¸€ä¸ªé˜Ÿåˆ—å°±æ˜¯ä¸€ä¸ªå…ˆå…¥å…ˆå‡ºï¼ˆFIFOï¼‰çš„æ•°æ®ç»“æž„,
   //
   private val tasks = mutable.Queue[() => Unit]()
 
@@ -325,7 +325,7 @@ object SynchronizedGracefulShutdown extends App {
   asynchronous { log("World!") }
 
   Thread.sleep(1000)
-  //Ïß³ÌÕý³£¹Ø±Õ,
+  //çº¿ç¨‹æ­£å¸¸å…³é—­,
   Worker.shutdown()
 }
 

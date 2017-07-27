@@ -9,7 +9,7 @@ import scala.concurrent.Future
 
 
 /**
- * ²¢·¢²»Õı³£
+ * å¹¶å‘ä¸æ­£å¸¸
  */
 object ConcurrentWrong extends App {
   import scala.collection._
@@ -45,7 +45,7 @@ object ConcurrentWrong extends App {
   }
 }
 /**
- * ²¢·¢¼¯ºÏ
+ * å¹¶å‘é›†åˆ
  * 
  */
 

@@ -13,20 +13,20 @@ import scala.collection.par.Scheduler.Implicits.global
 
 
 /**
- * Blitz(ÉÁµç)Comparison(±È½Ï)
+ * Blitz(é—ªç”µ)Comparison(æ¯”è¾ƒ)
  */
 object BlitzComparison extends App {
   val array = (0 until 100000).toArray
   @volatile var x = 0
- //ÏßĞÔ
+ //çº¿æ€§
   val seqtime = warmedTimed(1000) {
     array.reduce(_ + _)
   }
-  //par±ê×¼ 
+  //paræ ‡å‡† 
   val partime = warmedTimed(1000) {
     array.par.reduce(_ + _)
   }
-  //ÉÁµçm²¢·¢
+  //é—ªç”µmå¹¶å‘
   val blitztime = warmedTimed(1000) {
     x = array.toPar.reduce(_ + _)
   }
