@@ -24,8 +24,8 @@ object BlockingAwait extends App {
 
   val urlSpecSizeFuture = Future { Source.fromURL("http://www.w3.org/Addressing/URL/url-spec.txt").size }
   //调用者线程能够等待的最长时间
-  val urlSpecSize = Await.result(urlSpecSizeFuture, 10.seconds)
-
+  val urlSpecSize = Await.result(urlSpecSizeFuture, 100.seconds)
+ // val urlSpecSizeb =Await.ready(urlSpecSizeFuture, 2000.second)
   log(s"url spec contains $urlSpecSize characters")
 
 }
@@ -50,8 +50,9 @@ object BlockingSleepBad extends App {
   for (f <- futures) Await.ready(f, Duration.Inf)
 
   val endTime = System.nanoTime
-
+  //执行时间总耗时
   log(s"Total execution time of the program = ${(endTime - startTime) / 1000000} ms")
+  //Runtime.getRuntime.availableProcessors CPU核数
   log(s"Note: there are ${Runtime.getRuntime.availableProcessors} CPUs on this machine")
 
 }

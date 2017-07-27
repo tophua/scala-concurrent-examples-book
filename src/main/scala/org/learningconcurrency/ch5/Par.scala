@@ -17,16 +17,18 @@ object ParBasic extends App {
 
   val seqtime = timed {
     val n = numbers.max
+  //largest number 4999999
     println(s"largest number $n")
   }
-//顺序的max方法运行时间为381.411 毫秒
+//顺序的max方法运行时间为602.16 ms 毫秒
   log(s"Sequential time $seqtime ms")
 
   val partime = timed {
     val n = numbers.par.max
+    //largest number 4999999
     println(s"largest number $n")
   }
-//并行的max方法的运行293.74 毫秒
+  //并行的max方法的运行393.089 毫秒
   log(s"Parallel time $partime ms")
 }
 
