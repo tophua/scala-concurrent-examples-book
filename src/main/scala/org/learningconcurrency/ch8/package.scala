@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import com.typesafe.config._
 
 package object ch8 {
-  
+  //创建一个 actor 系统
   lazy val ourSystem = ActorSystem("OurExampleSystem")
 
   def remotingConfig(port: Int) = ConfigFactory.parseString(s"""

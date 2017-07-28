@@ -110,7 +110,9 @@ object ParHtmlSpecSearch extends App {
     try specSrc.getLines.toArray finally specSrc.close()
   }
 
-  getHtmlSpec() foreach { case specDoc =>
+  getHtmlSpec() foreach {
+    //匹配字符串数组
+    case specDoc =>
     log(s"Download complete!")
     //GenSeq顺序和并发子类型,这样做使用该程序的顺序和并行版本的运行.
     def search(d: GenSeq[String]) = warmedTimed() {

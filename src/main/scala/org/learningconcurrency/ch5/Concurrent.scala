@@ -14,9 +14,7 @@ import scala.concurrent.Future
 object ConcurrentWrong extends App {
   import scala.collection._
   import scala.concurrent.ExecutionContext.Implicits.global
- 
-
-  
+  //注意返回数据类型
   def getUrlSpec(): Future[Seq[String]] = Future {
     val f = Source.fromURL("http://www.w3.org/Addressing/URL/url-spec.txt")
     try{
@@ -26,11 +24,13 @@ object ConcurrentWrong extends App {
     }
   }
   def intersection(a: GenSet[String], b: GenSet[String]): GenSet[String] = {
+    //可变HashSet,不支持并发
     val result = new mutable.HashSet[String]
+    //set迭代方式
     for (x <- a.par) if (b contains x) result.add(x)
     result
   }
-
+  //推倒迭代方式,返回的数据类型Future[Seq[String]]
   val ifut = for {
     htmlSpec <- getHtmlSpec()
     urlSpec <- getUrlSpec()
@@ -43,6 +43,8 @@ object ConcurrentWrong extends App {
   ifut onComplete {
     case t => log(s"Result: $t")
   }
+  //注意不加入,不显示内容
+  Thread.sleep(2500)
 }
 /**
  * 并发集合
@@ -56,20 +58,21 @@ object ConcurrentCollections extends App {
   import scala.concurrent.ExecutionContext.Implicits.global
   import ParHtmlSpecSearch.getHtmlSpec
  
- 
-  
+
+  //流关闭
   def getUrlSpec(): Future[Seq[String]] = Future {
     val f = Source.fromURL("http://www.w3.org/Addressing/URL/url-spec.txt")
     try f.getLines.toList finally f.close()
   }
   
   def intersection(a: GenSet[String], b: GenSet[String]): GenSet[String] = {
+    //可变ConcurrentSkipListSet,支持并发
     val skiplist = new ConcurrentSkipListSet[String]
     for (x <- a.par) if (b contains x) skiplist.add(x)
     val result: Set[String] = skiplist.asScala
     result
   }
-
+  //注意类型推倒,
   val ifut = for {
     htmlSpec <- getHtmlSpec()
     urlSpec <- getUrlSpec()
@@ -82,7 +85,8 @@ object ConcurrentCollections extends App {
   ifut foreach { case i =>
     log(s"intersection = $i")
   }
-
+  //注意不加入,不显示内容
+  Thread.sleep(20000)
 }
 
 
@@ -102,7 +106,7 @@ object ConcurrentCollectionsBad extends App {
 
 object ConcurrentTrieMap extends App {
   import scala.collection._
-
+    //并发Map处理
   val cache = new concurrent.TrieMap[Int, String]()
   for (i <- 0 until 100) cache(i) = i.toString
 

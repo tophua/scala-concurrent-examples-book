@@ -12,13 +12,20 @@ import akka.actor.ActorSystem
 import scala.io.Source
 import scala.collection._
 
-
+/**
+  * 这个问题的答案很简单：“不是”。Akka actor 是异步运行的,所以即使目标 actor 与发送方 actor 位于相同的 JVM 中,目标 actor 也绝不会立即开始执行。
+  * 相反，处理该消息的线程会将消息添加到目标 actor 的邮箱中。将消息添加到邮箱中会触发一个线程,
+  * 以便从邮箱获取该消息并调用 actor 的 receive 方法来处理。但从邮箱获取消息的线程通常不同于将消息添加到邮箱的线程。
+  * @param hello
+  */
 
 class HelloActor(val hello: String) extends Actor {
   val log = Logging(context.system, this)
   def receive = {
+    //注意`使用方式,不是单引号,引用类hello属性
     case `hello` =>
       log.info(s"Received a '$hello'... $hello!")
+      //mes any匹配任何类型
     case msg     =>
       log.info(s"Unexpected message '$msg'")
       context.stop(self)
@@ -27,17 +34,24 @@ class HelloActor(val hello: String) extends Actor {
 
 
 object HelloActor {
+  //Akka 通过Props实例创建Actor
   def props(hello: String) = Props(new HelloActor(hello))
   def propsVariant(hello: String) = Props(classOf[HelloActor], hello)
 }
 
 
 object ActorsCreate extends App {
+  //在系统内创建一个 actor,它为所创建的 actor 返回一个 actor 引用
+  //它使用了专门用于 Hello actor 类型的配置属性,greeter 使用指定的名称创建此上下文中的子角色
+  //HelloActor.props("hi")参数类型,
   val hiActor: ActorRef = ourSystem.actorOf(HelloActor.props("hi"), name = "greeter")
+  //使用 actor 引用向 actor 发送消息
   hiActor ! "hi"
+  //等待一秒钟，
   Thread.sleep(1000)
   hiActor ! "hola"
   Thread.sleep(1000)
+  //然后关闭 actor 系统
   ourSystem.shutdown()
 }
 
@@ -45,6 +59,7 @@ object ActorsCreate extends App {
 class DeafActor extends Actor {
   val log = Logging(context.system, this)
   def receive = PartialFunction.empty
+  //unhandled方法使用
   override def unhandled(msg: Any) = msg match {
     case msg: String => log.info(s"could not handle '$msg'")
     case _           => super.unhandled(msg)
@@ -68,6 +83,7 @@ class CountdownActor extends Actor {
     case "count" =>
       n -= 1
       log(s"n = $n")
+      //原子方法调用方式
       if (n == 0) context.become(done)
   }
   def done = PartialFunction.empty
