@@ -108,14 +108,14 @@ object PromisesAndCallbacks extends App {
 
     p.future
   }
-/**
- * 使用Future对象,订阅文件系统中第一个被改变的文件,fileCreated方法返回的Future对象中的foreach方法
- * 在编辑器中创建一个新文件,并观察该程序检测新建文件的方式.
- */
+  /**
+   * 使用Future对象,订阅文件系统中第一个被改变的文件,fileCreated方法返回的Future对象中的foreach方法
+   * 在编辑器中创建一个新文件,并观察该程序检测新建文件的方式.
+   */
   fileCreated(".") foreach {
     case filename => log(s"Detected new file '$filename'")
   }
-Thread.sleep(500)
+  Thread.sleep(500)
 }
 
 

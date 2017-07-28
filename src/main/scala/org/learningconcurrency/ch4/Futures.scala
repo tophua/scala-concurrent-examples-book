@@ -21,7 +21,13 @@ object FuturesComputation extends App {
   Future {
     log(s"the future is here")
   }
-
+  /**
+    * ForkJoinPool-1-worker-5: the future is here
+      main: the future is coming
+      每次运行顺序不一样
+     main: the future is coming
+     ForkJoinPool-1-worker-5: the future is here
+    */
   log(s"the future is coming")
 
 }
@@ -41,7 +47,7 @@ object FuturesDataType extends App {
     val f = Source.fromFile("build.sbt")
     try f.getLines.mkString("\n") finally f.close()
   }
-
+  //开始异步读取构建文件
   log(s"started reading build file asynchronously")
   /**
    * main线程会调用Future对象中的isCompleted方法,该Future对象为通过执行Future计算获得buildFile对象
@@ -50,9 +56,12 @@ object FuturesDataType extends App {
    * 最后main线程会调用value方法,该方法会返回build.sb文件的内容
    * 
    */
+  //main: status: false
   log(s"status: ${buildFile.isCompleted}")//当异步操作完成了且返回了true值,是success
   Thread.sleep(250)
+  //main: status: true
   log(s"status: ${buildFile.isCompleted}")//当异步操作没有完成返回false
+  println("========")
   log(s"status: ${buildFile.value}")//还回值
 
 }
@@ -89,14 +98,22 @@ object FuturesCallbacks extends App {
  * 直接发送给find方法,而且在程序调用find方法时,该Future很可能还无法使用.
  */
   def find(lines: Seq[String], word: String) = lines.zipWithIndex.collect {
-    //zipWithIndex， 返回对偶列表，第二个组成部分是元素下标  
+    //zipWithIndex,返回对偶列表,n第二个组成部分是元素下标,注意case if前缀判断
     case (line, n) if line.contains(word) => (n, line)
+      //\n是换行
   }.mkString("\n")//此迭代器转换为字符串
 /**
  * 我们使用foreach方法为这个Future添加一个回调函数,注意onSuccess方法与foreach方法等价,但onSuccess方法可能
  * 会在scala 2.11之后被弃用,foreach方法接收偏函数作为其参数 
  */
   urlSpec.foreach {//foreach接收一个偏函数
+    /**
+      ForkJoinPool-1-worker-5: Found occurrences of 'telnet'
+      (207,  telnet , rlogin and tn3270 )
+      (745,                         nntpaddress | prosperoaddress | telnetaddress)
+      (806,  telnetaddress           t e l n e t : / / login )
+      (931,   for a given protocol (for example,  CR and LF characters for telnet)
+      **/
     case lines => log(s"Found occurrences of 'telnet'\n${find(lines, "telnet")}\n")
   }
   /**
@@ -109,11 +126,6 @@ object FuturesCallbacks extends App {
    log("callbacks registered, continuing with other work")
 
 /**
- * ForkJoinPool-1-worker-5: Found occurrences of 'telnet'
- * (207,  telnet , rlogin and tn3270 )
- * (745,                         nntpaddress | prosperoaddress | telnetaddress)
- * (806,  telnetaddress           t e l n e t : / / login )
- * (931,   for a given protocol (for example,  CR and LF characters for telnet)
    ForkJoinPool-1-worker-5: Found occurrences of 'password'
  * (107,                         servers). The password, is present, follows)
  * (109,                         the user name and optional password are)
@@ -133,6 +145,7 @@ object FuturesCallbacks extends App {
   urlSpec.foreach {
     lines => log(s"Found occurrences of 'password'\n${find(lines, "password")}\n")
   }
+  //添加此方法如果不添加不异步调用不显示信息
   Thread.sleep(1000)
 
   log("callbacks installed, continuing with other work")
@@ -190,6 +203,7 @@ object FuturesExceptions extends App {
   }
   //失败回调
   file.failed foreach {//异常处理,抛出异常类型FileNotFoundException
+    //Cannot find file - java.io.FileNotFoundException: .gitignore-SAMPLE (没有那个文件或目录)
     case fnfe: java.io.FileNotFoundException => log(s"Cannot find file - $fnfe")
     case t => log(s"Failed due to $t")
   }
@@ -197,6 +211,7 @@ object FuturesExceptions extends App {
 
   file.onComplete {//回调函数时,我们使用提供Success[T]值和Failure[T]值匹配的偏函数
     case Success(text) => log(text)
+      // Failed due to java.io.FileNotFoundException: .gitignore-SAMPLE (没有那个文件或目录)
     case Failure(t) => log(s"Failed due to $t")
   }
   Thread.sleep(2000)
@@ -220,8 +235,9 @@ object FuturesTry extends App {
     tn <- threadName
     st <- someText
   } yield s"$st, t = $tn"
-
+//注意不需要加Thread.sleep(2000),即同步的方式
   message match {
+      //main: Try objects are created synchronously, t = main
     case Success(msg) => log(msg)
     case Failure(error) => log(s"There should be no $error here.")
   }
@@ -235,8 +251,9 @@ object FuturesTry extends App {
 object FuturesNonFatal extends App {
   import scala.concurrent._
   import ExecutionContext.Implicits.global
-
+  //致命异常
   val f = Future { throw new InterruptedException }
+  //非致命异常
   val g = Future { throw new IllegalArgumentException }
   f.failed foreach { case t => log(s"error - $t") }
   g.failed foreach { case t => log(s"error - $t") }
@@ -244,7 +261,8 @@ object FuturesNonFatal extends App {
 }
 /**
  * Future对象中的函数组合
- * 引入Future对象后就将阻塞线程的责任,从API上转移到了调用者线程身上,
+ * 引入Future对象后就将有阻塞线程的责任,从API上转移到了调用者线程身上,
+  *注意不需要加Thread.sleep(2000),即同步的方式
  */
 
 object FuturesClumsyCallback extends App {
@@ -259,10 +277,13 @@ object FuturesClumsyCallback extends App {
  * 过虑掉空白行和所有以#开头的注释行,findFiles方法递归查找符合文件名(gitignore)
  * 返回的Future对象,最终会含有一个字符串列表,代表SBT文件存储目录中由scala创建的文件.
  * 
- * 异步操作读取文件内容
+ * 异步读取文件内容
+  * .gitignore
  */
   def blacklistFile(filename: String) = Future {
+    //获得所有行数据
     val lines = Source.fromFile(filename).getLines
+    //过滤掉开头#,行为空的
     lines.filter(x => !x.startsWith("#") && !x.isEmpty()).toList
   }
   
@@ -271,6 +292,7 @@ object FuturesClumsyCallback extends App {
    * 
    * 将格式列表提交给该方法后,该方法可以找到当前目录中符合这些格式的所有文件
    */
+  var tset=""
   def findFiles(patterns: List[String]): List[String] = {
     val root = new File(".")
     //println(root.getAbsolutePath+"|||||"+root.getCanonicalPath)
@@ -279,11 +301,14 @@ object FuturesClumsyCallback extends App {
       //之转换为Scala迭代器,然后获得所有匹配的文件路径
       f <- iterateFiles(root, null, true).asScala.toList
       pat <- patterns
+      //patterns 多个文件匹配方式,返回抽象路径名的规范路径名字符串
       abspat = root.getCanonicalPath + File.separator + pat
+      tset=abspat
       if f.getCanonicalPath.contains(abspat)
     } yield
     {
-      println(">>>>>>>."+f.getCanonicalPath)
+      println(">>>>>>>."+f.getCanonicalPath+"==="+tset)
+
       f.getCanonicalPath
     }
     
@@ -295,20 +320,25 @@ object FuturesClumsyCallback extends App {
    */
 //val lines = Source.fromFile(".gitignore").getLines
 //  lines.filter(x => !x.startsWith("#") && !x.isEmpty()).foreach { x => println(">>>>>>>>>>"+x) }
-
+//读取.gitignore文件,List(*.iml, .idea, target, SCALA-README.md, url-spec.txt)
   blacklistFile(".gitignore").foreach {
     case lines =>      
       val files = findFiles(lines)
+      //读取.gitignore文件,List(*.iml, .idea, target, SCALA-README.md, url-spec.txt)
+      println("==="+lines)
+      //获得文件名其路径
       files.foreach {  x => println("|||||||||"+x) }
-      log(s"matches: ${files.mkString("\n")}")
+      //files.mkString("\n")把list,把一个集合转化为一个字符串并以换行
+      log(s"matches1111: ${files.mkString("\n")}")
   }
   
   /**
    * 可以使用Map方式简化操作,Map方法接收函数f,并返回新的Future对象,
+    * 组合函数使用
    */
-  
+
   def blacklistFiles(filename: String):Future[List[String]]=blacklistFile(filename).map(patterns => findFiles(patterns))
-  blacklistFiles(".gitignore").foreach { x =>  log(s"matches: ${x.mkString("\n")}") }
+  blacklistFiles(".gitignore").foreach { x =>  log(s"matches222: ${x.mkString("\n")}") }
    Thread.sleep(2000)
    //System.exit(0);
 }
@@ -332,11 +362,13 @@ object FuturesMap extends App {
  */
   val longestBuildLine = buildFile.map(lines => lines.maxBy(_.length))//获最长的一行  
   longestBuildLine.onComplete {
+    //ForkJoinPool-1-worker-5: the longest line is '// libraryDependencies += "com.twitter" %% "finagle-http" % "6.2.0" // only enable with 2.10.4'
     case Success(line) => log(s"the longest line is '$line'")
   }
   //使用for推导语句,异常处理
   val longestGitignoreLine = for (lines <- gitignoreFile) yield lines.maxBy(_.length)
   longestGitignoreLine.failed.foreach {
+    //ForkJoinPool-1-worker-1: no longest line, because .gitignore-SAMPLE (没有那个文件或目录)
     case t => log(s"no longest line, because ${t.getMessage}")
   }
    Thread.sleep(2000)
@@ -349,7 +381,7 @@ object FuturesFlatMapRaw extends App {
   import scala.concurrent._
   import ExecutionContext.Implicits.global
   import scala.io.Source
-//异步方式获取网络文件
+  //异步方式获取网络文件
   val netiquette = Future { Source.fromURL("http://www.ietf.org/rfc/rfc1855.txt").mkString }
   //异步方式获取标题规范
   val urlSpec = Future { Source.fromURL("http://www.w3.org/Addressing/URL/url-spec.txt").mkString }
@@ -376,6 +408,7 @@ object FuturesFlatMap extends App {
  */
   val netiquette = Future { Source.fromURL("http://www.ietf.org/rfc/rfc1855.txt").mkString }
   val urlSpec = Future { Source.fromURL("http://www.w3.org/Addressing/URL/url-spec.txt").mkString }
+  //使用for推导代替flatMap,map循环
   val answer = for {
     nettext <- netiquette
     urltext <- urlSpec
@@ -401,6 +434,7 @@ object FuturesDifferentFlatMap extends App {
 /**
  * for推导语句nettext是从第一个Future对象被完善后,完善第二个Future对象的操作才会被执行,
  * 当异步方式使用nettext值计算第二个Future对象的完善时,这种模式才有意义
+  * 使用for推导代替flatMap,map循环
  */
   val answer = for {
     nettext <- Future { Source.fromURL("http://www.ietf.org/rfc/rfc1855.txt").mkString }
@@ -412,7 +446,7 @@ object FuturesDifferentFlatMap extends App {
   answer foreach {
     case contents => log(contents)
   }
-
+  Thread.sleep(2000)
 }
 
 
@@ -434,7 +468,7 @@ object FuturesRecover extends App {
   netiquette foreach {
     case contents => log(contents)
   }
-
+  Thread.sleep(2000)
 }
 
 
@@ -448,6 +482,7 @@ object FuturesReduce extends App {
   sumOfSquares foreach {
     case sum => log(s"Sum of squares = $sum")
   }
+  Thread.sleep(2000)
 }
 
 
