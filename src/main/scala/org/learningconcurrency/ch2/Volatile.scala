@@ -6,7 +6,7 @@ import ch2._
 
 
 /**
- * volatile变量能够以原子方式被读取和修改,而且大多用作状态标志
+ * volatile变量能够以原子方式被读取和修改,而且大多用作状态标志,.volatile不能确保原子性
  * 优点:1,在单个线程中,对volatile变量执行写入和读取操作的次序是不会改变
  * 			2,对volatile变量执行写入操作的情况会立刻展示给所有线程
  */
@@ -39,6 +39,7 @@ object VolatileScan extends App {
   val document: Seq[String] = for (i <- 1 to 5) yield "lorem ipsum " * (1000 - 200 * i) + "Scala"
   var results = Array.fill(document.length)(-1)
   @volatile var found = false //volatile变量能够以原子方式被读取和修改,而且大多用作状态标志
+  //volatile不能确保原子性
   val threads = for (i <- 0 until document.length) yield thread {
     def scan(n: Int, words: Seq[String], query: String): Unit =
       if (words(n) == query) {
@@ -48,6 +49,8 @@ object VolatileScan extends App {
     scan(0, document(i).split(" "), "Scala")
   }
   for (t <- threads) t.join()
+  //main: Found: Some(1200)
+  //main: Found: Some(1600)
   log(s"Found: ${results.find(_ != -1)}")
 }
 /**
@@ -86,7 +89,7 @@ object VolatileUnprotectedUid extends App {
 object VolatileSharedStateAccess extends App {
   for (i <- 0 until 10000) {
     //@volatile确保对变量t1started和t2started正确读取和写入次序
-    //volatile变量能够以原子方式被读取和修改,而且大多用作状态标志
+    //volatile变量能够以原子方式被读取和修改,而且大多用作状态标志,volatile不能确保原子性
     @volatile var t1started = false
     @volatile var t2started = false
     var t1index = -1
@@ -107,5 +110,19 @@ object VolatileSharedStateAccess extends App {
     t2.join()
     assert(!(t1index == 1 && t2index == 1), s"t1 = $t1index, t2 = $t2index")
   }
+
 }
+object test extends App {
+
+  import org.scalameter.utils.Statistics.Test
+  var inc = 0
+
+  def increase(): Unit = {
+    inc += 1
+  }
+
+
+
+}
+
 

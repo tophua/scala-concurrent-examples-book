@@ -52,7 +52,7 @@ object Hello3 extends App {
       // 但收到它的 Greeter 实例知道应使用一个包含 TellName 发送方名称的 TellName 消息作为响应。当
       // 第一个 Greeter 收到所返回的 TellName 消息时，它打印出自己的问候语。
       case Greet(peer) => peer ! AskName
-        //
+        //相互调用 sender
       case AskName => sender ! TellName(myName)
       case TellName(name) => println(s"$greeting, $name")
     }
